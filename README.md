@@ -73,4 +73,3 @@ smartGarden/
 ## License
 
 Educational use only - CSEN 275 Project
-
