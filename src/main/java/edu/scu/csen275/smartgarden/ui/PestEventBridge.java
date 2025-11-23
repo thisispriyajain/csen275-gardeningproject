@@ -18,6 +18,7 @@ public class PestEventBridge {
         void onPestAttack(Position position, int damage);
         void onPesticideApplied(Position position);
         void onPestRemoved(Position position, String pestType);
+        void onBeneficialInsectHealing(Position position, int healing);
     }
     
     /**
@@ -60,6 +61,15 @@ public class PestEventBridge {
     public void notifyPestRemoved(Position position, String pestType) {
         if (handler != null) {
             Platform.runLater(() -> handler.onPestRemoved(position, pestType));
+        }
+    }
+    
+    /**
+     * Notifies that a beneficial insect provided healing.
+     */
+    public void notifyBeneficialInsectHealing(Position position, int healing) {
+        if (handler != null) {
+            Platform.runLater(() -> handler.onBeneficialInsectHealing(position, healing));
         }
     }
 }

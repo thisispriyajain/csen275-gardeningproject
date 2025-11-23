@@ -1,6 +1,7 @@
 package edu.scu.csen275.smartgarden.ui;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,46 +22,17 @@ public class WaterAnimationEngine {
     private static final double FRAME_RATE = 60.0; // 60 FPS
     private static final double FRAME_INTERVAL = 1000.0 / FRAME_RATE; // ~16.67ms
     
-    // Track active animations to prevent duplicates
-    private static final java.util.Set<Pane> activeAnimations = new java.util.HashSet<>();
-    
     /**
      * Animates watering for all tiles with full effects.
      */
     public static void animateAllTilesWatering(List<AnimatedTile> tiles, Pane container) {
-        if (tiles == null || tiles.isEmpty() || container == null) {
+        if (tiles.isEmpty() || container == null) {
             return;
-        }
-        
-        // Check if scene is ready
-        if (container.getScene() == null) {
-            return;
-        }
-        
-        // Prevent duplicate animations on same container
-        synchronized (activeAnimations) {
-            if (activeAnimations.contains(container)) {
-                return; // Animation already running
-            }
-            activeAnimations.add(container);
         }
         
         // Create animation canvas overlay
         Canvas animationCanvas = new Canvas();
         animationCanvas.setMouseTransparent(true);
-        
-        // Set initial size
-        double containerWidth = container.getWidth();
-        double containerHeight = container.getHeight();
-        if (containerWidth > 0 && containerHeight > 0) {
-            animationCanvas.setWidth(containerWidth);
-            animationCanvas.setHeight(containerHeight);
-        } else {
-            // Use default size if container not sized yet
-            animationCanvas.setWidth(800);
-            animationCanvas.setHeight(600);
-        }
-        
         container.getChildren().add(animationCanvas);
         
         // Bind canvas size to container
@@ -70,88 +42,42 @@ public class WaterAnimationEngine {
         // Create animation data for each tile
         List<WaterAnimationData> animations = new ArrayList<>();
         for (AnimatedTile tile : tiles) {
-            if (tile == null) continue;
-            
             WaterAnimationData data = new WaterAnimationData(tile, null);
             animations.add(data);
             
             // Start soil darkening animation on tile
-            try {
-                tile.startWateringAnimation();
-            } catch (Exception ex) {
-                // Skip if tile is invalid
-            }
+            tile.startWateringAnimation();
         }
         
         // Create high-frequency animation timeline (60 FPS)
         Timeline animationTimeline = new Timeline(
             new KeyFrame(Duration.millis(FRAME_INTERVAL), e -> {
-                if (animationCanvas == null || container == null || !container.getChildren().contains(animationCanvas)) {
-                    return;
+                GraphicsContext gc = animationCanvas.getGraphicsContext2D();
+                gc.clearRect(0, 0, animationCanvas.getWidth(), animationCanvas.getHeight());
+                
+                long currentTime = System.currentTimeMillis();
+                boolean hasActiveAnimations = false;
+                
+                for (WaterAnimationData data : animations) {
+                    double elapsed = currentTime - data.startTime;
+                    double progress = Math.min(1.0, elapsed / ANIMATION_DURATION);
+                    
+                    if (progress < 1.0) {
+                        hasActiveAnimations = true;
+                        
+                        // Draw droplets
+                        drawDroplets(gc, data, progress);
+                        
+                        // Draw ripples
+                        drawRipples(gc, data, progress);
+                    }
                 }
                 
-                try {
-                    GraphicsContext gc = animationCanvas.getGraphicsContext2D();
-                    if (gc == null) return;
-                    
-                    double width = animationCanvas.getWidth();
-                    double height = animationCanvas.getHeight();
-                    
-                    if (width <= 0 || height <= 0) {
-                        return;
-                    }
-                    
-                    gc.clearRect(0, 0, width, height);
-                    
-                    long currentTime = System.currentTimeMillis();
-                    boolean hasActiveAnimations = false;
-                    
-                    for (WaterAnimationData data : animations) {
-                        if (data == null || data.tile == null) continue;
-                        
-                        double elapsed = currentTime - data.startTime;
-                        double progress = Math.min(1.0, elapsed / ANIMATION_DURATION);
-                        
-                        if (progress < 1.0) {
-                            hasActiveAnimations = true;
-                            
-                            // Draw droplets
-                            try {
-                                drawDroplets(gc, data, progress);
-                            } catch (Exception ex) {
-                                // Skip if error drawing
-                            }
-                            
-                            // Draw ripples
-                            try {
-                                drawRipples(gc, data, progress);
-                            } catch (Exception ex) {
-                                // Skip if error drawing
-                            }
-                        }
-                    }
-                    
-                    // Remove canvas when animation is complete
-                    if (!hasActiveAnimations) {
-                        if (container.getChildren().contains(animationCanvas)) {
-                            container.getChildren().remove(animationCanvas);
-                        }
-                        synchronized (activeAnimations) {
-                            activeAnimations.remove(container);
-                        }
-                    }
-                } catch (Exception ex) {
-                    // Handle any drawing errors - clean up
-                    try {
-                        if (container.getChildren().contains(animationCanvas)) {
-                            container.getChildren().remove(animationCanvas);
-                        }
-                    } catch (Exception ex2) {
-                        // Ignore cleanup errors
-                    }
-                    synchronized (activeAnimations) {
-                        activeAnimations.remove(container);
-                    }
+                // Remove canvas when animation is complete
+                if (!hasActiveAnimations) {
+                    Platform.runLater(() -> {
+                        container.getChildren().remove(animationCanvas);
+                    });
                 }
             })
         );
@@ -160,19 +86,10 @@ public class WaterAnimationEngine {
         // Stop after animation duration
         Timeline stopTimeline = new Timeline(
             new KeyFrame(Duration.millis(ANIMATION_DURATION), e -> {
-                if (animationTimeline != null) {
-                    animationTimeline.stop();
-                }
-                try {
-                    if (container != null && container.getChildren().contains(animationCanvas)) {
-                        container.getChildren().remove(animationCanvas);
-                    }
-                } catch (Exception ex) {
-                    // Ignore cleanup errors
-                }
-                synchronized (activeAnimations) {
-                    activeAnimations.remove(container);
-                }
+                animationTimeline.stop();
+                Platform.runLater(() -> {
+                    container.getChildren().remove(animationCanvas);
+                });
             })
         );
         
@@ -296,8 +213,8 @@ public class WaterAnimationEngine {
         double centerY = canvasY + tileHeight / 2;
         double maxRadius = Math.max(tileWidth, tileHeight) * 0.8;
         
-        // Single ripple with reduced intensity
-        for (int i = 0; i < 1; i++) {
+        // Multiple ripples with different delays
+        for (int i = 0; i < 2; i++) {
             double rippleProgress = progress - (i * 0.3); // Stagger ripples
             rippleProgress = Math.max(0, Math.min(1.0, rippleProgress));
             
@@ -307,12 +224,12 @@ public class WaterAnimationEngine {
             
             double radius = rippleProgress * maxRadius;
             
-            // Reduced alpha - much more subtle
-            double alpha = (1.0 - rippleProgress) * 0.25; // Reduced from 0.6 to 0.25
+            // Alpha fades as ripple expands
+            double alpha = (1.0 - rippleProgress) * 0.6;
             
-            // Draw ripple circle with thinner line
+            // Draw ripple circle
             gc.setStroke(Color.rgb(100, 149, 237, alpha)); // Cornflower blue
-            gc.setLineWidth(1.0); // Reduced from 2.0 to 1.0
+            gc.setLineWidth(2.0);
             gc.strokeOval(
                 centerX - radius,
                 centerY - radius,
@@ -320,7 +237,18 @@ public class WaterAnimationEngine {
                 radius * 2
             );
             
-            // Removed inner ripple for less intensity
+            // Draw inner ripple for depth
+            if (rippleProgress > 0.2 && rippleProgress < 0.8) {
+                double innerRadius = radius * 0.7;
+                gc.setStroke(Color.rgb(135, 206, 250, alpha * 0.8)); // Light blue
+                gc.setLineWidth(1.5);
+                gc.strokeOval(
+                    centerX - innerRadius,
+                    centerY - innerRadius,
+                    innerRadius * 2,
+                    innerRadius * 2
+                );
+            }
         }
     }
     

@@ -84,9 +84,12 @@ loop for each zone
                 PestCtrl -> PestCtrl: reducePestCount(zone, 50%)
                 
                 loop for pests in zone
-                    PestCtrl -> Pest: remove()
-                    destroy Pest
-                    note right: All pests removed\n(harmful only)
+                    alt pest.isBeneficial() = false
+                        PestCtrl -> Pest: remove()
+                        destroy Pest
+                    else
+                        note right: Preserve beneficial insects
+                    end
                 end
                 
                 PestCtrl -> PestCtrl: updateStock(-1)

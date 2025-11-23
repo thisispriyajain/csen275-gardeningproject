@@ -20,7 +20,6 @@ public class AnimatedBackgroundPane extends Pane {
     private final List<SunRay> sunRays;
     private final Random random;
     private Timeline animationTimeline;
-    private boolean isSunny = true; // Track if weather is sunny for brighter background
     
     public AnimatedBackgroundPane() {
         this.backgroundCanvas = new Canvas();
@@ -102,15 +101,8 @@ public class AnimatedBackgroundPane extends Pane {
         // Draw gradient sky background
         drawSkyGradient(gc, width, height);
         
-        // Draw sun icon when sunny
-        if (isSunny) {
-            drawSunIcon(gc, width, height);
-        }
-        
-        // Draw sunlight rays (only when sunny)
-        if (isSunny) {
-            drawSunRays(gc, width, height);
-        }
+        // Draw sunlight rays
+        drawSunRays(gc, width, height);
         
         // Update and draw clouds
         for (Cloud cloud : clouds) {
@@ -131,81 +123,29 @@ public class AnimatedBackgroundPane extends Pane {
     
     /**
      * Draws cheerful gradient sky background.
-     * Brighter when sunny, darker when rainy.
      */
     private void drawSkyGradient(GraphicsContext gc, double width, double height) {
-        LinearGradient skyGradient;
-        
-        if (isSunny) {
-            // Bright, sunny sky gradient - very vibrant and bright
-            skyGradient = new LinearGradient(
-                0, 0, 0, height,
-                false,
-                CycleMethod.NO_CYCLE,
-                new Stop(0, Color.rgb(135, 206, 250)), // Bright sky blue
-                new Stop(0.3, Color.rgb(176, 224, 255)), // Very light sky blue
-                new Stop(0.6, Color.rgb(200, 255, 200)), // Bright light green
-                new Stop(1, Color.rgb(173, 255, 173)) // Bright green
-            );
-        } else {
-            // Darker, cloudy/rainy sky gradient
-            skyGradient = new LinearGradient(
-                0, 0, 0, height,
-                false,
-                CycleMethod.NO_CYCLE,
-                new Stop(0, Color.rgb(100, 150, 180)), // Darker blue-gray
-                new Stop(0.4, Color.rgb(120, 170, 200)), // Medium blue-gray
-                new Stop(0.7, Color.rgb(140, 200, 180)), // Darker green
-                new Stop(1, Color.rgb(120, 200, 150)) // Darker green
-            );
-        }
+        // Bright sky gradient (light blue to light green) - make it vibrant and visible
+        LinearGradient skyGradient = new LinearGradient(
+            0, 0, 0, height,
+            false,
+            CycleMethod.NO_CYCLE,
+            new Stop(0, Color.rgb(135, 206, 235)), // Sky blue - more vibrant
+            new Stop(0.4, Color.rgb(176, 224, 230)), // Light sky blue
+            new Stop(0.7, Color.rgb(173, 255, 173)), // Light green
+            new Stop(1, Color.rgb(144, 238, 144)) // Light green - brighter
+        );
         
         gc.setFill(skyGradient);
         gc.fillRect(0, 0, width, height);
     }
     
     /**
-     * Draws a bright sun icon in the top-right corner when sunny.
-     */
-    private void drawSunIcon(GraphicsContext gc, double width, double height) {
-        double sunX = width * 0.85;
-        double sunY = height * 0.08;
-        double sunRadius = 50;
-        
-        // Draw glowing sun with multiple layers for brightness
-        // Outer glow
-        RadialGradient sunGlow = new RadialGradient(
-            0, 0, sunX, sunY, sunRadius * 1.5,
-            false, CycleMethod.NO_CYCLE,
-            new Stop(0, Color.rgb(255, 255, 200, 0.6)),
-            new Stop(0.5, Color.rgb(255, 255, 150, 0.3)),
-            new Stop(1, Color.rgb(255, 255, 200, 0.0))
-        );
-        gc.setFill(sunGlow);
-        gc.fillOval(sunX - sunRadius * 1.5, sunY - sunRadius * 1.5, sunRadius * 3, sunRadius * 3);
-        
-        // Main sun body - bright yellow
-        RadialGradient sunGradient = new RadialGradient(
-            0, 0, sunX, sunY, sunRadius,
-            false, CycleMethod.NO_CYCLE,
-            new Stop(0, Color.rgb(255, 255, 100)), // Bright yellow center
-            new Stop(0.7, Color.rgb(255, 220, 50)), // Golden yellow
-            new Stop(1, Color.rgb(255, 200, 0)) // Orange-yellow edge
-        );
-        gc.setFill(sunGradient);
-        gc.fillOval(sunX - sunRadius, sunY - sunRadius, sunRadius * 2, sunRadius * 2);
-        
-        // Bright center highlight
-        gc.setFill(Color.rgb(255, 255, 200, 0.8));
-        gc.fillOval(sunX - sunRadius * 0.3, sunY - sunRadius * 0.3, sunRadius * 0.6, sunRadius * 0.6);
-    }
-    
-    /**
      * Draws sunlight rays from top-right.
      */
     private void drawSunRays(GraphicsContext gc, double width, double height) {
-        double centerX = width * 0.85;
-        double centerY = height * 0.08;
+        double centerX = width * 0.9;
+        double centerY = height * 0.1;
         
         for (SunRay ray : sunRays) {
             gc.save();
@@ -213,12 +153,12 @@ public class AnimatedBackgroundPane extends Pane {
             gc.translate(centerX, centerY);
             gc.rotate(ray.angle);
             
-            // Draw ray as a gradient - brighter when sunny
+            // Draw ray as a gradient
             LinearGradient rayGradient = new LinearGradient(
                 0, 0, ray.width, 0,
                 false,
                 CycleMethod.NO_CYCLE,
-                new Stop(0, Color.rgb(255, 255, 200, 0.5)), // Brighter when sunny
+                new Stop(0, Color.rgb(255, 255, 200, 0.3)),
                 new Stop(1, Color.rgb(255, 255, 200, 0.0))
             );
             
@@ -262,13 +202,6 @@ public class AnimatedBackgroundPane extends Pane {
      */
     private static class SunRay {
         double angle, opacity, width;
-    }
-    
-    /**
-     * Updates background based on weather (sunny or rainy).
-     */
-    public void setWeather(boolean sunny) {
-        this.isSunny = sunny;
     }
     
     /**

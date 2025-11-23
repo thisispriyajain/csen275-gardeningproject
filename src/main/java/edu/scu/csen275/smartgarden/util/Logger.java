@@ -9,7 +9,6 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -24,8 +23,8 @@ public class Logger {
     private final Path logFilePath;
     private final String sessionId;
     private final ConcurrentLinkedQueue<LogEntry> buffer;
-    private final List<LogEntry> memoryLog;  // Thread-safe synchronized list
-    private volatile LogLevel minLogLevel;   // Volatile for thread visibility
+    private final List<LogEntry> memoryLog;
+    private LogLevel minLogLevel;
     private BufferedWriter writer;
     
     private static final DateTimeFormatter TIME_FORMATTER = 
@@ -38,7 +37,7 @@ public class Logger {
     private Logger() {
         this.sessionId = generateSessionId();
         this.buffer = new ConcurrentLinkedQueue<>();
-        this.memoryLog = Collections.synchronizedList(new ArrayList<>());
+        this.memoryLog = new ArrayList<>();
         this.minLogLevel = LogLevel.INFO;
         
         // Create logs directory if it doesn't exist
@@ -147,48 +146,36 @@ public class Logger {
     
     /**
      * Gets recent log entries (last N entries).
-     * Thread-safe: synchronized on memoryLog during iteration.
      */
     public List<LogEntry> getRecentLogs(int count) {
-        synchronized (memoryLog) {
-            int size = memoryLog.size();
-            int fromIndex = Math.max(0, size - count);
-            return new ArrayList<>(memoryLog.subList(fromIndex, size));
-        }
+        int size = memoryLog.size();
+        int fromIndex = Math.max(0, size - count);
+        return new ArrayList<>(memoryLog.subList(fromIndex, size));
     }
     
     /**
      * Gets all log entries in memory.
-     * Thread-safe: synchronized on memoryLog during copy.
      */
     public List<LogEntry> getAllLogs() {
-        synchronized (memoryLog) {
-            return new ArrayList<>(memoryLog);
-        }
+        return new ArrayList<>(memoryLog);
     }
     
     /**
      * Filters logs by category.
-     * Thread-safe: synchronized on memoryLog during iteration.
      */
     public List<LogEntry> filterByCategory(String category) {
-        synchronized (memoryLog) {
-            return memoryLog.stream()
-                .filter(entry -> entry.category().equals(category))
-                .toList();
-        }
+        return memoryLog.stream()
+            .filter(entry -> entry.category().equals(category))
+            .toList();
     }
     
     /**
      * Filters logs by level.
-     * Thread-safe: synchronized on memoryLog during iteration.
      */
     public List<LogEntry> filterByLevel(LogLevel level) {
-        synchronized (memoryLog) {
-            return memoryLog.stream()
-                .filter(entry -> entry.level() == level)
-                .toList();
-        }
+        return memoryLog.stream()
+            .filter(entry -> entry.level() == level)
+            .toList();
     }
     
     /**

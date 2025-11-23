@@ -3,6 +3,7 @@ package edu.scu.csen275.smartgarden.controller;
 import edu.scu.csen275.smartgarden.model.*;
 import edu.scu.csen275.smartgarden.simulation.SimulationEngine;
 import edu.scu.csen275.smartgarden.util.Logger;
+import javafx.beans.property.*;
 
 /**
  * Main controller that coordinates the garden model and simulation.
@@ -26,13 +27,13 @@ public class GardenController {
     }
     
     /**
-     * Plants a new plant in the garden using PlantType enum.
+     * Plants a new plant in the garden.
      */
-    public boolean plantSeed(PlantType plantType, Position position) {
+    public boolean plantSeed(String plantType, Position position) {
         try {
             Plant plant = createPlant(plantType, position);
             if (plant != null && garden.addPlant(plant)) {
-                logger.info("Controller", "Plant " + plantType.getDisplayName() + " added at " + position);
+                logger.info("Controller", "Plant " + plantType + " added at " + position);
                 return true;
             }
             return false;
@@ -43,49 +44,9 @@ public class GardenController {
     }
     
     /**
-     * Legacy method for backward compatibility - converts string to PlantType.
+     * Creates a plant based on type string.
      */
-    public boolean plantSeed(String plantType, Position position) {
-        try {
-            PlantType type = PlantType.valueOf(plantType.toUpperCase().replace(" ", "_"));
-            return plantSeed(type, position);
-        } catch (IllegalArgumentException e) {
-            // Fallback to old system for compatibility
-            Plant plant = createPlantLegacy(plantType, position);
-            if (plant != null && garden.addPlant(plant)) {
-                logger.info("Controller", "Plant " + plantType + " added at " + position);
-                return true;
-            }
-            return false;
-        }
-    }
-    
-    /**
-     * Creates a plant based on PlantType enum.
-     */
-    private Plant createPlant(PlantType plantType, Position position) {
-        return switch (plantType) {
-            // Fruit Plants
-            case STRAWBERRY -> new Fruit(position, "Strawberry");
-            case GRAPEVINE -> new Fruit(position, "Grapevine");
-            case APPLE -> new Fruit(position, "Apple Sapling");
-            
-            // Vegetable Crops
-            case CARROT -> new Vegetable(position, "Carrot");
-            case TOMATO -> new Vegetable(position, "Tomato");
-            case ONION -> new Vegetable(position, "Onion");
-            
-            // Flowers
-            case SUNFLOWER -> new Flower(position, "Sunflower");
-            case TULIP -> new Flower(position, "Tulip");
-            case ROSE -> new Flower(position, "Rose");
-        };
-    }
-    
-    /**
-     * Legacy method for creating plants from string (backward compatibility).
-     */
-    private Plant createPlantLegacy(String plantType, Position position) {
+    private Plant createPlant(String plantType, Position position) {
         return switch (plantType.toLowerCase()) {
             case "flower" -> new Flower(position);
             case "vegetable", "tomato" -> new Vegetable(position, "Tomato");

@@ -15,23 +15,19 @@ note right: Every 5 simulation minutes
 Engine -> Water: checkMoistureLevels()
 activate Water
 
-Water -> Water: checkWeather()
-note right: Check if raining\nbefore watering
-
-alt weather != RAINY
-    loop for each zone
-        Water -> Zone: getZoneId()
-        activate Zone
-        Zone --> Water: zoneId
-        deactivate Zone
-        
-        Water -> Sensor: readValue()
-        activate Sensor
-        Sensor -> Sensor: calculateMoisture()
-        Sensor --> Water: moistureLevel
-        deactivate Sensor
-        
-        alt moistureLevel < threshold
+loop for each zone
+    Water -> Zone: getZoneId()
+    activate Zone
+    Zone --> Water: zoneId
+    deactivate Zone
+    
+    Water -> Sensor: readValue()
+    activate Sensor
+    Sensor -> Sensor: calculateMoisture()
+    Sensor --> Water: moistureLevel
+    deactivate Sensor
+    
+    alt moistureLevel < threshold
         Water -> Log: log(INFO, "Zone X moisture low: Y%")
         activate Log
         Log --> Water: 
@@ -96,20 +92,12 @@ alt weather != RAINY
             deactivate Log
         end
         
-        else moistureLevel adequate
-            Water -> Log: log(DEBUG, "Zone X moisture adequate: Y%")
-            activate Log
-            Log --> Water: 
-            deactivate Log
-        end
+    else moistureLevel adequate
+        Water -> Log: log(DEBUG, "Zone X moisture adequate: Y%")
+        activate Log
+        Log --> Water: 
+        deactivate Log
     end
-else weather == RAINY
-    Water -> Log: log(INFO, "Skipping watering - rain detected")
-    activate Log
-    Log --> Water: 
-    deactivate Log
-    Water -> Water: stopAllSprinklers()
-    note right: Sprinklers stopped\nduring rain
 end
 
 Water --> Engine: 

@@ -29,6 +29,7 @@ public class RainAnimationEngine {
             return; // Already raining
         }
         
+        System.out.println("[RainAnimationEngine] Starting rain animation");
         isRaining = true;
         
         // Create rain canvas overlay
@@ -70,6 +71,7 @@ public class RainAnimationEngine {
             return;
         }
         
+        System.out.println("[RainAnimationEngine] Stopping rain animation");
         isRaining = false;
         
         if (rainTimeline != null) {
@@ -124,6 +126,8 @@ public class RainAnimationEngine {
             rainDrops.add(drop);
         }
         
+        System.out.println("[RainAnimationEngine] Initialized " + rainDrops.size() + " rain drops for " + 
+                          (int)width + "x" + (int)height);
     }
     
     /**

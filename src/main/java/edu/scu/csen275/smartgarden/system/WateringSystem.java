@@ -43,22 +43,10 @@ public class WateringSystem {
     
     /**
      * Sets the weather system reference to check for rain.
-     * Also adds a listener to stop sprinklers when rain starts.
      */
     public void setWeatherSystem(WeatherSystem weatherSystem) {
         this.weatherSystem = weatherSystem;
         logger.info("Watering", "Weather system connected - will skip watering when raining");
-        
-        // Add listener to stop sprinklers when weather changes to RAINY
-        if (weatherSystem != null) {
-            weatherSystem.currentWeatherProperty().addListener((obs, oldWeather, newWeather) -> {
-                if (newWeather == WeatherSystem.Weather.RAINY && oldWeather != WeatherSystem.Weather.RAINY) {
-                    // Rain just started - stop all active sprinklers
-                    stopAllSprinklers();
-                    logger.info("Watering", "Rain detected - stopped all active sprinklers");
-                }
-            });
-        }
     }
     
     /**
@@ -111,7 +99,6 @@ public class WateringSystem {
     
     /**
      * Waters a specific zone with given amount.
-     * Checks weather before and during watering - stops if it starts raining.
      */
     public void waterZone(int zoneId, int amount) {
         Sprinkler sprinkler = sprinklers.get(zoneId);
@@ -119,12 +106,6 @@ public class WateringSystem {
         
         if (sprinkler == null || zone == null) {
             logger.error("Watering", "Invalid zone ID: " + zoneId);
-            return;
-        }
-        
-        // Check if it's raining before starting
-        if (weatherSystem != null && weatherSystem.getCurrentWeather() == WeatherSystem.Weather.RAINY) {
-            logger.info("Watering", "Skipping watering Zone " + zoneId + " - it's currently raining");
             return;
         }
         
@@ -140,13 +121,6 @@ public class WateringSystem {
         // Activate sprinkler
         sprinkler.activate();
         
-        // Check weather again before distributing water (in case it started raining)
-        if (weatherSystem != null && weatherSystem.getCurrentWeather() == WeatherSystem.Weather.RAINY) {
-            logger.info("Watering", "Stopping watering Zone " + zoneId + " - rain detected");
-            sprinkler.deactivate();
-            return;
-        }
-        
         // Distribute water
         int waterUsed = sprinkler.distributeWater(amount);
         
@@ -159,18 +133,6 @@ public class WateringSystem {
         logger.info("Watering", "Zone " + zoneId + " watered with " + waterUsed + 
                    "L. Moisture: " + zone.getMoistureLevel() + "%. Supply remaining: " + 
                    waterSupply.get() + "L");
-    }
-    
-    /**
-     * Stops all active sprinklers (called when rain starts).
-     */
-    public void stopAllSprinklers() {
-        for (Sprinkler sprinkler : sprinklers.values()) {
-            if (sprinkler != null && sprinkler.isActive()) {
-                sprinkler.deactivate();
-                logger.info("Watering", "Stopped active sprinkler for Zone " + sprinkler.getZone().getZoneId() + " due to rain");
-            }
-        }
     }
     
     /**

@@ -158,9 +158,6 @@ public class SimulationEngine {
             pestControlSystem.update();
             weatherSystem.update();
             
-            // Auto-refill water and pesticide if below threshold
-            autoRefillSupplies();
-            
             // Check for new day
             if (ticksPerDay >= TICKS_PER_SIM_DAY / speedMultiplier.get()) {
                 advanceDay();
@@ -180,35 +177,6 @@ public class SimulationEngine {
         } catch (Exception e) {
             logger.logException("Simulation", "Error during tick " + elapsedTicks.get(), e);
             // Continue simulation despite errors
-        }
-    }
-    
-    /**
-     * Automatically refills water and pesticide supplies when they drop below threshold.
-     */
-    private void autoRefillSupplies() {
-        // Water supply threshold: 20% of initial (2000L out of 10000L)
-        final int WATER_THRESHOLD = 2000;
-        final int INITIAL_WATER = 10000;
-        
-        int currentWater = wateringSystem.getWaterSupply();
-        if (currentWater < WATER_THRESHOLD) {
-            int refillAmount = INITIAL_WATER - currentWater;
-            wateringSystem.refillWater(refillAmount);
-            logger.info("Simulation", "Auto-refilled water supply: " + currentWater + "L -> " + 
-                       INITIAL_WATER + "L");
-        }
-        
-        // Pesticide stock threshold: 20% of initial (10 out of 50)
-        final int PESTICIDE_THRESHOLD = 10;
-        final int INITIAL_PESTICIDE = 50;
-        
-        int currentPesticide = pestControlSystem.getPesticideStock();
-        if (currentPesticide < PESTICIDE_THRESHOLD) {
-            int refillAmount = INITIAL_PESTICIDE - currentPesticide;
-            pestControlSystem.refillPesticide(refillAmount);
-            logger.info("Simulation", "Auto-refilled pesticide stock: " + currentPesticide + " -> " + 
-                       INITIAL_PESTICIDE);
         }
     }
     

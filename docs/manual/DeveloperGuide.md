@@ -98,6 +98,7 @@ smartGarden/
 │   │   │       │   ├── HeatingSystem.java
 │   │   │       │   ├── Pest.java                  # Abstract base
 │   │   │       │   ├── HarmfulPest.java
+│   │   │       │   ├── BeneficialInsect.java
 │   │   │       │   └── PestControlSystem.java
 │   │   │       │
 │   │   │       ├── simulation/                     # Simulation engine
@@ -836,6 +837,7 @@ int getCurrentTemperature()
 void update()
 void manualTreat(int zoneId)
 int getHarmfulPestCount()
+int getBeneficialInsectCount()
 ```
 
 ### Simulation Classes
@@ -948,14 +950,6 @@ Happy coding! 🌱
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: December 2024  
+**Last Updated**: November 2025  
 **Course**: CSEN 275 - Object-Oriented Analysis & Design
-
-## Recent Changes (v1.0.0)
-
-- **Plant Types**: Expanded to 9 types (Strawberry, Grapevine, Apple, Carrot, Tomato, Onion, Sunflower, Tulip, Rose)
-- **Weather Integration**: Sprinkler system now responds to weather changes (stops during rain)
-- **Image Resources**: All plant images use local PNG files in `src/main/resources/images/`
-- **Pest System**: Simplified to harmful pests only (BeneficialInsect class removed)
-- **Animation Engine**: Improved SprinklerAnimationEngine and WaterAnimationEngine with better null safety
 

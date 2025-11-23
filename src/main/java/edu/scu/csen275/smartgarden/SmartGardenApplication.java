@@ -78,9 +78,9 @@ public class SmartGardenApplication extends Application {
             // Setup pest event handlers
             setupPestEventHandlers();
             
-            // ROTATION MODE: Rotate between sunny and rainy every 1 minute
-            controller.getSimulationEngine().getWeatherSystem().enableSunnyRainyRotation();
-            System.out.println("[SmartGardenApplication] ROTATION MODE: Weather rotating between SUNNY and RAINY every 1 minute");
+            // TEST MODE: Enable rain every 1 minute for testing
+            controller.getSimulationEngine().getWeatherSystem().enableRainTestMode();
+            System.out.println("[SmartGardenApplication] TEST MODE: Rain enabled every 1 minute");
             
             // Add initial test log entry to verify log display
             controller.getLogger().info("System", "Smart Garden Simulation started");
@@ -369,6 +369,11 @@ public class SmartGardenApplication extends Application {
             }
 
             @Override
+            public void onBeneficialInsectHealing(Position position, int healingAmount) {
+                gardenPanel.onBeneficialInsectHealing(position, healingAmount);
+            }
+
+            @Override
             public void onPestRemoved(Position position, String pestType) {
                 // Not explicitly handled in UI yet, but can be added
             }
@@ -427,11 +432,6 @@ public class SmartGardenApplication extends Application {
             WeatherSystem.Weather weather = engine.getWeatherSystem().getCurrentWeather();
             infoPanel.getWeatherDisplay().updateWeather(weather);
             
-            // Update background brightness based on weather
-            if (animatedBackground != null) {
-                animatedBackground.setWeather(weather == WeatherSystem.Weather.SUNNY);
-            }
-            
             // Show/hide rain animation based on weather changes
             if (previousWeather != weather) {
                 // Get center container - root is StackPane containing BorderPane
@@ -463,12 +463,6 @@ public class SmartGardenApplication extends Application {
                     if (weather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed to RAINY - starting rain animation");
                         RainAnimationEngine.startRain(centerContainer);
-                        // Stop all sprinklers when rain starts
-                        if (engine != null && engine.getWateringSystem() != null) {
-                            engine.getWateringSystem().stopAllSprinklers();
-                        }
-                        // Stop all sprinkler animations when rain starts
-                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
                     } else if (previousWeather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed from RAINY to " + weather + " - stopping rain animation");
                         RainAnimationEngine.stopRain(centerContainer);
@@ -509,13 +503,6 @@ public class SmartGardenApplication extends Application {
                     List<edu.scu.csen275.smartgarden.util.Logger.LogEntry> logEntries = 
                         logger.getRecentLogs(20);
                     
-                    // Get current weather once - check if it's raining
-                    WeatherSystem.Weather currentWeather = engine.getWeatherSystem().getCurrentWeather();
-                    boolean isRaining = (currentWeather == WeatherSystem.Weather.RAINY);
-                    
-                    // Track processed log entries to avoid duplicate animations
-                    java.util.Set<String> processedWateringLogs = new java.util.HashSet<>();
-                    
                     for (edu.scu.csen275.smartgarden.util.Logger.LogEntry entry : logEntries) {
                         try {
                             String logEntry = entry.toDisplayFormat();
@@ -524,18 +511,6 @@ public class SmartGardenApplication extends Application {
                                 
                                 // Detect automatic watering from logs
                                 if (logEntry.contains("Auto-watered Zone")) {
-                                    // Always skip if it's currently raining
-                                    if (isRaining) {
-                                        continue;
-                                    }
-                                    
-                                    // Create unique key from timestamp and message to prevent duplicates
-                                    String logKey = entry.timestamp().toString() + ":" + logEntry;
-                                    if (processedWateringLogs.contains(logKey)) {
-                                        continue; // Already processed this log entry
-                                    }
-                                    processedWateringLogs.add(logKey);
-                                    
                                     // Extract zone ID from log message
                                     try {
                                         int zoneId = Integer.parseInt(logEntry.substring(
@@ -647,9 +622,10 @@ public class SmartGardenApplication extends Application {
                         // Spawn all pests at this position
                         for (var pest : pestsAtPos) {
                             String pestType = pest.getPestType();
+                            boolean isHarmful = !pest.isBeneficial();
                             
-                            // Spawn in UI (all pests are harmful now)
-                            gardenPanel.onPestSpawned(pos, pestType, true);
+                            // Spawn in UI
+                            gardenPanel.onPestSpawned(pos, pestType, isHarmful);
                         }
                     } else if (currentCount > uiPestCount && uiPestCount > 0) {
                         // More pests than UI shows - spawn additional ones
@@ -658,8 +634,8 @@ public class SmartGardenApplication extends Application {
                         for (var pest : pestsAtPos) {
                             if (spawned >= toSpawn) break;
                             String pestType = pest.getPestType();
-                            // All pests are harmful now
-                            gardenPanel.onPestSpawned(pos, pestType, true);
+                            boolean isHarmful = !pest.isBeneficial();
+                            gardenPanel.onPestSpawned(pos, pestType, isHarmful);
                             spawned++;
                         }
                     }

@@ -21,7 +21,7 @@ The Smart Garden Simulation System follows a **layered architecture** with clear
 
 ### 4. System Layer
 - **Responsibility**: Automation subsystems
-- **Components**: Watering (weather-aware), Heating, Pest Control, Weather
+- **Components**: Watering, Heating, Pest Control, Weather
 - **Pattern**: Strategy, Observer
 
 ### 5. Infrastructure Layer
@@ -74,11 +74,6 @@ The Smart Garden Simulation System follows a **layered architecture** with clear
 **Decision**: Single Logger instance used throughout  
 **Rationale**: Consistent log format, easier to manage file I/O  
 **Trade-off**: Potential bottleneck, but buffered writing mitigates this
-
-### 8. Weather-Aware Sprinkler Control
-**Decision**: Sprinklers automatically stop when rain is detected  
-**Rationale**: Prevents unnecessary water usage, realistic behavior  
-**Trade-off**: Requires coordination between WeatherSystem and WateringSystem, but improves efficiency
 
 ### 6. No Persistence Layer
 **Decision**: All data in-memory, logs to file only  

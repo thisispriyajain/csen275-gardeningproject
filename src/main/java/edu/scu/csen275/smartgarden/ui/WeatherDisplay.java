@@ -25,7 +25,7 @@ public class WeatherDisplay extends HBox {
         this.getStyleClass().add("weather-display");
         
         weatherIcon = new Label("☀");
-        weatherIcon.setFont(javafx.scene.text.Font.font(40)); // Larger sun icon
+        weatherIcon.setFont(javafx.scene.text.Font.font(32));
         
         weatherLabel = new Label("Weather: Sunny");
         weatherLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
@@ -67,30 +67,18 @@ public class WeatherDisplay extends HBox {
         
         // Adjust animations based on weather type
         switch (weather) {
-            case SUNNY:
-                // Bright sun with glowing pulse animation
-                weatherIcon.setStyle("-fx-text-fill: #FFD700; -fx-effect: dropshadow(gaussian, #FFD700, 20, 0.8, 0, 0);");
-                pulseAnimation.setDuration(Duration.seconds(1.5));
-                pulseAnimation.setToX(1.15); // Slightly larger pulse for sun
-                pulseAnimation.setToY(1.15);
-                pulseAnimation.play();
-                rotateAnimation.stop();
-                break;
             case WINDY:
-                weatherIcon.setStyle(""); // Reset style
                 rotateAnimation.setFromAngle(0);
                 rotateAnimation.setToAngle(360);
                 rotateAnimation.play();
                 pulseAnimation.stop();
                 break;
             case RAINY:
-                weatherIcon.setStyle(""); // Reset style
                 pulseAnimation.setDuration(Duration.seconds(0.5));
                 pulseAnimation.play();
                 rotateAnimation.stop();
                 break;
             case SNOWY:
-                weatherIcon.setStyle(""); // Reset style
                 rotateAnimation.setFromAngle(-5);
                 rotateAnimation.setToAngle(5);
                 rotateAnimation.setDuration(Duration.seconds(1));
@@ -98,7 +86,6 @@ public class WeatherDisplay extends HBox {
                 pulseAnimation.stop();
                 break;
             default:
-                weatherIcon.setStyle(""); // Reset style
                 pulseAnimation.setDuration(Duration.seconds(2));
                 pulseAnimation.play();
                 rotateAnimation.stop();

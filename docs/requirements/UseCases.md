@@ -147,7 +147,13 @@
 
 **Alternative Flows:**
 
-**AF-04a: Pesticide Stock Depleted**
+**AF-04a: Beneficial Insects Present**
+1. System identifies beneficial insects
+2. Treatment is moderated to protect them
+3. Reduced dosage applied
+4. Log notes "Selective treatment to preserve beneficial insects"
+
+**AF-04b: Pesticide Stock Depleted**
 1. System checks pesticide inventory
 2. If empty, displays alert: "Pesticide stock empty"
 3. Manual intervention required

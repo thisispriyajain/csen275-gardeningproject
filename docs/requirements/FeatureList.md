@@ -10,7 +10,7 @@
 - **F-005**: Interactive cell selection
 
 ### 1.2 Plant Management
-- **F-010**: Support for 9 plant types (3 Fruits: Strawberry, Grapevine, Apple; 3 Vegetables: Carrot, Tomato, Onion; 3 Flowers: Sunflower, Tulip, Rose)
+- **F-010**: Support for 5+ plant types (Flower, Vegetable, Tree, Grass, Herb)
 - **F-011**: Individual plant growth stages (Seed → Seedling → Mature → Flowering/Fruiting)
 - **F-012**: Plant-specific water requirements
 - **F-013**: Plant-specific sunlight requirements
@@ -24,11 +24,10 @@
 - **F-020**: Automatic zone-based watering
 - **F-021**: Soil moisture sensors (per zone)
 - **F-022**: Smart watering schedule
-- **F-023**: Weather-aware sprinkler control (stops automatically when raining)
-- **F-024**: Manual override controls
-- **F-025**: Water level monitoring
-- **F-026**: Sprinkler activation animation
-- **F-027**: Water conservation alerts
+- **F-023**: Manual override controls
+- **F-024**: Water level monitoring
+- **F-025**: Sprinkler activation animation
+- **F-026**: Water conservation alerts
 
 ### 2.2 Heating System
 - **F-030**: Ambient temperature monitoring
@@ -40,11 +39,12 @@
 
 ### 2.3 Pest Control System
 - **F-040**: Pest infestation detection
-- **F-041**: Multiple harmful pest types (Aphids, Caterpillars, Beetles, etc.)
+- **F-041**: Multiple pest types (harmful and beneficial)
 - **F-042**: Automated pesticide application
 - **F-043**: Pest trap placement
 - **F-044**: Infestation level tracking
 - **F-045**: Treatment effectiveness monitoring
+- **F-046**: Beneficial insect protection
 
 ## 3. Simulation Engine
 
@@ -56,17 +56,17 @@
 - **F-054**: Day/Night cycle visualization
 
 ### 3.2 Environmental Simulation
-- **F-060**: Dynamic weather system (Sunny, Rainy, Cloudy, Windy, Snowy)
+- **F-060**: Dynamic weather system (Sunny, Rainy, Cloudy, Windy)
 - **F-061**: Weather effects on plants
-- **F-062**: Weather integration with watering system (rain stops sprinklers)
-- **F-063**: Random environmental events
-- **F-064**: Seasonal changes (optional)
-- **F-065**: Weather forecast display
+- **F-062**: Random environmental events
+- **F-063**: Seasonal changes (optional)
+- **F-064**: Weather forecast display
 
 ### 3.3 Random Events
-- **F-070**: Pest outbreak events (harmful pests only)
+- **F-070**: Pest outbreak events
 - **F-071**: Extreme weather events
 - **F-072**: Equipment malfunction simulation
+- **F-073**: Beneficial event chances (e.g., pollination)
 
 ## 4. User Interface
 

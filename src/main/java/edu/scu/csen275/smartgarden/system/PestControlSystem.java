@@ -83,17 +83,25 @@ public class PestControlSystem {
         Plant targetPlant = livingPlants.get(random.nextInt(livingPlants.size()));
         Position position = targetPlant.getPosition();
         
-        // All pests are harmful
-        String[] harmfulTypes = {"Red Mite", "Green Leaf Worm", "Black Beetle", "Brown Caterpillar"};
-        String type = harmfulTypes[random.nextInt(harmfulTypes.length)];
-        Pest newPest = new HarmfulPest(type, position);
-        logger.warning("PestControl", type + " appeared at " + position);
+        // 80% harmful, 20% beneficial
+        Pest newPest;
+        if (random.nextDouble() < 0.8) {
+            String[] harmfulTypes = {"Aphid", "Caterpillar", "Beetle", "Spider Mite"};
+            String type = harmfulTypes[random.nextInt(harmfulTypes.length)];
+            newPest = new HarmfulPest(type, position);
+            logger.warning("PestControl", type + " appeared at " + position);
+        } else {
+            String[] beneficialTypes = {"Bee", "Ladybug", "Butterfly"};
+            String type = beneficialTypes[random.nextInt(beneficialTypes.length)];
+            newPest = new BeneficialInsect(type, position, 2);
+            logger.info("PestControl", type + " (beneficial) appeared at " + position);
+        }
         
         pests.add(newPest);
         
         // NOTIFY UI IMMEDIATELY when pest spawns
         if (pestEventBridge != null) {
-            pestEventBridge.notifyPestSpawned(position, newPest.getPestType(), true);
+            pestEventBridge.notifyPestSpawned(position, newPest.getPestType(), !newPest.isBeneficial());
         }
     }
     
@@ -110,6 +118,11 @@ public class PestControlSystem {
             Plant plant = garden.getPlant(pest.getPosition());
             if (plant != null && !plant.isDead()) {
                 pest.causeDamage(plant);
+                
+                // Beneficial insects provide benefits instead
+                if (pest instanceof BeneficialInsect beneficial) {
+                    beneficial.pollinate(plant);
+                }
             } else {
                 // Plant is gone, remove pest
                 pests.remove(pest);
@@ -146,9 +159,9 @@ public class PestControlSystem {
     private ThreatLevel assessThreat(Zone zone) {
         int infestationLevel = zone.getPestInfestationLevel();
         
-        // Check for actual pests in this zone
+        // Check for actual harmful pests in this zone
         long harmfulPestCount = pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p.isAlive() && !p.isBeneficial())
             .filter(p -> zone.containsPosition(p.getPosition()))
             .count();
         
@@ -197,9 +210,17 @@ public class PestControlSystem {
         
         // Remove pests in the zone
         int pestsEliminated = 0;
+        int beneficialSaved = 0;
         
         for (Pest pest : new ArrayList<>(pests)) {
             if (zone.containsPosition(pest.getPosition())) {
+                if (pest.isBeneficial()) {
+                    // 70% chance to spare beneficial insects
+                    if (random.nextDouble() > 0.3) {
+                        beneficialSaved++;
+                        continue;
+                    }
+                }
                 pest.eliminate();
                 pests.remove(pest);
                 pestsEliminated++;
@@ -221,7 +242,8 @@ public class PestControlSystem {
         pesticideStock.set(pesticideStock.get() - 1);
         
         logger.info("PestControl", "Treatment complete for Zone " + zone.getZoneId() + 
-                   ". Eliminated: " + pestsEliminated + ", Stock remaining: " + pesticideStock.get());
+                   ". Eliminated: " + pestsEliminated + ", Beneficial saved: " + 
+                   beneficialSaved + ", Stock remaining: " + pesticideStock.get());
     }
     
     /**
@@ -230,7 +252,7 @@ public class PestControlSystem {
     private void updateInfestationLevels() {
         for (Zone zone : garden.getZones()) {
             int pestCount = (int) pests.stream()
-                .filter(p -> p.isAlive())
+                .filter(p -> p.isAlive() && !p.isBeneficial())
                 .filter(p -> zone.containsPosition(p.getPosition()))
                 .count();
             
@@ -265,20 +287,29 @@ public class PestControlSystem {
     }
     
     /**
-     * Gets count of pests.
+     * Gets count of harmful pests.
      */
     public int getHarmfulPestCount() {
         return (int) pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p.isAlive() && !p.isBeneficial())
             .count();
     }
     
     /**
-     * Gets the number of active pests at a specific position.
+     * Gets count of beneficial insects.
+     */
+    public int getBeneficialInsectCount() {
+        return (int) pests.stream()
+            .filter(p -> p.isAlive() && p.isBeneficial())
+            .count();
+    }
+    
+    /**
+     * Gets the number of active harmful pests at a specific position.
      */
     public int getActivePestCountAtPosition(edu.scu.csen275.smartgarden.model.Position position) {
         return (int) pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p.isAlive() && !p.isBeneficial())
             .filter(p -> p.getPosition().equals(position))
             .count();
     }
@@ -332,7 +363,8 @@ public class PestControlSystem {
     
     @Override
     public String toString() {
-        return "PestControlSystem[Pests: " + getHarmfulPestCount() + 
+        return "PestControlSystem[Harmful: " + getHarmfulPestCount() + 
+               ", Beneficial: " + getBeneficialInsectCount() + 
                ", Stock: " + pesticideStock.get() + "]";
     }
 }

@@ -21,237 +21,131 @@ public class SprinklerAnimationEngine {
     private static final double FRAME_RATE = 60.0; // 60 FPS
     private static final double FRAME_INTERVAL = 1000.0 / FRAME_RATE; // ~16.67ms
     
-    // Track active animations to prevent duplicates and allow stopping
-    private static final java.util.Set<Pane> activeAnimations = new java.util.HashSet<>();
-    private static final java.util.Map<Pane, Timeline> activeTimelines = new java.util.HashMap<>();
-    
-    /**
-     * Stops all active sprinkler animations (called when rain starts).
-     */
-    public static void stopAllAnimations() {
-        synchronized (activeAnimations) {
-            for (Timeline timeline : new ArrayList<>(activeTimelines.values())) {
-                if (timeline != null) {
-                    timeline.stop();
-                }
-            }
-            activeTimelines.clear();
-            activeAnimations.clear();
-        }
-    }
-    
     /**
      * Animates sprinkler water for a specific zone.
      */
     public static void animateSprinkler(int zoneId, List<AnimatedTile> tiles, Pane container) {
-        if (tiles == null || tiles.isEmpty() || container == null) {
+        if (tiles.isEmpty() || container == null) {
             return;
         }
         
-        // Check if scene is ready
-        if (container.getScene() == null) {
-            return;
-        }
-        
-        // Prevent duplicate animations on same container
-        synchronized (activeAnimations) {
-            if (activeAnimations.contains(container)) {
-                return; // Animation already running
-            }
-            activeAnimations.add(container);
-        }
+        System.out.println("[SprinklerAnimationEngine] Starting sprinkler animation for Zone " + zoneId + 
+                          " with " + tiles.size() + " tiles");
         
         // Create animation canvas overlay
         Canvas animationCanvas = new Canvas();
         animationCanvas.setMouseTransparent(true);
+        container.getChildren().add(animationCanvas);
         
-        // Set initial size
-        double containerWidth = container.getWidth();
-        double containerHeight = container.getHeight();
-        if (containerWidth > 0 && containerHeight > 0) {
-            animationCanvas.setWidth(containerWidth);
-            animationCanvas.setHeight(containerHeight);
-        } else {
-            // Use default size if container not sized yet
-            animationCanvas.setWidth(800);
-            animationCanvas.setHeight(600);
-        }
-        
-        // Bind canvas size to container for dynamic resizing
+        // Bind canvas size to container
         animationCanvas.widthProperty().bind(container.widthProperty());
         animationCanvas.heightProperty().bind(container.heightProperty());
-        
-        container.getChildren().add(animationCanvas);
         
         // Create sprinkler water particles for each tile
         List<SprinklerParticle> particles = new ArrayList<>();
         for (AnimatedTile tile : tiles) {
-            if (tile == null) continue;
-            
-            // Check if tile is in scene
             if (tile.getScene() == null) continue;
             
-            try {
-                javafx.geometry.Bounds localBounds = tile.getBoundsInLocal();
-                if (localBounds == null || localBounds.isEmpty()) continue;
+            Bounds tileBounds = tile.localToScene(tile.getBoundsInLocal());
+            if (tileBounds == null || tileBounds.isEmpty()) continue;
+            
+            Bounds containerBounds = container.localToScene(container.getBoundsInLocal());
+            if (containerBounds == null || containerBounds.isEmpty()) continue;
+            
+            // Convert to canvas coordinates
+            double centerX = (tileBounds.getMinX() - containerBounds.getMinX()) + tileBounds.getWidth() / 2;
+            double centerY = (tileBounds.getMinY() - containerBounds.getMinY()) + tileBounds.getHeight() / 2;
+            
+            // Create multiple water particles per tile (sprinkler effect)
+            int particleCount = 8 + random.nextInt(5); // 8-12 particles per tile
+            for (int i = 0; i < particleCount; i++) {
+                SprinklerParticle particle = new SprinklerParticle();
+                particle.startX = centerX;
+                particle.startY = centerY;
+                particle.x = centerX;
+                particle.y = centerY;
                 
-                Bounds tileBounds = tile.localToScene(localBounds);
-                if (tileBounds == null || tileBounds.isEmpty()) continue;
+                // Random angle for sprinkler spray (arc pattern)
+                double angle = (Math.PI / 4) + (random.nextDouble() * Math.PI / 2); // 45-135 degrees
+                double velocity = 2 + random.nextDouble() * 3; // 2-5 pixels per frame
+                particle.vx = Math.cos(angle) * velocity;
+                particle.vy = Math.sin(angle) * velocity;
                 
-                javafx.geometry.Bounds containerLocalBounds = container.getBoundsInLocal();
-                if (containerLocalBounds == null || containerLocalBounds.isEmpty()) continue;
+                particle.size = 3 + random.nextDouble() * 2; // 3-5 pixels
+                particle.opacity = 0.7 + random.nextDouble() * 0.3; // 0.7-1.0
+                particle.lifetime = 0;
+                particle.maxLifetime = 30 + random.nextInt(20); // 30-50 frames
                 
-                Bounds containerBounds = container.localToScene(containerLocalBounds);
-                if (containerBounds == null || containerBounds.isEmpty()) continue;
-                
-                // Convert to canvas coordinates
-                double centerX = (tileBounds.getMinX() - containerBounds.getMinX()) + tileBounds.getWidth() / 2;
-                double centerY = (tileBounds.getMinY() - containerBounds.getMinY()) + tileBounds.getHeight() / 2;
-                
-                // Create multiple water particles per tile (sprinkler effect)
-                int particleCount = 8 + random.nextInt(5); // 8-12 particles per tile
-                for (int i = 0; i < particleCount; i++) {
-                    SprinklerParticle particle = new SprinklerParticle();
-                    particle.x = centerX;
-                    particle.y = centerY;
-                    
-                    // Random angle for sprinkler spray (arc pattern)
-                    double angle = (Math.PI / 4) + (random.nextDouble() * Math.PI / 2); // 45-135 degrees
-                    double velocity = 2 + random.nextDouble() * 3; // 2-5 pixels per frame
-                    particle.vx = Math.cos(angle) * velocity;
-                    particle.vy = Math.sin(angle) * velocity;
-                    
-                    particle.size = 3 + random.nextDouble() * 2; // 3-5 pixels
-                    particle.opacity = 0.7 + random.nextDouble() * 0.3; // 0.7-1.0
-                    particle.lifetime = 0;
-                    particle.maxLifetime = 30 + random.nextInt(20); // 30-50 frames
-                    
-                    particles.add(particle);
-                }
-            } catch (Exception ex) {
-                // Skip this tile if there's an error getting bounds
-                continue;
+                particles.add(particle);
             }
         }
         
-        // If no particles created, clean up and return
-        if (particles.isEmpty()) {
-            container.getChildren().remove(animationCanvas);
-            synchronized (activeAnimations) {
-                activeAnimations.remove(container);
-            }
-            return;
-        }
+        System.out.println("[SprinklerAnimationEngine] Created " + particles.size() + " water particles");
         
         // Create animation timeline (60 FPS)
         Timeline animationTimeline = new Timeline(
             new KeyFrame(Duration.millis(FRAME_INTERVAL), e -> {
-                if (animationCanvas == null || container == null || !container.getChildren().contains(animationCanvas)) {
+                GraphicsContext gc = animationCanvas.getGraphicsContext2D();
+                double width = animationCanvas.getWidth();
+                double height = animationCanvas.getHeight();
+                
+                if (width <= 0 || height <= 0) {
                     return;
                 }
                 
-                try {
-                    GraphicsContext gc = animationCanvas.getGraphicsContext2D();
-                    if (gc == null) return;
+                gc.clearRect(0, 0, width, height);
+                
+                // Update and draw particles
+                boolean hasActiveParticles = false;
+                for (SprinklerParticle particle : new ArrayList<>(particles)) {
+                    particle.lifetime++;
                     
-                    double width = animationCanvas.getWidth();
-                    double height = animationCanvas.getHeight();
-                    
-                    if (width <= 0 || height <= 0) {
-                        return;
-                    }
-                    
-                    gc.clearRect(0, 0, width, height);
-                    
-                    // Update and draw particles
-                    boolean hasActiveParticles = false;
-                    for (SprinklerParticle particle : new ArrayList<>(particles)) {
-                        if (particle == null) continue;
+                    if (particle.lifetime < particle.maxLifetime) {
+                        hasActiveParticles = true;
                         
-                        particle.lifetime++;
+                        // Update position
+                        particle.x += particle.vx;
+                        particle.y += particle.vy;
                         
-                        if (particle.lifetime < particle.maxLifetime) {
-                            hasActiveParticles = true;
-                            
-                            // Update position
-                            particle.x += particle.vx;
-                            particle.y += particle.vy;
-                            
-                            // Apply gravity
-                            particle.vy += 0.3;
-                            
-                            // Fade out over time
-                            double progress = (double)particle.lifetime / particle.maxLifetime;
-                            double currentOpacity = particle.opacity * (1.0 - progress);
-                            
-                            // Draw water droplet
-                            gc.setFill(Color.rgb(135, 206, 250, currentOpacity)); // Light blue
-                            gc.fillOval(
-                                particle.x - particle.size / 2,
-                                particle.y - particle.size / 2,
-                                particle.size,
-                                particle.size
-                            );
-                        } else {
-                            particles.remove(particle);
-                        }
+                        // Apply gravity
+                        particle.vy += 0.3;
+                        
+                        // Fade out over time
+                        double progress = (double)particle.lifetime / particle.maxLifetime;
+                        double currentOpacity = particle.opacity * (1.0 - progress);
+                        
+                        // Draw water droplet
+                        gc.setFill(Color.rgb(135, 206, 250, currentOpacity)); // Light blue
+                        gc.fillOval(
+                            particle.x - particle.size / 2,
+                            particle.y - particle.size / 2,
+                            particle.size,
+                            particle.size
+                        );
+                    } else {
+                        particles.remove(particle);
                     }
-                    
-                        // Remove canvas when all particles are gone
-                        if (!hasActiveParticles) {
-                            if (container.getChildren().contains(animationCanvas)) {
-                                container.getChildren().remove(animationCanvas);
-                            }
-                            synchronized (activeAnimations) {
-                                activeAnimations.remove(container);
-                                activeTimelines.remove(container);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        // Handle any drawing errors - clean up
-                        try {
-                            if (container.getChildren().contains(animationCanvas)) {
-                                container.getChildren().remove(animationCanvas);
-                            }
-                        } catch (Exception ex2) {
-                            // Ignore cleanup errors
-                        }
-                        synchronized (activeAnimations) {
-                            activeAnimations.remove(container);
-                            activeTimelines.remove(container);
-                        }
-                    }
+                }
+                
+                // Remove canvas when all particles are gone
+                if (!hasActiveParticles) {
+                    container.getChildren().remove(animationCanvas);
+                    System.out.println("[SprinklerAnimationEngine] Sprinkler animation completed");
+                }
             })
         );
-            animationTimeline.setCycleCount(Animation.INDEFINITE);
-            
-            // Store timeline for potential stopping
-            synchronized (activeAnimations) {
-                activeTimelines.put(container, animationTimeline);
-            }
-            
-            // Stop after animation duration
-            Timeline stopTimeline = new Timeline(
-                new KeyFrame(Duration.millis(ANIMATION_DURATION), e -> {
-                    if (animationTimeline != null) {
-                        animationTimeline.stop();
-                    }
-                    try {
-                        if (container != null && container.getChildren().contains(animationCanvas)) {
-                            container.getChildren().remove(animationCanvas);
-                        }
-                    } catch (Exception ex) {
-                        // Ignore cleanup errors
-                    }
-                    synchronized (activeAnimations) {
-                        activeAnimations.remove(container);
-                        activeTimelines.remove(container);
-                    }
-                })
-            );
-            
-            animationTimeline.play();
-            stopTimeline.play();
+        animationTimeline.setCycleCount(Animation.INDEFINITE);
+        
+        // Stop after animation duration
+        Timeline stopTimeline = new Timeline(
+            new KeyFrame(Duration.millis(ANIMATION_DURATION), e -> {
+                animationTimeline.stop();
+                container.getChildren().remove(animationCanvas);
+            })
+        );
+        
+        animationTimeline.play();
+        stopTimeline.play();
     }
     
     /**

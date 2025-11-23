@@ -1,14 +1,13 @@
 package edu.scu.csen275.smartgarden.ui;
 
 import edu.scu.csen275.smartgarden.model.Plant;
-import edu.scu.csen275.smartgarden.model.PlantType;
 import javafx.animation.*;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 import javafx.scene.effect.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +17,11 @@ import java.util.List;
  * Provides smooth animations for plant growth, watering, and death.
  */
 public class AnimatedTile extends StackPane {
-    private final ImageView plantImageView; // Using ImageView for emoji images
+    private final Label plantLabel;
     private final StackPane baseTile;
     private final StackPane shadowPane; // For soft shadow under plant
     private Plant plant;
     private String currentStyle;
-    private String currentPlantType; // Cache current plant type to avoid reloading image
-    private Image cachedImage; // Cache the actual Image object to prevent reloading
     private ScaleTransition growthAnimation;
     private FadeTransition fadeAnimation;
     private boolean isWatering;
@@ -34,6 +31,7 @@ public class AnimatedTile extends StackPane {
     // Pest management
     private PestTileOverlay pestOverlay;
     private List<PestSprite> activePests;
+    private List<BeneficialInsectSprite> activeBeneficialInsects;
     private Timeline damageTickTimeline;
     private boolean isUnderAttack;
     private Pane animationContainer; // For floating text animations
@@ -48,7 +46,6 @@ public class AnimatedTile extends StackPane {
     };
     
     private static final double BASE_SIZE = 60;
-    private static final double PLANT_IMAGE_SIZE = 44; // Plant image size (larger than before)
     
     public AnimatedTile() {
         this(0); // Default index
@@ -72,18 +69,13 @@ public class AnimatedTile extends StackPane {
         baseTile.setMinSize(BASE_SIZE, BASE_SIZE);
         baseTile.setMaxSize(BASE_SIZE, BASE_SIZE);
         baseTile.setStyle(getPastelEmptyStyle());
-        // Defer effect application until node is in scene
-        safeSetEffect(baseTile, createSoftShadow());
+        baseTile.setEffect(createSoftShadow());
         
-        // Plant image view (using emoji images from CDN instead of fonts)
-        plantImageView = new ImageView();
-        plantImageView.setFitWidth(PLANT_IMAGE_SIZE);
-        plantImageView.setFitHeight(PLANT_IMAGE_SIZE);
-        plantImageView.setPreserveRatio(true);
-        plantImageView.setSmooth(true);
-        // Defer effect application until node is in scene
-        safeSetEffect(plantImageView, createPlantShadow()); // Shadow under plant
-        StackPane.setAlignment(plantImageView, Pos.CENTER);
+        // Plant label
+        plantLabel = new Label("");
+        plantLabel.setFont(javafx.scene.text.Font.font(24));
+        plantLabel.setAlignment(Pos.CENTER);
+        plantLabel.setEffect(createPlantShadow()); // Shadow under plant
         
         // Pest overlay
         pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
@@ -91,11 +83,12 @@ public class AnimatedTile extends StackPane {
         
         // Initialize pest lists
         activePests = new ArrayList<>();
+        activeBeneficialInsects = new ArrayList<>();
         isUnderAttack = false;
         
         // CRITICAL: Add children in correct z-order
-        // baseTile (bottom) -> shadowPane -> plantImageView -> pestOverlay (top)
-        this.getChildren().addAll(baseTile, shadowPane, plantImageView, pestOverlay);
+        // baseTile (bottom) -> shadowPane -> plantLabel -> pestOverlay (top)
+        this.getChildren().addAll(baseTile, shadowPane, plantLabel, pestOverlay);
         
         // Ensure pest overlay is always on top
         pestOverlay.toFront();
@@ -105,28 +98,6 @@ public class AnimatedTile extends StackPane {
         
         // Initialize animations
         setupAnimations();
-    }
-    
-    /**
-     * Safely applies an effect to a node, deferring if not in scene.
-     */
-    private void safeSetEffect(javafx.scene.Node node, Effect effect) {
-        if (node.getScene() != null && node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
-            // Node is in scene and has valid bounds, apply immediately
-            node.setEffect(effect);
-        } else {
-            // Defer until node is in scene
-            node.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    // Use Platform.runLater to ensure layout is complete
-                    javafx.application.Platform.runLater(() -> {
-                        if (node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
-                            node.setEffect(effect);
-                        }
-                    });
-                }
-            });
-        }
     }
     
     /**
@@ -160,7 +131,7 @@ public class AnimatedTile extends StackPane {
      */
     private void setupAnimations() {
         // Growth animation (scale up)
-        growthAnimation = new ScaleTransition(Duration.millis(300), plantImageView);
+        growthAnimation = new ScaleTransition(Duration.millis(300), plantLabel);
         growthAnimation.setFromX(0.5);
         growthAnimation.setFromY(0.5);
         growthAnimation.setToX(1.0);
@@ -190,7 +161,8 @@ public class AnimatedTile extends StackPane {
         
         // PRESERVE pest overlay visibility - don't clear it when updating
         if (pestOverlay != null && (isUnderAttack || 
-            (activePests != null && !activePests.isEmpty()))) {
+            (activePests != null && !activePests.isEmpty()) ||
+            (activeBeneficialInsects != null && !activeBeneficialInsects.isEmpty()))) {
             pestOverlay.setVisible(true);
             pestOverlay.toFront();
             
@@ -205,9 +177,7 @@ public class AnimatedTile extends StackPane {
      * Sets tile to empty state.
      */
     private void setEmpty() {
-        plantImageView.setImage(null);
-        cachedImage = null; // Clear cached image
-        currentPlantType = null; // Reset cached plant type
+        plantLabel.setText("");
         shadowPane.setVisible(false); // Hide shadow when empty
         baseTile.setStyle(getPastelEmptyStyle());
         baseTile.setOpacity(1.0);
@@ -219,61 +189,15 @@ public class AnimatedTile extends StackPane {
      * PRESERVES pest overlay - doesn't clear it.
      */
     private void setPlant(Plant plant) {
-        String plantType = plant.getPlantType();
-        boolean isNewPlant = (currentPlantType == null || !plantType.equals(currentPlantType));
-        
-        // Only reload image if plant type has changed (prevents blinking)
-        if (isNewPlant) {
-            currentPlantType = plantType;
-            
-            // Load plant image from resources/images folder
-            try {
-                String imagePath = getPlantImagePath(plant);
-                if (imagePath != null) {
-                    // Always create new image for new plant type
-                    cachedImage = new Image(getClass().getResourceAsStream(imagePath), PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
-                    plantImageView.setImage(cachedImage);
-                } else {
-                    // Fallback to emoji if image not found
-                    String emoji = getPlantEmoji(plant);
-                    String imageUrl = getEmojiImageUrl(emoji);
-                    cachedImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
-                    plantImageView.setImage(cachedImage);
-                }
-            } catch (Exception e) {
-                // Try emoji fallback
-                try {
-                    String emoji = getPlantEmoji(plant);
-                    String imageUrl = getEmojiImageUrl(emoji);
-                    cachedImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
-                    plantImageView.setImage(cachedImage);
-                } catch (Exception e2) {
-                    cachedImage = null;
-                    plantImageView.setImage(null);
-                }
-            }
-        }
-        
-        // For all plants, ensure image view properties are stable (prevents blinking)
-        // Ensure image view is always at stable state and full size
-        plantImageView.setVisible(true);
-        plantImageView.setOpacity(1.0);
-        plantImageView.setScaleX(1.0);
-        plantImageView.setScaleY(1.0);
+        String emoji = getPlantEmoji(plant);
+        plantLabel.setText(emoji);
         
         // Show shadow when plant appears
         shadowPane.setVisible(true);
         
         // Determine health-based style with pastel base
         String healthColor = plant.getHealthColor();
-        String style;
-        
-        // When pests attack, show light brown unhealthy background instead of normal colors
-        if (isUnderAttack) {
-            style = getUnhealthyPestStyle(); // Light brown background for pest attacks
-        } else {
-            style = getPastelPlantStyle(healthColor);
-        }
+        String style = getPastelPlantStyle(healthColor);
         
         // PRESERVE attack border if under attack
         if (isUnderAttack && !style.contains("border-color: #FF4444")) {
@@ -282,7 +206,6 @@ public class AnimatedTile extends StackPane {
             style = style.replace("-fx-border-color: #FFD54F;", "-fx-border-color: #FF4444;");
             style = style.replace("-fx-border-color: #FFB74D;", "-fx-border-color: #FF4444;");
             style = style.replace("-fx-border-color: #E57373;", "-fx-border-color: #FF4444;");
-            style = style.replace("-fx-border-color: #D7CCC8;", "-fx-border-color: #FF4444;");
         }
         
         baseTile.setStyle(style);
@@ -290,29 +213,23 @@ public class AnimatedTile extends StackPane {
         // PRESERVE attack glow effect if under attack
         if (!isUnderAttack) {
             baseTile.setOpacity(1.0);
-            safeSetEffect(baseTile, createSoftShadow());
+            baseTile.setEffect(createSoftShadow());
         }
         // If under attack, updateTileBorderForAttack() will set the effect
         
         currentStyle = healthColor.toLowerCase();
         
-        // Plants appear at full size immediately (no growth animation)
-        // Ensure image view is at full scale from the start
-        plantImageView.setScaleX(1.0);
-        plantImageView.setScaleY(1.0);
+        // Animate plant appearance
+        if (!plantLabel.getText().equals(emoji)) {
+            animateGrowth();
+        }
     }
     
     /**
      * Sets tile to show dead plant.
      */
     private void setDead() {
-        try {
-            String imageUrl = getEmojiImageUrl("💀");
-            Image emojiImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
-            plantImageView.setImage(emojiImage);
-        } catch (Exception e) {
-            plantImageView.setImage(null);
-        }
+        plantLabel.setText("💀");
         baseTile.setStyle(getDeadStyle());
         fadeAnimation.play();
         currentStyle = "dead";
@@ -362,7 +279,7 @@ public class AnimatedTile extends StackPane {
         darkeningBlend.setMode(BlendMode.MULTIPLY);
         darkeningBlend.setBottomInput(colorAdjust);
         darkeningBlend.setTopInput(createSoftShadow());
-        safeSetEffect(baseTile, darkeningBlend);
+        baseTile.setEffect(darkeningBlend);
         
         // Temporarily darken the background style
         String darkenedStyle = darkenStyle(originalStyle);
@@ -374,7 +291,7 @@ public class AnimatedTile extends StackPane {
         darkenFade.setToValue(1.0);    // Back to normal
         darkenFade.setOnFinished(e -> {
             isWatering = false;
-            safeSetEffect(baseTile, createSoftShadow()); // Restore original effect
+            baseTile.setEffect(createSoftShadow()); // Restore original effect
             // Restore original style
             if (originalStyle != null) {
                 baseTile.setStyle(originalStyle);
@@ -429,110 +346,17 @@ public class AnimatedTile extends StackPane {
     }
     
     /**
-     * Gets the image path for a plant from resources/images folder.
-     * Returns null if image file doesn't exist.
-     */
-    private String getPlantImagePath(Plant plant) {
-        String plantTypeName = plant.getPlantType();
-        
-        // Try to match PlantType enum by display name
-        try {
-            for (PlantType type : PlantType.values()) {
-                if (type.getDisplayName().equalsIgnoreCase(plantTypeName) ||
-                    plantTypeName.contains(type.getDisplayName())) {
-                    return getImagePathForPlantType(type);
-                }
-            }
-        } catch (Exception e) {
-            // Fall through to fallback mapping
-        }
-        
-        // Fallback mapping based on plant type name
-        String lowerName = plantTypeName.toLowerCase();
-        if (lowerName.contains("strawberry")) return "/images/strawberry.png";
-        if (lowerName.contains("grapevine") || lowerName.contains("grape")) return "/images/grape.png";
-        if (lowerName.contains("apple")) return "/images/apple.png";
-        if (lowerName.contains("carrot")) return "/images/carrot.png";
-        if (lowerName.contains("tomato")) return "/images/tomato.png";
-        if (lowerName.contains("onion")) return "/images/onion.png";
-        if (lowerName.contains("sunflower")) return "/images/sunflower.png";
-        if (lowerName.contains("tulip")) return "/images/tulip.png";
-        if (lowerName.contains("rose")) return "/images/rose.png";
-        
-        return null; // No image found
-    }
-    
-    /**
-     * Gets the image path for a specific PlantType.
-     */
-    private String getImagePathForPlantType(PlantType type) {
-        return switch (type) {
-            case STRAWBERRY -> "/images/strawberry.png";
-            case GRAPEVINE -> "/images/grape.png";
-            case APPLE -> "/images/apple.png";
-            case CARROT -> "/images/carrot.png";
-            case TOMATO -> "/images/tomato.png";
-            case ONION -> "/images/onion.png";
-            case SUNFLOWER -> "/images/sunflower.png";
-            case TULIP -> "/images/tulip.png";
-            case ROSE -> "/images/rose.png";
-        };
-    }
-    
-    /**
-     * Gets emoji image URL from CDN (using Twemoji) - used as fallback.
-     * Converts emoji Unicode to image URL.
-     */
-    private String getEmojiImageUrl(String emoji) {
-        // Convert emoji to code points and create Twemoji URL
-        // Twemoji format: https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/[code].png
-        StringBuilder codePoints = new StringBuilder();
-        emoji.codePoints().forEach(cp -> {
-            if (codePoints.length() > 0) codePoints.append("-");
-            codePoints.append(String.format("%04X", cp).toLowerCase());
-        });
-        
-        // Twemoji CDN - reliable and colorful (fallback when local image not available)
-        return "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/" + codePoints.toString() + ".png";
-    }
-    
-    /**
-     * Gets plant emoji based on plant type name.
-     * Maps plant type names to PlantType enum emojis.
+     * Gets plant emoji based on type.
      */
     private String getPlantEmoji(Plant plant) {
-        String plantTypeName = plant.getPlantType();
-        
-        // Try to match PlantType enum by display name
-        try {
-            for (PlantType type : PlantType.values()) {
-                if (type.getDisplayName().equalsIgnoreCase(plantTypeName) ||
-                    plantTypeName.contains(type.getDisplayName())) {
-                    return type.getEmoji();
-                }
-            }
-        } catch (Exception e) {
-            // Fall through to default mapping
-        }
-        
-        // Fallback mapping based on plant type name
-        String lowerName = plantTypeName.toLowerCase();
-        if (lowerName.contains("strawberry")) return "🍓";
-        if (lowerName.contains("grapevine")) return "🍇";
-        if (lowerName.contains("apple")) return "🍎";
-        if (lowerName.contains("carrot")) return "🥕";
-        if (lowerName.contains("tomato")) return "🍅";
-        if (lowerName.contains("onion")) return "🧅";
-        if (lowerName.contains("sunflower")) return "🌻";
-        if (lowerName.contains("tulip")) return "🌸";
-        if (lowerName.contains("rose")) return "🌹";
-        if (lowerName.contains("flower")) return "🌸";
-        if (lowerName.contains("vegetable")) return "🍅";
-        if (lowerName.contains("tree")) return "🌳";
-        if (lowerName.contains("grass")) return "🌿";
-        if (lowerName.contains("herb")) return "🌱";
-        
-        return "🌱"; // Default
+        return switch (plant.getClass().getSimpleName()) {
+            case "Flower" -> "🌸";
+            case "Vegetable" -> "🍅";
+            case "Tree" -> "🌳";
+            case "Grass" -> "🌿";
+            case "Herb" -> "🌱";
+            default -> "🌱";
+        };
     }
     
     /**
@@ -630,23 +454,11 @@ public class AnimatedTile extends StackPane {
     }
     
     /**
-     * Gets light brown unhealthy style for tiles under pest attack.
-     */
-    private String getUnhealthyPestStyle() {
-        // Light brown colors for unhealthy appearance during pest attacks
-        return "-fx-background-color: linear-gradient(to bottom, #D7CCC8 0%, #BCAAA4 100%); " +
-               "-fx-background-radius: 6; " +
-               "-fx-border-color: #A1887F; " +
-               "-fx-border-width: 3px; " +
-               "-fx-border-radius: 6;";
-    }
-    
-    /**
      * Applies hover effect.
      */
     public void applyHoverEffect() {
         if (!currentStyle.equals("dead")) {
-            safeSetEffect(baseTile, new Glow(0.3));
+            baseTile.setEffect(new Glow(0.3));
         }
     }
     
@@ -654,7 +466,7 @@ public class AnimatedTile extends StackPane {
      * Removes hover effect.
      */
     public void removeHoverEffect() {
-        safeSetEffect(baseTile, createSoftShadow());
+        baseTile.setEffect(createSoftShadow());
     }
     
     /**
@@ -676,12 +488,19 @@ public class AnimatedTile extends StackPane {
      * Spawns a harmful pest on this tile.
      */
     public void spawnPest(String pestType) {
+        System.out.println("[AnimatedTile] spawnPest called: " + pestType + 
+                         " | Tile visible: " + this.isVisible() +
+                         " | Has plant: " + (plant != null));
+        
         // Initialize pest overlay if needed
         if (pestOverlay == null) {
+            System.out.println("[AnimatedTile] Creating new PestTileOverlay");
             pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
             pestOverlay.setVisible(false);
             activePests = new ArrayList<>();
+            activeBeneficialInsects = new ArrayList<>();
             this.getChildren().add(pestOverlay);
+            System.out.println("[AnimatedTile] PestTileOverlay added to children. Total children: " + this.getChildren().size());
         }
         
         // Check if this pest type already exists (avoid duplicates)
@@ -690,6 +509,7 @@ public class AnimatedTile extends StackPane {
             for (PestSprite existing : activePests) {
                 if (existing.getPestType().equalsIgnoreCase(pestType)) {
                     alreadyExists = true;
+                    System.out.println("[AnimatedTile] Duplicate pest detected, skipping: " + pestType);
                     break;
                 }
             }
@@ -703,9 +523,13 @@ public class AnimatedTile extends StackPane {
         pestOverlay.toFront();
         isUnderAttack = true;
         
+        System.out.println("[AnimatedTile] Creating PestSprite for: " + pestType);
+        
         // Create and add pest sprite
         PestSprite pestSprite = new PestSprite(pestType);
         activePests.add(pestSprite);
+        
+        System.out.println("[AnimatedTile] PestSprite created, adding to overlay. Active pests: " + activePests.size());
         
         pestOverlay.addPest(pestSprite);
         
@@ -717,9 +541,30 @@ public class AnimatedTile extends StackPane {
         pestOverlay.requestLayout();
         this.requestLayout();
         
+        System.out.println("[AnimatedTile] Pest spawn complete: " + pestType + 
+                         " | Overlay visible: " + pestOverlay.isVisible() +
+                         " | Pest visible: " + pestSprite.isVisible() +
+                         " | Pest in scene: " + (pestSprite.getScene() != null));
         
         // Update tile border to red (under attack)
         updateTileBorderForAttack();
+    }
+    
+    /**
+     * Spawns a beneficial insect on this tile.
+     */
+    public void spawnBeneficial(String insectType, int healingAmount) {
+        if (pestOverlay == null) {
+            pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
+            pestOverlay.setVisible(false);
+            activePests = new ArrayList<>();
+            activeBeneficialInsects = new ArrayList<>();
+            this.getChildren().add(pestOverlay);
+        }
+        
+        BeneficialInsectSprite insect = new BeneficialInsectSprite(insectType, healingAmount);
+        activeBeneficialInsects.add(insect);
+        pestOverlay.addBeneficialInsect(insect);
     }
     
     /**
@@ -750,6 +595,28 @@ public class AnimatedTile extends StackPane {
     }
     
     /**
+     * Shows healing visual when beneficial insect helps.
+     */
+    public void showHealingVisual(int healing) {
+        // Show floating healing text
+        if (animationContainer != null) {
+            javafx.geometry.Bounds bounds = this.localToScene(this.getBoundsInLocal());
+            javafx.geometry.Bounds containerBounds = animationContainer.sceneToLocal(bounds);
+            DamageTextAnimation.createHealingText(animationContainer,
+                containerBounds.getMinX() + containerBounds.getWidth() / 2,
+                containerBounds.getMinY() + containerBounds.getHeight() / 2,
+                healing);
+        }
+        
+        // Animate beneficial insects
+        if (activeBeneficialInsects != null) {
+            for (BeneficialInsectSprite insect : activeBeneficialInsects) {
+                insect.animateHealing();
+            }
+        }
+    }
+    
+    /**
      * Applies pesticide treatment to this tile.
      * FIXED: Always show animation even if hasPests() check fails.
      */
@@ -774,18 +641,29 @@ public class AnimatedTile extends StackPane {
         
         // Get copies of pest lists before clearing (for animation)
         List<PestSprite> pestsToAnimate = activePests != null ? new ArrayList<>(activePests) : new ArrayList<>();
+        List<BeneficialInsectSprite> insectsToAnimate = activeBeneficialInsects != null ? new ArrayList<>(activeBeneficialInsects) : new ArrayList<>();
+        
+        // DEBUG: Log pesticide application with full details
+        System.out.println("[AnimatedTile] Pesticide applied - Pests: " + pestsToAnimate.size() + 
+                          ", Insects: " + insectsToAnimate.size() +
+                          ", AnimationContainer: " + (animationContainer != null ? "SET" : "NULL") +
+                          ", Tile visible: " + this.isVisible() +
+                          ", Overlay visible: " + (pestOverlay != null && pestOverlay.isVisible()));
         
         // Animate spray effect (this will handle pest death animations)
         PesticideSprayEngine.animateSpray(this, 
             pestsToAnimate,
+            insectsToAnimate,
             animationContainer,
             centerX,
             centerY);
         
         // Clear pests AFTER animation starts (death animation will remove them from overlay)
         // Delay clearing to let animation play - MUCH LONGER (2.4s mist + 0.8s pest death + buffer)
+        System.out.println("[AnimatedTile] Delaying pest removal for 3.5 seconds to allow animations to play");
         javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.millis(3500)); // 3.5 seconds
         delay.setOnFinished(e -> {
+            System.out.println("[AnimatedTile] Removing pests after animation delay");
             if (activePests != null) {
                 activePests.clear();
             }
@@ -800,7 +678,7 @@ public class AnimatedTile extends StackPane {
         if (pestOverlay != null) {
             pestOverlay.clearDamageVisuals();
             isUnderAttack = false;
-            pestOverlay.setVisible(false);
+            pestOverlay.setVisible(activeBeneficialInsects != null && activeBeneficialInsects.size() > 0);
         }
         
         // Restore healthy border
@@ -829,7 +707,7 @@ public class AnimatedTile extends StackPane {
             redShadow.setRadius(8);
             redShadow.setOffsetX(0);
             redShadow.setOffsetY(0);
-            safeSetEffect(baseTile, redShadow);
+            baseTile.setEffect(redShadow);
         }
     }
     
@@ -865,7 +743,8 @@ public class AnimatedTile extends StackPane {
         
         if (pestOverlay != null) {
             // Update overlay visibility
-            pestOverlay.setVisible(isUnderAttack);
+            pestOverlay.setVisible(isUnderAttack || 
+                (activeBeneficialInsects != null && activeBeneficialInsects.size() > 0));
         }
         
         // Update attack state
@@ -888,5 +767,11 @@ public class AnimatedTile extends StackPane {
         return activePests != null ? activePests.size() : 0;
     }
     
+    /**
+     * Gets active beneficial insect count.
+     */
+    public int getActiveBeneficialCount() {
+        return activeBeneficialInsects != null ? activeBeneficialInsects.size() : 0;
+    }
 }
 

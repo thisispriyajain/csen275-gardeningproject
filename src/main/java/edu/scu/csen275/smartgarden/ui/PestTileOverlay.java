@@ -17,9 +17,10 @@ import java.util.Random;
  */
 public class PestTileOverlay extends StackPane {
     private final Canvas damageCanvas; // For brown tint and bite marks
-    private final StackPane spriteContainer; // For pest sprites
+    private final StackPane spriteContainer; // For pest and beneficial insect sprites
     private final WarningIndicator warningIndicator;
     private final List<PestSprite> pests;
+    private final List<BeneficialInsectSprite> beneficialInsects;
     private final List<Label> pestTypeLabels; // Labels showing pest type names
     private final Random random;
     private Timeline damageVisualTimeline;
@@ -35,6 +36,7 @@ public class PestTileOverlay extends StackPane {
     public PestTileOverlay(double width, double height) {
         this.random = new Random();
         this.pests = new ArrayList<>();
+        this.beneficialInsects = new ArrayList<>();
         this.pestTypeLabels = new ArrayList<>();
         this.biteMarks = new ArrayList<>();
         this.isUnderAttack = false;
@@ -101,11 +103,34 @@ public class PestTileOverlay extends StackPane {
         spriteContainer.getChildren().add(pest);
         isUnderAttack = true;
         
-        // Position pest within tile bounds (no label, no warning indicator)
+        // Create label showing pest type name - make it VERY visible
+        Label pestLabel = new Label(pest.getPestType());
+        pestLabel.setStyle(
+            "-fx-font-size: 10px; " +
+            "-fx-font-weight: bold; " +
+            "-fx-text-fill: #FFFFFF; " +  // White text
+            "-fx-background-color: #FF3333; " +  // Solid red background (no transparency)
+            "-fx-background-radius: 5px; " +
+            "-fx-padding: 3px 6px; " +
+            "-fx-border-color: #CC0000; " +
+            "-fx-border-width: 2px; " +
+            "-fx-border-radius: 5px; " +
+            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0, 0, 1);"
+        );
+        pestLabel.setMouseTransparent(true);
+        pestLabel.setVisible(true);
+        pestLabel.setOpacity(1.0);
+        pestLabel.setManaged(true);
+        pestTypeLabels.add(pestLabel);
+        spriteContainer.getChildren().add(pestLabel);
+        
+        // Position pest and label within tile bounds
         double pestX = (tileWidth - 40) / 2 + (random.nextDouble() - 0.5) * 15;
         double pestY = (tileHeight - 40) / 2 + (random.nextDouble() - 0.5) * 15;
         pest.setLayoutX(pestX);
         pest.setLayoutY(pestY);
+        pestLabel.setLayoutX(pestX - 8);
+        pestLabel.setLayoutY(pestY + 35); // Below the pest sprite
         
         // CRITICAL: Make sure everything is visible and on top
         this.setVisible(true);
@@ -117,9 +142,12 @@ public class PestTileOverlay extends StackPane {
         pest.setOpacity(1.0);
         pest.setMouseTransparent(true);
         
-        // Hide warning indicator - user only wants to see the pest
-        warningIndicator.setVisible(false);
-        warningIndicator.hide();
+        pestLabel.setVisible(true);
+        pestLabel.setOpacity(1.0);
+        pestLabel.setMouseTransparent(true);
+        
+        warningIndicator.setVisible(true);
+        warningIndicator.show();
         
         // Make sure sprite container is sized correctly and fills the tile
         spriteContainer.setPrefSize(tileWidth, tileHeight);
@@ -133,17 +161,33 @@ public class PestTileOverlay extends StackPane {
         
         // Bring everything to front
         pest.toFront();
+        pestLabel.toFront();
         spriteContainer.toFront();
+        warningIndicator.toFront();
         this.toFront();
         
         // Force layout update
         this.requestLayout();
         spriteContainer.requestLayout();
         pest.requestLayout();
+        pestLabel.requestLayout();
+        
+        // DEBUG: Log pest addition with full details
+        System.out.println("[PestTileOverlay] Pest added: " + pest.getPestType() + 
+                         " | Position: (" + pestX + ", " + pestY + ")" +
+                         " | Overlay visible: " + this.isVisible() +
+                         " | Overlay opacity: " + this.getOpacity() +
+                         " | Pest visible: " + pest.isVisible() +
+                         " | Pest opacity: " + pest.getOpacity() +
+                         " | Label visible: " + pestLabel.isVisible() +
+                         " | Children count: " + spriteContainer.getChildren().size());
         
         // Verify pest is in container
         if (!spriteContainer.getChildren().contains(pest)) {
             System.err.println("[PestTileOverlay] ERROR: Pest not in spriteContainer!");
+        }
+        if (!spriteContainer.getChildren().contains(pestLabel)) {
+            System.err.println("[PestTileOverlay] ERROR: Pest label not in spriteContainer!");
         }
         
         updateDamageVisuals();
@@ -170,9 +214,8 @@ public class PestTileOverlay extends StackPane {
             spriteContainer.getChildren().remove(labelToRemove);
         }
         
-        if (pests.isEmpty()) {
+        if (pests.isEmpty() && beneficialInsects.isEmpty()) {
             isUnderAttack = false;
-            warningIndicator.setVisible(false);
             warningIndicator.hide();
             stopDamageVisualAnimation();
             clearDamageVisuals();
@@ -180,7 +223,7 @@ public class PestTileOverlay extends StackPane {
     }
     
     /**
-     * Clears all pests from this tile.
+     * Clears all pests and beneficial insects from this tile.
      */
     public void clearAllPests() {
         // Remove all pests
@@ -195,12 +238,38 @@ public class PestTileOverlay extends StackPane {
         }
         pestTypeLabels.clear();
         
+        // Remove all beneficial insects
+        for (BeneficialInsectSprite insect : new ArrayList<>(beneficialInsects)) {
+            spriteContainer.getChildren().remove(insect);
+        }
+        beneficialInsects.clear();
+        
         // Reset state
         isUnderAttack = false;
-        warningIndicator.setVisible(false);
         warningIndicator.hide();
         stopDamageVisualAnimation();
         clearDamageVisuals();
+    }
+    
+    /**
+     * Adds a beneficial insect to this tile.
+     */
+    public void addBeneficialInsect(BeneficialInsectSprite insect) {
+        beneficialInsects.add(insect);
+        spriteContainer.getChildren().add(insect);
+        
+        // Make sure insect is visible
+        this.setVisible(true);
+        insect.setVisible(true);
+        insect.toFront();
+    }
+    
+    /**
+     * Removes a beneficial insect from this tile.
+     */
+    public void removeBeneficialInsect(BeneficialInsectSprite insect) {
+        beneficialInsects.remove(insect);
+        spriteContainer.getChildren().remove(insect);
     }
     
     /**
@@ -279,6 +348,10 @@ public class PestTileOverlay extends StackPane {
     
     public List<PestSprite> getPests() {
         return new ArrayList<>(pests);
+    }
+    
+    public List<BeneficialInsectSprite> getBeneficialInsects() {
+        return new ArrayList<>(beneficialInsects);
     }
     
     public boolean isUnderAttack() {

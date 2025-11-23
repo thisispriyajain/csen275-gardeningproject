@@ -27,7 +27,7 @@ AND all systems should be in idle state
 **So that** I can create a diverse garden
 
 **Acceptance Criteria:**
-- Multiple plant types are available (9 types: Strawberry, Grapevine, Apple, Carrot, Tomato, Onion, Sunflower, Tulip, Rose)
+- Multiple plant types are available (Flower, Vegetable, Tree, Grass, Herb)
 - Each plant has unique visual representation
 - Plants can be placed in any empty cell
 - Plant information is displayed on hover
@@ -153,8 +153,9 @@ AND log should record "Pest detected in Zone 5"
 
 **Acceptance Criteria:**
 - Treatment activates at high infestation threshold
-- Treatment reduces pest count effectively
+- Treatment reduces pest count
 - Treatment is logged with details
+- Beneficial insects are minimally affected
 
 **Scenario 4.2.1: Treatment Application**
 ```
