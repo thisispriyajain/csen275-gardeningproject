@@ -9,9 +9,9 @@ import javafx.util.Duration;
 import java.util.Random;
 
 /**
- * Animated sprite for harmful pests (Aphid, Caterpillar, Beetle, Spider Mite).
- * Crawls and moves around the plant tile with periodic damage animations.
- * Uses Text node for proper emoji rendering support (avoids surrogate pair issues).
+ * Animated sprite for harmful pests (Set C: Red Mite, Green Leaf Worm, Black Beetle, Brown Caterpillar).
+ * Slow crawl or jitter movement with periodic damage animations.
+ * Uses Text node for proper emoji rendering support.
  */
 public class PestSprite extends StackPane {
     private final String pestType;
@@ -22,27 +22,29 @@ public class PestSprite extends StackPane {
     private Timeline damageAnimation;
     private boolean isAlive;
     
+    // Emoji size: 20-28px for visibility
+    private static final int EMOJI_SIZE = 24;
+    private static final int SPRITE_SIZE = 28;
+    
     public PestSprite(String pestType) {
         this.pestType = pestType;
         this.random = new Random();
         this.isAlive = true;
         
-        // Use Text node for proper emoji rendering (handles surrogate pairs correctly)
+        // Use Text node for proper emoji rendering
         String emoji = getPestEmoji(pestType);
         emojiText = new Text(emoji);
         
-        // Use system font that supports emojis
+        // Use system font that supports emojis - smaller size (20-28px)
         try {
-            Font emojiFont = Font.font("Segoe UI Emoji", 36);
+            Font emojiFont = Font.font("Segoe UI Emoji", EMOJI_SIZE);
             emojiText.setFont(emojiFont);
         } catch (Exception e) {
-            // Try alternative emoji fonts
             try {
-                Font emojiFont = Font.font("Apple Color Emoji", 36);
+                Font emojiFont = Font.font("Apple Color Emoji", EMOJI_SIZE);
                 emojiText.setFont(emojiFont);
             } catch (Exception e2) {
-                // Fallback to default with larger size
-                emojiText.setFont(Font.font(36));
+                emojiText.setFont(Font.font(EMOJI_SIZE));
             }
         }
         
@@ -63,76 +65,39 @@ public class PestSprite extends StackPane {
         setOpacity(1.0);
         setMouseTransparent(true);
         
-        // Ensure sprite is properly sized
-        setMinSize(40, 40);
-        setMaxSize(40, 40);
-        setPrefSize(40, 40);
+        // Ensure sprite is properly sized (20-28px)
+        setMinSize(SPRITE_SIZE, SPRITE_SIZE);
+        setMaxSize(SPRITE_SIZE, SPRITE_SIZE);
+        setPrefSize(SPRITE_SIZE, SPRITE_SIZE);
         
         // Add tooltip to show pest type
         javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(pestType + " (Harmful Pest)");
         javafx.scene.control.Tooltip.install(this, tooltip);
         
-        // DEBUG: Log emoji being set with proper Unicode
-        System.out.println("[PestSprite] Created: " + pestType + 
-                         " | Emoji: " + emoji + 
-                         " | Length: " + emoji.length() + 
-                         " | CodePoints: " + emoji.codePointCount(0, emoji.length()) +
-                         " | Font: " + emojiText.getFont().getName() +
-                         " | Visible: " + isVisible() +
-                         " | Opacity: " + getOpacity());
-        
-        // Verify emoji is actually set
-        if (emojiText.getText() == null || emojiText.getText().isEmpty()) {
-            System.err.println("[PestSprite] ERROR: Emoji text is null or empty for " + pestType);
-        }
-        
         setupAnimations();
     }
     
     /**
-     * Gets emoji for pest type using Unicode escape sequences to avoid encoding issues.
-     * Also tries direct emoji characters as fallback.
+     * Gets emoji for pest type (Set C) - colorful emoji-based definitions.
      */
     private String getPestEmoji(String type) {
-        String emoji = switch (type.toLowerCase()) {
-            case "aphid" -> "\uD83D\uDC1C";      // 🐜 Ant
-            case "caterpillar" -> "\uD83D\uDC1B"; // 🐛 Bug
-            case "beetle" -> "\uD83E\uDD32";      // 🪲 Beetle
-            case "spider mite" -> "\uD83D\uDD77\uFE0F"; // 🕷️ Spider
-            default -> "\uD83D\uDC1B";           // 🐛 Bug (default)
+        return switch (type.toLowerCase()) {
+            case "red mite" -> "🔴🐞";           // Red Mite
+            case "green leaf worm" -> "🟢🐛";    // Green Leaf Worm
+            case "black beetle" -> "⚫🪲";        // Black Beetle
+            case "brown caterpillar" -> "🟤🐛";  // Brown Caterpillar
+            default -> "🔴🐞";                   // Red Mite (default)
         };
-        
-        // Verify emoji is valid
-        if (emoji == null || emoji.isEmpty()) {
-            System.err.println("[PestSprite] ERROR: Emoji is null/empty for " + type + ", using fallback");
-            emoji = "🐛"; // Direct emoji as ultimate fallback
-        }
-        
-        // Try direct emoji if Unicode escape fails (check if first char is valid emoji range)
-        int firstCodePoint = emoji.codePointAt(0);
-        if (firstCodePoint < 0x1F000 || firstCodePoint > 0x1FAFF) {
-            System.out.println("[PestSprite] Unicode escape may have failed (codePoint: " + firstCodePoint + 
-                             "), trying direct emoji for " + type);
-            emoji = switch (type.toLowerCase()) {
-                case "aphid" -> "🐜";
-                case "caterpillar" -> "🐛";
-                case "beetle" -> "🪲";
-                case "spider mite" -> "🕷️";
-                default -> "🐛";
-            };
-        }
-        
-        return emoji;
     }
     
     /**
-     * Sets up continuous crawling animation (sine wave movement).
+     * Sets up slow crawl or jitter movement animation for harmful pests.
      */
     private void setupAnimations() {
-        // Crawl animation - moves pest in small circular/sine pattern
-        crawlAnimation = new TranslateTransition(Duration.millis(2000 + random.nextInt(1000)), this);
-        double offsetX = -5 - random.nextDouble() * 5;
-        double offsetY = -5 - random.nextDouble() * 5;
+        // Slow crawl animation - gentle movement pattern
+        crawlAnimation = new TranslateTransition(Duration.millis(3000 + random.nextInt(2000)), this);
+        double offsetX = -3 - random.nextDouble() * 4;
+        double offsetY = -3 - random.nextDouble() * 4;
         crawlAnimation.setFromX(0);
         crawlAnimation.setToX(offsetX);
         crawlAnimation.setFromY(0);
@@ -142,10 +107,24 @@ public class PestSprite extends StackPane {
         crawlAnimation.setAutoReverse(true);
         crawlAnimation.play();
         
+        // Jitter animation - small random movements for some pests
+        if (random.nextDouble() < 0.5) {
+            Timeline jitter = new Timeline(
+                new KeyFrame(Duration.millis(100 + random.nextInt(100)), e -> {
+                    if (isAlive) {
+                        setTranslateX(getTranslateX() + (random.nextDouble() - 0.5) * 1.5);
+                        setTranslateY(getTranslateY() + (random.nextDouble() - 0.5) * 1.5);
+                    }
+                })
+            );
+            jitter.setCycleCount(Animation.INDEFINITE);
+            jitter.play();
+        }
+        
         // Periodic wiggle animation (every 2-3 seconds)
         wiggleAnimation = new RotateTransition(Duration.millis(200), this);
-        wiggleAnimation.setFromAngle(-10);
-        wiggleAnimation.setToAngle(10);
+        wiggleAnimation.setFromAngle(-8);
+        wiggleAnimation.setToAngle(8);
         wiggleAnimation.setCycleCount(2);
         wiggleAnimation.setAutoReverse(true);
         
@@ -162,7 +141,7 @@ public class PestSprite extends StackPane {
     }
     
     /**
-     * Animates pest death when pesticide is applied (pop animation).
+     * Animates pest death when pesticide is applied (shrink and fade animation).
      */
     public void animateDeath(Runnable onComplete) {
         if (!isAlive) return;
@@ -171,20 +150,21 @@ public class PestSprite extends StackPane {
         // Stop all animations
         crawlAnimation.stop();
         damageAnimation.stop();
+        if (wiggleAnimation != null) wiggleAnimation.stop();
         
-        // Pop animation - scale down and fade out - SLOWED DOWN for visibility
-        ScaleTransition pop = new ScaleTransition(Duration.millis(800), this); // 800ms instead of 300ms
-        pop.setFromX(1.0);
-        pop.setFromY(1.0);
-        pop.setToX(0);
-        pop.setToY(0);
-        pop.setInterpolator(Interpolator.EASE_OUT);
+        // Shrink and fade out animation
+        ScaleTransition shrink = new ScaleTransition(Duration.millis(600), this);
+        shrink.setFromX(1.0);
+        shrink.setFromY(1.0);
+        shrink.setToX(0.3);
+        shrink.setToY(0.3);
+        shrink.setInterpolator(Interpolator.EASE_OUT);
         
-        FadeTransition fade = new FadeTransition(Duration.millis(800), this); // 800ms instead of 300ms
+        FadeTransition fade = new FadeTransition(Duration.millis(600), this);
         fade.setFromValue(1.0);
         fade.setToValue(0);
         
-        ParallelTransition death = new ParallelTransition(pop, fade);
+        ParallelTransition death = new ParallelTransition(shrink, fade);
         death.setOnFinished(e -> {
             if (onComplete != null) {
                 onComplete.run();

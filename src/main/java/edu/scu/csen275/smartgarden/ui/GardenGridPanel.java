@@ -52,22 +52,6 @@ public class GardenGridPanel extends VBox {
         }
     }
     
-    /**
-     * Creates coin float animation at position.
-     */
-    private void createCoinFloat(double x, double y, int value) {
-        if (coinFloatPane != null) {
-            javafx.geometry.Bounds paneBounds = coinFloatPane.localToScene(
-                coinFloatPane.getBoundsInLocal()
-            );
-            if (paneBounds != null) {
-                double localX = x - paneBounds.getMinX();
-                double localY = y - paneBounds.getMinY();
-                CoinFloatAnimation.createCoinFloat(coinFloatPane, localX, localY, value);
-            }
-        }
-    }
-    
     public GardenGridPanel(GardenController controller) {
         this.controller = controller;
         this.tiles = new AnimatedTile[GRID_SIZE][GRID_SIZE];
@@ -84,7 +68,6 @@ public class GardenGridPanel extends VBox {
      */
     public void setAnimationContainer(Pane container) {
         this.animationContainer = container;
-        System.out.println("[GardenGridPanel] Animation container set: " + (container != null ? "SET" : "NULL"));
         
         // Also set animation container on all existing tiles
         for (int row = 0; row < GRID_SIZE; row++) {
@@ -94,7 +77,6 @@ public class GardenGridPanel extends VBox {
                 }
             }
         }
-        System.out.println("[GardenGridPanel] Animation container propagated to " + (GRID_SIZE * GRID_SIZE) + " tiles");
     }
     
     /**
@@ -208,11 +190,6 @@ public class GardenGridPanel extends VBox {
                 if (controller.plantSeed(plantType, position)) {
                     tile.animateGrowth();
                     updateTile(row, col);
-                    
-                    // Coin float on successful plant
-                    if (bounds != null) {
-                        createCoinFloat(bounds.getCenterX(), bounds.getCenterY(), 5);
-                    }
                     
                     // Float petals from grass when planting (only if there was a flower)
                     if (grassTile.hasFlower()) {
@@ -489,30 +466,22 @@ public class GardenGridPanel extends VBox {
      * Handles pest spawn event - spawns pest sprite on tile.
      */
     public void onPestSpawned(Position position, String pestType, boolean isHarmful) {
-        System.out.println("[GardenGridPanel] onPestSpawned: " + pestType + 
-                         " at (" + position.row() + ", " + position.column() + ")" +
-                         " | Harmful: " + isHarmful);
-        
         if (position.row() >= 0 && position.row() < GRID_SIZE && 
             position.column() >= 0 && position.column() < GRID_SIZE) {
             
             AnimatedTile tile = tiles[position.row()][position.column()];
-            System.out.println("[GardenGridPanel] Tile found: " + (tile != null ? "YES" : "NULL") +
-                             " | Visible: " + (tile != null && tile.isVisible()));
             
             if (tile != null && tile.isVisible()) {
                 if (isHarmful) {
-                    System.out.println("[GardenGridPanel] Spawning harmful pest: " + pestType);
                     tile.spawnPest(pestType);
                 } else {
                     // Beneficial insect - determine healing amount
                     int healing = switch (pestType.toLowerCase()) {
-                        case "bee" -> 3;
-                        case "ladybug" -> 2;
-                        case "butterfly" -> 2;
+                        case "monarch butterfly" -> 3;
+                        case "honey bee" -> 2;
+                        case "blue dragonfly" -> 2;
                         default -> 2;
                     };
-                    System.out.println("[GardenGridPanel] Spawning beneficial insect: " + pestType + " (healing: " + healing + ")");
                     tile.spawnBeneficial(pestType, healing);
                 }
             } else {

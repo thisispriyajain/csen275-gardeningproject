@@ -87,13 +87,10 @@ public class PesticideSprayEngine {
         mistAnimation.setCycleCount(150); // ~2.4 seconds at 16ms per frame - MUCH LONGER
         mistAnimation.setOnFinished(e -> {
             tile.getChildren().remove(mistCanvas);
-            System.out.println("[PesticideSprayEngine] Mist animation completed");
         });
         mistAnimation.play();
-        System.out.println("[PesticideSprayEngine] Mist animation started - will last 2.4 seconds");
         
-        // Animate pest death (pop animation) - SLOWED DOWN for visibility
-        System.out.println("[PesticideSprayEngine] Animating death for " + pests.size() + " pests");
+        // Animate pest death (shrink animation)
         List<Runnable> completionCallbacks = new ArrayList<>();
         for (PestSprite pest : new ArrayList<>(pests)) {
             // Delay each pest death slightly for staggered effect
@@ -102,7 +99,7 @@ public class PesticideSprayEngine {
             );
             delay.setOnFinished(e -> {
                 pest.animateDeath(() -> {
-                    System.out.println("[PesticideSprayEngine] Pest death animation completed");
+                    // Pest death animation completed
                 });
             });
             delay.play();
@@ -139,13 +136,12 @@ public class PesticideSprayEngine {
             javafx.geometry.Bounds containerBounds = particleContainer.sceneToLocal(tileBounds);
             double textX = containerBounds.getMinX() + containerBounds.getWidth() / 2;
             double textY = containerBounds.getMinY() + containerBounds.getHeight() / 2;
-            System.out.println("Showing 'Plant Saved!' at (" + textX + ", " + textY + ")");
             DamageTextAnimation.createText(particleContainer, "Plant Saved!", 
                                           Color.rgb(51, 255, 51), 
                                           textX, 
                                           textY);
         } else {
-            System.out.println("WARNING: particleContainer is null - cannot show 'Plant Saved!' message");
+            System.err.println("[PesticideSprayEngine] WARNING: particleContainer is null - cannot show 'Plant Saved!' message");
         }
         
         // Green glow on tile - LONGER DURATION (2.5 seconds)
@@ -159,7 +155,6 @@ public class PesticideSprayEngine {
         glowFade.setToValue(1.0); // Don't fade, just remove effect
         glowFade.setOnFinished(e -> {
             tile.setEffect(null);
-            System.out.println("[PesticideSprayEngine] Healing glow completed");
         });
         glowFade.play();
     }

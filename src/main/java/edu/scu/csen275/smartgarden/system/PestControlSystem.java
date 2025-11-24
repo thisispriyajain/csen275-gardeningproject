@@ -86,14 +86,22 @@ public class PestControlSystem {
         // 80% harmful, 20% beneficial
         Pest newPest;
         if (random.nextDouble() < 0.8) {
-            String[] harmfulTypes = {"Aphid", "Caterpillar", "Beetle", "Spider Mite"};
+            // Harmful Pests (Set C)
+            String[] harmfulTypes = {"Red Mite", "Green Leaf Worm", "Black Beetle", "Brown Caterpillar"};
             String type = harmfulTypes[random.nextInt(harmfulTypes.length)];
             newPest = new HarmfulPest(type, position);
             logger.warning("PestControl", type + " appeared at " + position);
         } else {
-            String[] beneficialTypes = {"Bee", "Ladybug", "Butterfly"};
+            // Beneficial Insects (Set C)
+            String[] beneficialTypes = {"Monarch Butterfly", "Honey Bee", "Blue Dragonfly"};
             String type = beneficialTypes[random.nextInt(beneficialTypes.length)];
-            newPest = new BeneficialInsect(type, position, 2);
+            int healing = switch (type) {
+                case "Monarch Butterfly" -> 3;
+                case "Honey Bee" -> 2;
+                case "Blue Dragonfly" -> 2;
+                default -> 2;
+            };
+            newPest = new BeneficialInsect(type, position, healing);
             logger.info("PestControl", type + " (beneficial) appeared at " + position);
         }
         

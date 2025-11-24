@@ -18,10 +18,10 @@ public class BeneficialInsect extends Pest {
     }
     
     /**
-     * Creates a default beneficial insect (Bee).
+     * Creates a default beneficial insect (Honey Bee).
      */
     public BeneficialInsect(Position position) {
-        this("Bee", position, 3);
+        this("Honey Bee", position, 2);
     }
     
     @Override

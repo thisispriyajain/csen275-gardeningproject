@@ -488,19 +488,13 @@ public class AnimatedTile extends StackPane {
      * Spawns a harmful pest on this tile.
      */
     public void spawnPest(String pestType) {
-        System.out.println("[AnimatedTile] spawnPest called: " + pestType + 
-                         " | Tile visible: " + this.isVisible() +
-                         " | Has plant: " + (plant != null));
-        
         // Initialize pest overlay if needed
         if (pestOverlay == null) {
-            System.out.println("[AnimatedTile] Creating new PestTileOverlay");
             pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
             pestOverlay.setVisible(false);
             activePests = new ArrayList<>();
             activeBeneficialInsects = new ArrayList<>();
             this.getChildren().add(pestOverlay);
-            System.out.println("[AnimatedTile] PestTileOverlay added to children. Total children: " + this.getChildren().size());
         }
         
         // Check if this pest type already exists (avoid duplicates)
@@ -509,7 +503,6 @@ public class AnimatedTile extends StackPane {
             for (PestSprite existing : activePests) {
                 if (existing.getPestType().equalsIgnoreCase(pestType)) {
                     alreadyExists = true;
-                    System.out.println("[AnimatedTile] Duplicate pest detected, skipping: " + pestType);
                     break;
                 }
             }
@@ -523,13 +516,9 @@ public class AnimatedTile extends StackPane {
         pestOverlay.toFront();
         isUnderAttack = true;
         
-        System.out.println("[AnimatedTile] Creating PestSprite for: " + pestType);
-        
         // Create and add pest sprite
         PestSprite pestSprite = new PestSprite(pestType);
         activePests.add(pestSprite);
-        
-        System.out.println("[AnimatedTile] PestSprite created, adding to overlay. Active pests: " + activePests.size());
         
         pestOverlay.addPest(pestSprite);
         
@@ -541,10 +530,6 @@ public class AnimatedTile extends StackPane {
         pestOverlay.requestLayout();
         this.requestLayout();
         
-        System.out.println("[AnimatedTile] Pest spawn complete: " + pestType + 
-                         " | Overlay visible: " + pestOverlay.isVisible() +
-                         " | Pest visible: " + pestSprite.isVisible() +
-                         " | Pest in scene: " + (pestSprite.getScene() != null));
         
         // Update tile border to red (under attack)
         updateTileBorderForAttack();
@@ -643,13 +628,6 @@ public class AnimatedTile extends StackPane {
         List<PestSprite> pestsToAnimate = activePests != null ? new ArrayList<>(activePests) : new ArrayList<>();
         List<BeneficialInsectSprite> insectsToAnimate = activeBeneficialInsects != null ? new ArrayList<>(activeBeneficialInsects) : new ArrayList<>();
         
-        // DEBUG: Log pesticide application with full details
-        System.out.println("[AnimatedTile] Pesticide applied - Pests: " + pestsToAnimate.size() + 
-                          ", Insects: " + insectsToAnimate.size() +
-                          ", AnimationContainer: " + (animationContainer != null ? "SET" : "NULL") +
-                          ", Tile visible: " + this.isVisible() +
-                          ", Overlay visible: " + (pestOverlay != null && pestOverlay.isVisible()));
-        
         // Animate spray effect (this will handle pest death animations)
         PesticideSprayEngine.animateSpray(this, 
             pestsToAnimate,
@@ -660,10 +638,8 @@ public class AnimatedTile extends StackPane {
         
         // Clear pests AFTER animation starts (death animation will remove them from overlay)
         // Delay clearing to let animation play - MUCH LONGER (2.4s mist + 0.8s pest death + buffer)
-        System.out.println("[AnimatedTile] Delaying pest removal for 3.5 seconds to allow animations to play");
         javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.millis(3500)); // 3.5 seconds
         delay.setOnFinished(e -> {
-            System.out.println("[AnimatedTile] Removing pests after animation delay");
             if (activePests != null) {
                 activePests.clear();
             }
