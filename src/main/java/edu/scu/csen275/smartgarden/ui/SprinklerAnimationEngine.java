@@ -29,8 +29,6 @@ public class SprinklerAnimationEngine {
             return;
         }
         
-        System.out.println("[SprinklerAnimationEngine] Starting sprinkler animation for Zone " + zoneId + 
-                          " with " + tiles.size() + " tiles");
         
         // Create animation canvas overlay
         Canvas animationCanvas = new Canvas();
@@ -80,7 +78,6 @@ public class SprinklerAnimationEngine {
             }
         }
         
-        System.out.println("[SprinklerAnimationEngine] Created " + particles.size() + " water particles");
         
         // Create animation timeline (60 FPS)
         Timeline animationTimeline = new Timeline(
@@ -130,7 +127,6 @@ public class SprinklerAnimationEngine {
                 // Remove canvas when all particles are gone
                 if (!hasActiveParticles) {
                     container.getChildren().remove(animationCanvas);
-                    System.out.println("[SprinklerAnimationEngine] Sprinkler animation completed");
                 }
             })
         );

@@ -16,10 +16,10 @@ public class HarmfulPest extends Pest {
     }
     
     /**
-     * Creates a default harmful pest (Aphid).
+     * Creates a default harmful pest (Red Mite).
      */
     public HarmfulPest(Position position) {
-        this("Aphid", position);
+        this("Red Mite", position);
     }
     
     @Override
@@ -35,15 +35,14 @@ public class HarmfulPest extends Pest {
     }
     
     /**
-     * Calculates damage rate based on pest type.
+     * Calculates damage rate based on pest type (Set C).
      */
     private static int calculateDamageRate(String type) {
         return switch (type.toLowerCase()) {
-            case "aphid" -> 2;
-            case "caterpillar" -> 3;
-            case "beetle" -> 4;
-            case "spider mite" -> 2;
-            case "whitefly" -> 2;
+            case "red mite" -> 2;
+            case "green leaf worm" -> 3;
+            case "black beetle" -> 4;
+            case "brown caterpillar" -> 2;
             default -> 2;
         };
     }

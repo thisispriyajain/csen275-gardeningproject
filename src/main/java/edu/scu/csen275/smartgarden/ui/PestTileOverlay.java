@@ -172,16 +172,6 @@ public class PestTileOverlay extends StackPane {
         pest.requestLayout();
         pestLabel.requestLayout();
         
-        // DEBUG: Log pest addition with full details
-        System.out.println("[PestTileOverlay] Pest added: " + pest.getPestType() + 
-                         " | Position: (" + pestX + ", " + pestY + ")" +
-                         " | Overlay visible: " + this.isVisible() +
-                         " | Overlay opacity: " + this.getOpacity() +
-                         " | Pest visible: " + pest.isVisible() +
-                         " | Pest opacity: " + pest.getOpacity() +
-                         " | Label visible: " + pestLabel.isVisible() +
-                         " | Children count: " + spriteContainer.getChildren().size());
-        
         // Verify pest is in container
         if (!spriteContainer.getChildren().contains(pest)) {
             System.err.println("[PestTileOverlay] ERROR: Pest not in spriteContainer!");

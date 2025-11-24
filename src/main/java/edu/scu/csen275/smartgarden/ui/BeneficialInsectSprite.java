@@ -2,7 +2,9 @@ package edu.scu.csen275.smartgarden.ui;
 
 import javafx.animation.*;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.paint.Color;
@@ -10,16 +12,22 @@ import javafx.util.Duration;
 import java.util.Random;
 
 /**
- * Animated sprite for beneficial insects (Bee, Ladybug, Butterfly).
- * Provides friendly animations and healing effects.
+ * Animated sprite for beneficial insects (Set C: Monarch Butterfly, Honey Bee, Blue Dragonfly).
+ * Slow upward float or gentle hovering animations with healing effects.
+ * Uses Text node for proper emoji rendering support.
  */
-public class BeneficialInsectSprite extends Label {
+public class BeneficialInsectSprite extends StackPane {
     private final String insectType;
     private final int healingAmount;
     private final Random random;
+    private final Text emojiText;
     private Timeline movementAnimation;
     private Glow healingGlow;
     private boolean isAlive;
+    
+    // Emoji size: 20-28px for visibility
+    private static final int EMOJI_SIZE = 24;
+    private static final int SPRITE_SIZE = 28;
     
     public BeneficialInsectSprite(String insectType, int healingAmount) {
         this.insectType = insectType;
@@ -27,39 +35,44 @@ public class BeneficialInsectSprite extends Label {
         this.random = new Random();
         this.isAlive = true;
         
-        // Set emoji based on insect type using Unicode escape sequences
+        // Use Text node for proper emoji rendering
         String emoji = getInsectEmoji(insectType);
-        setText(emoji);
+        emojiText = new Text(emoji);
         
-        // Use system font that supports emojis
+        // Use system font that supports emojis - smaller size (20-28px)
         try {
-            javafx.scene.text.Font emojiFont = javafx.scene.text.Font.font("Segoe UI Emoji", 36);
-            setFont(emojiFont);
+            Font emojiFont = Font.font("Segoe UI Emoji", EMOJI_SIZE);
+            emojiText.setFont(emojiFont);
         } catch (Exception e) {
             try {
-                javafx.scene.text.Font emojiFont = javafx.scene.text.Font.font("Apple Color Emoji", 36);
-                setFont(emojiFont);
+                Font emojiFont = Font.font("Apple Color Emoji", EMOJI_SIZE);
+                emojiText.setFont(emojiFont);
             } catch (Exception e2) {
-                setFont(javafx.scene.text.Font.font(36));
+                emojiText.setFont(Font.font(EMOJI_SIZE));
             }
         }
         
-        setAlignment(Pos.CENTER);
-        setStyle(
-            "-fx-padding: 0px; " +
-            "-fx-background-color: transparent; " +
-            "-fx-text-fill: black; " +
-            "-fx-font-weight: normal;"
-        );
+        emojiText.setFill(Color.BLACK);
+        emojiText.setStyle("-fx-font-weight: normal;");
+        
+        // Add text to StackPane
+        this.getChildren().add(emojiText);
+        this.setAlignment(Pos.CENTER);
+        this.setStyle("-fx-background-color: transparent;");
         
         // Set initial random position within tile bounds
         setLayoutX(15 + random.nextDouble() * 30);
         setLayoutY(15 + random.nextDouble() * 30);
         
-        // Ensure sprite is properly sized
-        setMinSize(32, 32);
-        setMaxSize(32, 32);
-        setPrefSize(32, 32);
+        // Make sure sprite is visible and on top
+        setVisible(true);
+        setOpacity(1.0);
+        setMouseTransparent(true);
+        
+        // Ensure sprite is properly sized (20-28px)
+        setMinSize(SPRITE_SIZE, SPRITE_SIZE);
+        setMaxSize(SPRITE_SIZE, SPRITE_SIZE);
+        setPrefSize(SPRITE_SIZE, SPRITE_SIZE);
         
         // Add tooltip to show insect type
         javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(insectType + " (Beneficial)");
@@ -69,25 +82,27 @@ public class BeneficialInsectSprite extends Label {
     }
     
     /**
-     * Gets emoji for insect type using Unicode escape sequences.
+     * Gets emoji for insect type (Set C) - colorful emoji-based definitions.
      */
     private String getInsectEmoji(String type) {
         return switch (type.toLowerCase()) {
-            case "bee" -> "\uD83D\uDC1D";      // 🐝 Bee
-            case "ladybug" -> "\uD83D\uDC1E";  // 🐞 Ladybug
-            case "butterfly" -> "\uD83E\uDD8B"; // 🦋 Butterfly
-            default -> "\uD83D\uDC1D";         // 🐝 Bee (default)
+            case "monarch butterfly" -> "🦋🟧";    // Monarch Butterfly
+            case "honey bee" -> "🐝🟨";           // Honey Bee
+            case "blue dragonfly" -> "🟦🐉";      // Blue Dragonfly
+            default -> "🐝🟨";                    // Honey Bee (default)
         };
     }
     
     /**
-     * Sets up movement animations based on insect type.
+     * Sets up movement animations based on insect type (Set C).
+     * Butterflies and dragonflies: slow upward float or gentle hovering.
      */
     private void setupAnimations() {
         switch (insectType.toLowerCase()) {
-            case "bee" -> setupBeeBuzzAnimation();
-            case "ladybug" -> setupLadybugCrawlAnimation();
-            case "butterfly" -> setupButterflyFlutterAnimation();
+            case "monarch butterfly" -> setupButterflyFloatAnimation();
+            case "honey bee" -> setupBeeHoverAnimation();
+            case "blue dragonfly" -> setupDragonflyFloatAnimation();
+            default -> setupBeeHoverAnimation();
         }
         
         // Healing glow effect
@@ -98,56 +113,83 @@ public class BeneficialInsectSprite extends Label {
     }
     
     /**
-     * Bee: Fast buzzing movement (jittery).
+     * Monarch Butterfly: Slow upward float with gentle hovering.
      */
-    private void setupBeeBuzzAnimation() {
-        movementAnimation = new Timeline(
-            new KeyFrame(Duration.millis(40), e -> {
-                if (isAlive) {
-                    setTranslateX(getTranslateX() + (random.nextDouble() - 0.5) * 3);
-                    setTranslateY(getTranslateY() + (random.nextDouble() - 0.5) * 3);
-                }
-            })
-        );
-        movementAnimation.setCycleCount(Animation.INDEFINITE);
-        movementAnimation.play();
+    private void setupButterflyFloatAnimation() {
+        // Slow upward float
+        TranslateTransition floatUp = new TranslateTransition(Duration.millis(2500), this);
+        floatUp.setFromY(0);
+        floatUp.setToY(-10);
+        floatUp.setInterpolator(Interpolator.EASE_BOTH);
+        floatUp.setCycleCount(Animation.INDEFINITE);
+        floatUp.setAutoReverse(true);
+        
+        // Gentle horizontal hover
+        TranslateTransition hover = new TranslateTransition(Duration.millis(2000), this);
+        hover.setFromX(0);
+        hover.setToX(5);
+        hover.setInterpolator(Interpolator.EASE_BOTH);
+        hover.setCycleCount(Animation.INDEFINITE);
+        hover.setAutoReverse(true);
+        
+        // Gentle rotation
+        RotateTransition rotate = new RotateTransition(Duration.millis(3000), this);
+        rotate.setFromAngle(-3);
+        rotate.setToAngle(3);
+        rotate.setInterpolator(Interpolator.EASE_BOTH);
+        rotate.setCycleCount(Animation.INDEFINITE);
+        rotate.setAutoReverse(true);
+        
+        ParallelTransition floatAnimation = new ParallelTransition(floatUp, hover, rotate);
+        floatAnimation.play();
     }
     
     /**
-     * Ladybug: Slow crawling animation.
+     * Honey Bee: Gentle hovering with slight movement.
      */
-    private void setupLadybugCrawlAnimation() {
-        TranslateTransition crawl = new TranslateTransition(Duration.millis(3000), this);
-        crawl.setFromX(0);
-        crawl.setToX(10);
-        crawl.setFromY(0);
-        crawl.setToY(-5);
-        crawl.setInterpolator(Interpolator.EASE_BOTH);
-        crawl.setCycleCount(Animation.INDEFINITE);
-        crawl.setAutoReverse(true);
-        crawl.play();
+    private void setupBeeHoverAnimation() {
+        // Gentle hover - slow up and down
+        TranslateTransition hover = new TranslateTransition(Duration.millis(2000), this);
+        hover.setFromY(0);
+        hover.setToY(-6);
+        hover.setInterpolator(Interpolator.EASE_BOTH);
+        hover.setCycleCount(Animation.INDEFINITE);
+        hover.setAutoReverse(true);
+        
+        // Slight horizontal drift
+        TranslateTransition drift = new TranslateTransition(Duration.millis(3000), this);
+        drift.setFromX(0);
+        drift.setToX(4);
+        drift.setInterpolator(Interpolator.EASE_BOTH);
+        drift.setCycleCount(Animation.INDEFINITE);
+        drift.setAutoReverse(true);
+        
+        ParallelTransition hoverAnimation = new ParallelTransition(hover, drift);
+        hoverAnimation.play();
     }
     
     /**
-     * Butterfly: Smooth fluttering up and down.
+     * Blue Dragonfly: Slow upward float with gentle hovering.
      */
-    private void setupButterflyFlutterAnimation() {
-        TranslateTransition flutter = new TranslateTransition(Duration.millis(1500), this);
-        flutter.setFromY(0);
-        flutter.setToY(-8);
-        flutter.setInterpolator(Interpolator.EASE_BOTH);
-        flutter.setCycleCount(Animation.INDEFINITE);
-        flutter.setAutoReverse(true);
+    private void setupDragonflyFloatAnimation() {
+        // Slow upward float
+        TranslateTransition floatUp = new TranslateTransition(Duration.millis(2200), this);
+        floatUp.setFromY(0);
+        floatUp.setToY(-8);
+        floatUp.setInterpolator(Interpolator.EASE_BOTH);
+        floatUp.setCycleCount(Animation.INDEFINITE);
+        floatUp.setAutoReverse(true);
         
-        RotateTransition flutterRotate = new RotateTransition(Duration.millis(1500), this);
-        flutterRotate.setFromAngle(-5);
-        flutterRotate.setToAngle(5);
-        flutterRotate.setInterpolator(Interpolator.EASE_BOTH);
-        flutterRotate.setCycleCount(Animation.INDEFINITE);
-        flutterRotate.setAutoReverse(true);
+        // Gentle horizontal hover
+        TranslateTransition hover = new TranslateTransition(Duration.millis(1800), this);
+        hover.setFromX(0);
+        hover.setToX(4);
+        hover.setInterpolator(Interpolator.EASE_BOTH);
+        hover.setCycleCount(Animation.INDEFINITE);
+        hover.setAutoReverse(true);
         
-        ParallelTransition flutterAnimation = new ParallelTransition(flutter, flutterRotate);
-        flutterAnimation.play();
+        ParallelTransition floatAnimation = new ParallelTransition(floatUp, hover);
+        floatAnimation.play();
     }
     
     /**
@@ -155,11 +197,11 @@ public class BeneficialInsectSprite extends Label {
      */
     public void triggerHealingEffect() {
         // Pulsing glow
-        ScaleTransition pulse = new ScaleTransition(Duration.millis(300), this);
+        ScaleTransition pulse = new ScaleTransition(Duration.millis(400), this);
         pulse.setFromX(1.0);
         pulse.setFromY(1.0);
-        pulse.setToX(1.2);
-        pulse.setToY(1.2);
+        pulse.setToX(1.15);
+        pulse.setToY(1.15);
         pulse.setAutoReverse(true);
         pulse.setCycleCount(2);
         pulse.play();
