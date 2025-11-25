@@ -1,13 +1,14 @@
 package edu.scu.csen275.smartgarden.ui;
 
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.model.PlantType;
 import javafx.animation.*;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.effect.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,13 @@ import java.util.List;
  * Provides smooth animations for plant growth, watering, and death.
  */
 public class AnimatedTile extends StackPane {
-    private final Label plantLabel;
+    private final ImageView plantImageView; // Using ImageView for emoji images
     private final StackPane baseTile;
     private final StackPane shadowPane; // For soft shadow under plant
     private Plant plant;
     private String currentStyle;
+    private String currentPlantType; // Cache current plant type to avoid reloading image
+    private Image cachedImage; // Cache the actual Image object to prevent reloading
     private ScaleTransition growthAnimation;
     private FadeTransition fadeAnimation;
     private boolean isWatering;
@@ -71,11 +74,14 @@ public class AnimatedTile extends StackPane {
         baseTile.setStyle(getPastelEmptyStyle());
         baseTile.setEffect(createSoftShadow());
         
-        // Plant label
-        plantLabel = new Label("");
-        plantLabel.setFont(javafx.scene.text.Font.font(24));
-        plantLabel.setAlignment(Pos.CENTER);
-        plantLabel.setEffect(createPlantShadow()); // Shadow under plant
+        // Plant image view (using emoji images from CDN instead of fonts)
+        plantImageView = new ImageView();
+        plantImageView.setFitWidth(32);
+        plantImageView.setFitHeight(32);
+        plantImageView.setPreserveRatio(true);
+        plantImageView.setSmooth(true);
+        plantImageView.setEffect(createPlantShadow()); // Shadow under plant
+        StackPane.setAlignment(plantImageView, Pos.CENTER);
         
         // Pest overlay
         pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
@@ -87,8 +93,8 @@ public class AnimatedTile extends StackPane {
         isUnderAttack = false;
         
         // CRITICAL: Add children in correct z-order
-        // baseTile (bottom) -> shadowPane -> plantLabel -> pestOverlay (top)
-        this.getChildren().addAll(baseTile, shadowPane, plantLabel, pestOverlay);
+        // baseTile (bottom) -> shadowPane -> plantImageView -> pestOverlay (top)
+        this.getChildren().addAll(baseTile, shadowPane, plantImageView, pestOverlay);
         
         // Ensure pest overlay is always on top
         pestOverlay.toFront();
@@ -131,7 +137,7 @@ public class AnimatedTile extends StackPane {
      */
     private void setupAnimations() {
         // Growth animation (scale up)
-        growthAnimation = new ScaleTransition(Duration.millis(300), plantLabel);
+        growthAnimation = new ScaleTransition(Duration.millis(300), plantImageView);
         growthAnimation.setFromX(0.5);
         growthAnimation.setFromY(0.5);
         growthAnimation.setToX(1.0);
@@ -177,7 +183,9 @@ public class AnimatedTile extends StackPane {
      * Sets tile to empty state.
      */
     private void setEmpty() {
-        plantLabel.setText("");
+        plantImageView.setImage(null);
+        cachedImage = null; // Clear cached image
+        currentPlantType = null; // Reset cached plant type
         shadowPane.setVisible(false); // Hide shadow when empty
         baseTile.setStyle(getPastelEmptyStyle());
         baseTile.setOpacity(1.0);
@@ -189,8 +197,51 @@ public class AnimatedTile extends StackPane {
      * PRESERVES pest overlay - doesn't clear it.
      */
     private void setPlant(Plant plant) {
-        String emoji = getPlantEmoji(plant);
-        plantLabel.setText(emoji);
+        String plantType = plant.getPlantType();
+        boolean isNewPlant = (currentPlantType == null || !plantType.equals(currentPlantType));
+        
+        // Only reload image if plant type has changed (prevents blinking)
+        if (isNewPlant) {
+            currentPlantType = plantType;
+            
+            // Load plant image from resources/images folder
+            try {
+                String imagePath = getPlantImagePath(plant);
+                if (imagePath != null) {
+                    // Always create new image for new plant type
+                    cachedImage = new Image(getClass().getResourceAsStream(imagePath), 32, 32, true, true);
+                    plantImageView.setImage(cachedImage);
+                } else {
+                    // Fallback to emoji if image not found
+                    String emoji = getPlantEmoji(plant);
+                    String imageUrl = getEmojiImageUrl(emoji);
+                    cachedImage = new Image(imageUrl, 32, 32, true, true);
+                    plantImageView.setImage(cachedImage);
+                }
+            } catch (Exception e) {
+                // Try emoji fallback
+                try {
+                    String emoji = getPlantEmoji(plant);
+                    String imageUrl = getEmojiImageUrl(emoji);
+                    cachedImage = new Image(imageUrl, 32, 32, true, true);
+                    plantImageView.setImage(cachedImage);
+                } catch (Exception e2) {
+                    cachedImage = null;
+                    plantImageView.setImage(null);
+                }
+            }
+        }
+        
+        // For all plants, ensure image view properties are stable (prevents blinking)
+        // Stop any running animations that might interfere
+        if (growthAnimation.getStatus() == Animation.Status.RUNNING) {
+            growthAnimation.stop();
+        }
+        // Ensure image view is always at stable state
+        plantImageView.setVisible(true);
+        plantImageView.setOpacity(1.0);
+        plantImageView.setScaleX(1.0);
+        plantImageView.setScaleY(1.0);
         
         // Show shadow when plant appears
         shadowPane.setVisible(true);
@@ -219,8 +270,8 @@ public class AnimatedTile extends StackPane {
         
         currentStyle = healthColor.toLowerCase();
         
-        // Animate plant appearance
-        if (!plantLabel.getText().equals(emoji)) {
+        // Animate plant appearance only if it's a new plant (not on every update)
+        if (isNewPlant) {
             animateGrowth();
         }
     }
@@ -229,7 +280,13 @@ public class AnimatedTile extends StackPane {
      * Sets tile to show dead plant.
      */
     private void setDead() {
-        plantLabel.setText("💀");
+        try {
+            String imageUrl = getEmojiImageUrl("💀");
+            Image emojiImage = new Image(imageUrl, 32, 32, true, true);
+            plantImageView.setImage(emojiImage);
+        } catch (Exception e) {
+            plantImageView.setImage(null);
+        }
         baseTile.setStyle(getDeadStyle());
         fadeAnimation.play();
         currentStyle = "dead";
@@ -346,17 +403,110 @@ public class AnimatedTile extends StackPane {
     }
     
     /**
-     * Gets plant emoji based on type.
+     * Gets the image path for a plant from resources/images folder.
+     * Returns null if image file doesn't exist.
+     */
+    private String getPlantImagePath(Plant plant) {
+        String plantTypeName = plant.getPlantType();
+        
+        // Try to match PlantType enum by display name
+        try {
+            for (PlantType type : PlantType.values()) {
+                if (type.getDisplayName().equalsIgnoreCase(plantTypeName) ||
+                    plantTypeName.contains(type.getDisplayName())) {
+                    return getImagePathForPlantType(type);
+                }
+            }
+        } catch (Exception e) {
+            // Fall through to fallback mapping
+        }
+        
+        // Fallback mapping based on plant type name
+        String lowerName = plantTypeName.toLowerCase();
+        if (lowerName.contains("strawberry")) return "/images/strawberry.png";
+        if (lowerName.contains("grapevine") || lowerName.contains("grape")) return "/images/grape.png";
+        if (lowerName.contains("apple")) return "/images/apple.png";
+        if (lowerName.contains("carrot")) return "/images/carrot.png";
+        if (lowerName.contains("tomato")) return "/images/tomato.png";
+        if (lowerName.contains("onion")) return null; // No onion.png available, will use emoji fallback
+        if (lowerName.contains("sunflower")) return "/images/sunflower.png";
+        if (lowerName.contains("tulip")) return "/images/tulip.png";
+        if (lowerName.contains("rose")) return "/images/rose.png";
+        
+        return null; // No image found
+    }
+    
+    /**
+     * Gets the image path for a specific PlantType.
+     */
+    private String getImagePathForPlantType(PlantType type) {
+        return switch (type) {
+            case STRAWBERRY -> "/images/strawberry.png";
+            case GRAPEVINE -> "/images/grape.png";
+            case APPLE -> "/images/apple.png";
+            case CARROT -> "/images/carrot.png";
+            case TOMATO -> "/images/tomato.png";
+            case ONION -> null; // No onion.png available
+            case SUNFLOWER -> "/images/sunflower.png";
+            case TULIP -> "/images/tulip.png";
+            case ROSE -> "/images/rose.png";
+        };
+    }
+    
+    /**
+     * Gets emoji image URL from CDN (using Twemoji) - used as fallback.
+     * Converts emoji Unicode to image URL.
+     */
+    private String getEmojiImageUrl(String emoji) {
+        // Convert emoji to code points and create Twemoji URL
+        // Twemoji format: https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/[code].png
+        StringBuilder codePoints = new StringBuilder();
+        emoji.codePoints().forEach(cp -> {
+            if (codePoints.length() > 0) codePoints.append("-");
+            codePoints.append(String.format("%04X", cp).toLowerCase());
+        });
+        
+        // Twemoji CDN - reliable and colorful (fallback when local image not available)
+        return "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/" + codePoints.toString() + ".png";
+    }
+    
+    /**
+     * Gets plant emoji based on plant type name.
+     * Maps plant type names to PlantType enum emojis.
      */
     private String getPlantEmoji(Plant plant) {
-        return switch (plant.getClass().getSimpleName()) {
-            case "Flower" -> "🌸";
-            case "Vegetable" -> "🍅";
-            case "Tree" -> "🌳";
-            case "Grass" -> "🌿";
-            case "Herb" -> "🌱";
-            default -> "🌱";
-        };
+        String plantTypeName = plant.getPlantType();
+        
+        // Try to match PlantType enum by display name
+        try {
+            for (PlantType type : PlantType.values()) {
+                if (type.getDisplayName().equalsIgnoreCase(plantTypeName) ||
+                    plantTypeName.contains(type.getDisplayName())) {
+                    return type.getEmoji();
+                }
+            }
+        } catch (Exception e) {
+            // Fall through to default mapping
+        }
+        
+        // Fallback mapping based on plant type name
+        String lowerName = plantTypeName.toLowerCase();
+        if (lowerName.contains("strawberry")) return "🍓";
+        if (lowerName.contains("grapevine")) return "🍇";
+        if (lowerName.contains("apple")) return "🍎";
+        if (lowerName.contains("carrot")) return "🥕";
+        if (lowerName.contains("tomato")) return "🍅";
+        if (lowerName.contains("onion")) return "🧅";
+        if (lowerName.contains("sunflower")) return "🌻";
+        if (lowerName.contains("tulip")) return "🌸";
+        if (lowerName.contains("rose")) return "🌹";
+        if (lowerName.contains("flower")) return "🌸";
+        if (lowerName.contains("vegetable")) return "🍅";
+        if (lowerName.contains("tree")) return "🌳";
+        if (lowerName.contains("grass")) return "🌿";
+        if (lowerName.contains("herb")) return "🌱";
+        
+        return "🌱"; // Default
     }
     
     /**

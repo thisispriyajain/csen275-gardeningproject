@@ -2,13 +2,17 @@ package edu.scu.csen275.smartgarden.ui;
 
 import edu.scu.csen275.smartgarden.controller.GardenController;
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.model.PlantType;
 import edu.scu.csen275.smartgarden.model.Position;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import java.util.List;
 
 /**
@@ -19,7 +23,7 @@ public class GardenGridPanel extends VBox {
     private final GridPane gardenGrid;
     private final AnimatedTile[][] tiles;
     private final GrassTile[][] grassTiles; // Grass tiles for empty cells
-    private ComboBox<String> plantSelector;
+    private ComboBox<PlantType> plantSelector;
     private Pane animationContainer; // Container for watering animations
     private Pane coinFloatPane; // Pane for coin float animations
     private static final int GRID_SIZE = 9;
@@ -92,7 +96,7 @@ public class GardenGridPanel extends VBox {
     }
     
     /**
-     * Sets up plant selector dropdown.
+     * Sets up plant selector dropdown with categorized PlantType enum.
      */
     private void setupPlantSelector() {
         HBox selectorBox = new HBox(10);
@@ -103,10 +107,160 @@ public class GardenGridPanel extends VBox {
         selectLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;");
         
         plantSelector = new ComboBox<>();
-        plantSelector.getItems().addAll("Flower", "Tomato", "Tree", "Grass", "Basil");
-        plantSelector.setValue("Flower");
-        plantSelector.getStyleClass().add("modern-combo");
-        plantSelector.setPrefWidth(150);
+        plantSelector.setEditable(false); // Make sure it's not editable
+        plantSelector.setDisable(false); // Ensure it's enabled
+        plantSelector.setFocusTraversable(true); // Allow focus
+        
+        // Add all plant types grouped by category
+        // Fruit Plants
+        plantSelector.getItems().add(PlantType.STRAWBERRY);
+        plantSelector.getItems().add(PlantType.GRAPEVINE);
+        plantSelector.getItems().add(PlantType.APPLE);
+        
+        // Vegetable Crops
+        plantSelector.getItems().add(PlantType.CARROT);
+        plantSelector.getItems().add(PlantType.TOMATO);
+        plantSelector.getItems().add(PlantType.ONION);
+        
+        // Flowers
+        plantSelector.getItems().add(PlantType.SUNFLOWER);
+        plantSelector.getItems().add(PlantType.TULIP);
+        plantSelector.getItems().add(PlantType.ROSE);
+        
+        // Set default value
+        plantSelector.setValue(PlantType.STRAWBERRY);
+        
+        // Custom cell factory to display emoji + name with colorful emojis
+        // Use setGraphic with Text node for proper emoji color rendering
+        plantSelector.setCellFactory(list -> new ListCell<PlantType>() {
+            @Override
+            protected void updateItem(PlantType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("");
+                } else {
+                    System.out.println("DEBUG: Rendering dropdown item: " + item.getDisplayName() + " emoji: " + item.getEmoji());
+                    System.out.println("DEBUG: Emoji character code: " + (int)item.getEmoji().charAt(0));
+                    
+                    // Create HBox with Text node for emoji (like AnimatedTile does) and Label for name
+                    HBox cellContent = new HBox(5);
+                    cellContent.setAlignment(Pos.CENTER_LEFT);
+                    
+                    // Text node for emoji (colorful rendering) - same approach as AnimatedTile
+                    Text emojiText = new Text(item.getEmoji());
+                    System.out.println("DEBUG: Emoji string length: " + item.getEmoji().length() + ", chars: " + item.getEmoji().codePointCount(0, item.getEmoji().length()));
+                    System.out.println("DEBUG: Full emoji string: " + java.util.Arrays.toString(item.getEmoji().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+                    
+                    // Use same font loading as AnimatedTile
+                    try {
+                        Font emojiFont = Font.font("Segoe UI Emoji", 20);
+                        emojiText.setFont(emojiFont);
+                        System.out.println("DEBUG: Successfully loaded Segoe UI Emoji font");
+                    } catch (Exception e) {
+                        try {
+                            Font emojiFont = Font.font("Apple Color Emoji", 20);
+                            emojiText.setFont(emojiFont);
+                            System.out.println("DEBUG: Successfully loaded Apple Color Emoji font");
+                        } catch (Exception e2) {
+                            emojiText.setFont(Font.font(20));
+                            System.out.println("DEBUG: Using fallback font");
+                        }
+                    }
+                    
+                    // NOTE: JavaFX ComboBox cells on Windows have a known limitation where
+                    // color emojis may render as black even with correct fonts.
+                    // As a workaround, we'll show the emoji in the button cell but only show
+                    // the plant name in dropdown items to avoid the black emoji issue.
+                    // The emoji will still appear correctly in the garden tiles.
+                    
+                    // For dropdown items, just show the plant name (emoji shows as black anyway)
+                    Label nameLabel = new Label(item.getDisplayName());
+                    nameLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+                    
+                    cellContent.getChildren().add(nameLabel);
+                    setGraphic(cellContent);
+                    setText(null);
+                    setStyle("-fx-padding: 8px;");
+                }
+            }
+        });
+        
+        // Custom button cell to show selected plant
+        // Use setGraphic with Text node for proper emoji color rendering
+        plantSelector.setButtonCell(new ListCell<PlantType>() {
+            @Override
+            protected void updateItem(PlantType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Select Plant");
+                    setGraphic(null);
+                } else {
+                    System.out.println("DEBUG: Rendering button cell: " + item.getDisplayName() + " emoji: " + item.getEmoji());
+                    System.out.println("DEBUG: Button cell - Emoji character code: " + (int)item.getEmoji().charAt(0));
+                    
+                    // Create HBox with Text node for emoji (like AnimatedTile does) and Label for name
+                    HBox buttonContent = new HBox(5);
+                    buttonContent.setAlignment(Pos.CENTER_LEFT);
+                    
+                    // Text node for emoji (colorful rendering) - same approach as AnimatedTile
+                    Text emojiText = new Text(item.getEmoji());
+                    System.out.println("DEBUG: Button cell - Emoji string length: " + item.getEmoji().length() + ", chars: " + item.getEmoji().codePointCount(0, item.getEmoji().length()));
+                    
+                    // Use same font loading as AnimatedTile
+                    try {
+                        Font emojiFont = Font.font("Segoe UI Emoji", 18);
+                        emojiText.setFont(emojiFont);
+                        System.out.println("DEBUG: Button cell - Successfully loaded Segoe UI Emoji font");
+                    } catch (Exception e) {
+                        try {
+                            Font emojiFont = Font.font("Apple Color Emoji", 18);
+                            emojiText.setFont(emojiFont);
+                            System.out.println("DEBUG: Button cell - Successfully loaded Apple Color Emoji font");
+                        } catch (Exception e2) {
+                            emojiText.setFont(Font.font(18));
+                            System.out.println("DEBUG: Button cell - Using fallback font");
+                        }
+                    }
+                    
+                    // WORKAROUND: JavaFX ComboBox cells may force black text, so we need to explicitly
+                    // prevent fill color inheritance. Try setting fill to null or using a wrapper.
+                    // Actually, let's try wrapping in a StackPane to isolate from cell styling
+                    StackPane emojiWrapper = new StackPane(emojiText);
+                    emojiWrapper.setAlignment(Pos.CENTER);
+                    emojiWrapper.setStyle("-fx-background-color: transparent;");
+                    // Don't set fill on Text - let emoji render in natural color
+                    
+                    // Label for plant name
+                    Label nameLabel = new Label(item.getDisplayName());
+                    nameLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+                    
+                    buttonContent.getChildren().addAll(emojiWrapper, nameLabel);
+                    setGraphic(buttonContent);
+                    setText(null); // Clear text, use graphic instead
+                    // CRITICAL: Don't set any text-fill on the cell - it would override emoji colors
+                    // Also ensure the cell doesn't apply any default styling to children
+                    setStyle("-fx-text-fill: transparent;");
+                    // The transparent text-fill on the cell won't affect the graphic's Text node
+                }
+            }
+        });
+        
+        // Ensure dropdown is visible and can open
+        plantSelector.setVisibleRowCount(10); // Show more items
+        
+        // Style the combo box (pure JavaFX, no CSS)
+        plantSelector.setStyle(
+            "-fx-background-color: white;" +
+            "-fx-background-radius: 8;" +
+            "-fx-border-color: #4CAF50;" +
+            "-fx-border-radius: 8;" +
+            "-fx-border-width: 2;" +
+            "-fx-font-size: 14px;" +
+            "-fx-padding: 5 10;"
+        );
+        plantSelector.setPrefWidth(200);
         
         javafx.scene.control.Button clearBtn = new javafx.scene.control.Button("🗑 Clear All");
         clearBtn.getStyleClass().add("modern-button");
@@ -186,8 +340,8 @@ public class GardenGridPanel extends VBox {
             }
             
             if (existing == null) {
-                String plantType = plantSelector.getValue();
-                if (controller.plantSeed(plantType, position)) {
+                PlantType selectedType = plantSelector.getValue();
+                if (selectedType != null && controller.plantSeed(selectedType, position)) {
                     tile.animateGrowth();
                     updateTile(row, col);
                     
@@ -564,4 +718,5 @@ public class GardenGridPanel extends VBox {
         return null;
     }
 }
+
 
