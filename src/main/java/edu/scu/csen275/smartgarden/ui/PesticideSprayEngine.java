@@ -22,7 +22,6 @@ public class PesticideSprayEngine {
      * Animates pesticide spray on a tile with all effects.
      */
     public static void animateSpray(StackPane tile, List<PestSprite> pests, 
-                                   List<BeneficialInsectSprite> beneficialInsects,
                                    Pane particleContainer, double centerX, double centerY) {
         double tileWidth = 60;
         double tileHeight = 60;
@@ -97,7 +96,6 @@ public class PesticideSprayEngine {
         mistAnimation.play();
         
         // Animate pest death (shrink animation)
-        List<Runnable> completionCallbacks = new ArrayList<>();
         for (PestSprite pest : new ArrayList<>(pests)) {
             // Delay each pest death slightly for staggered effect
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
@@ -109,31 +107,6 @@ public class PesticideSprayEngine {
                 });
             });
             delay.play();
-        }
-        
-        // 70% chance to save beneficial insects (animate them escaping)
-        for (BeneficialInsectSprite insect : new ArrayList<>(beneficialInsects)) {
-            if (Math.random() > 0.3) {
-                // Escape animation - fly away
-                TranslateTransition escape = new TranslateTransition(Duration.millis(500), insect);
-                escape.setByX((Math.random() - 0.5) * 50);
-                escape.setByY(-30 - Math.random() * 20);
-                escape.setOnFinished(e -> {
-                    // Insect saved, removed by AnimatedTile
-                });
-                escape.play();
-            } else {
-                // Insect dies too
-                ScaleTransition pop = new ScaleTransition(Duration.millis(300), insect);
-                pop.setFromX(1.0);
-                pop.setFromY(1.0);
-                pop.setToX(0);
-                pop.setToY(0);
-                FadeTransition fade = new FadeTransition(Duration.millis(300), insect);
-                fade.setToValue(0);
-                ParallelTransition death = new ParallelTransition(pop, fade);
-                death.play();
-            }
         }
         
         // Show "Plant Saved!" text - FIXED: Use correct coordinates and ensure visibility
@@ -155,16 +128,19 @@ public class PesticideSprayEngine {
         // Delay glow to appear after mist starts fading (around 5 seconds)
         PauseTransition glowDelay = new PauseTransition(Duration.millis(5000)); // Wait 5 seconds
         glowDelay.setOnFinished(e -> {
-            Glow healGlow = new Glow(0.3); // Subtle white glow (no color tint)
-            tile.setEffect(healGlow);
-            
-            FadeTransition glowFade = new FadeTransition(Duration.millis(1500), tile); // 1.5 seconds
-            glowFade.setFromValue(1.0);
-            glowFade.setToValue(1.0); // Don't fade, just remove effect
-            glowFade.setOnFinished(e2 -> {
-                tile.setEffect(null);
-            });
-            glowFade.play();
+            // Only apply effect if tile is in scene and has valid bounds
+            if (tile.getScene() != null && tile.getBoundsInLocal().getWidth() > 0 && tile.getBoundsInLocal().getHeight() > 0) {
+                Glow healGlow = new Glow(0.3); // Subtle white glow (no color tint)
+                tile.setEffect(healGlow);
+                
+                FadeTransition glowFade = new FadeTransition(Duration.millis(1500), tile); // 1.5 seconds
+                glowFade.setFromValue(1.0);
+                glowFade.setToValue(1.0); // Don't fade, just remove effect
+                glowFade.setOnFinished(e2 -> {
+                    tile.setEffect(null);
+                });
+                glowFade.play();
+            }
         });
         glowDelay.play();
     }

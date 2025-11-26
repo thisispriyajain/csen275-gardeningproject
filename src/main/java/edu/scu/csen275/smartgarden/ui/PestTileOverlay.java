@@ -17,10 +17,9 @@ import java.util.Random;
  */
 public class PestTileOverlay extends StackPane {
     private final Canvas damageCanvas; // For brown tint and bite marks
-    private final StackPane spriteContainer; // For pest and beneficial insect sprites
+    private final StackPane spriteContainer; // For pest sprites
     private final WarningIndicator warningIndicator;
     private final List<PestSprite> pests;
-    private final List<BeneficialInsectSprite> beneficialInsects;
     private final List<Label> pestTypeLabels; // Labels showing pest type names
     private final Random random;
     private Timeline damageVisualTimeline;
@@ -36,7 +35,6 @@ public class PestTileOverlay extends StackPane {
     public PestTileOverlay(double width, double height) {
         this.random = new Random();
         this.pests = new ArrayList<>();
-        this.beneficialInsects = new ArrayList<>();
         this.pestTypeLabels = new ArrayList<>();
         this.biteMarks = new ArrayList<>();
         this.isUnderAttack = false;
@@ -172,7 +170,7 @@ public class PestTileOverlay extends StackPane {
             spriteContainer.getChildren().remove(labelToRemove);
         }
         
-        if (pests.isEmpty() && beneficialInsects.isEmpty()) {
+        if (pests.isEmpty()) {
             isUnderAttack = false;
             warningIndicator.setVisible(false);
             warningIndicator.hide();
@@ -182,7 +180,7 @@ public class PestTileOverlay extends StackPane {
     }
     
     /**
-     * Clears all pests and beneficial insects from this tile.
+     * Clears all pests from this tile.
      */
     public void clearAllPests() {
         // Remove all pests
@@ -197,39 +195,12 @@ public class PestTileOverlay extends StackPane {
         }
         pestTypeLabels.clear();
         
-        // Remove all beneficial insects
-        for (BeneficialInsectSprite insect : new ArrayList<>(beneficialInsects)) {
-            spriteContainer.getChildren().remove(insect);
-        }
-        beneficialInsects.clear();
-        
         // Reset state
         isUnderAttack = false;
         warningIndicator.setVisible(false);
         warningIndicator.hide();
         stopDamageVisualAnimation();
         clearDamageVisuals();
-    }
-    
-    /**
-     * Adds a beneficial insect to this tile.
-     */
-    public void addBeneficialInsect(BeneficialInsectSprite insect) {
-        beneficialInsects.add(insect);
-        spriteContainer.getChildren().add(insect);
-        
-        // Make sure insect is visible
-        this.setVisible(true);
-        insect.setVisible(true);
-        insect.toFront();
-    }
-    
-    /**
-     * Removes a beneficial insect from this tile.
-     */
-    public void removeBeneficialInsect(BeneficialInsectSprite insect) {
-        beneficialInsects.remove(insect);
-        spriteContainer.getChildren().remove(insect);
     }
     
     /**
@@ -308,10 +279,6 @@ public class PestTileOverlay extends StackPane {
     
     public List<PestSprite> getPests() {
         return new ArrayList<>(pests);
-    }
-    
-    public List<BeneficialInsectSprite> getBeneficialInsects() {
-        return new ArrayList<>(beneficialInsects);
     }
     
     public boolean isUnderAttack() {

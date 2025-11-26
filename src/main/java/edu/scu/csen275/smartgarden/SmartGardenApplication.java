@@ -369,11 +369,6 @@ public class SmartGardenApplication extends Application {
             }
 
             @Override
-            public void onBeneficialInsectHealing(Position position, int healingAmount) {
-                gardenPanel.onBeneficialInsectHealing(position, healingAmount);
-            }
-
-            @Override
             public void onPestRemoved(Position position, String pestType) {
                 // Not explicitly handled in UI yet, but can be added
             }
@@ -627,10 +622,9 @@ public class SmartGardenApplication extends Application {
                         // Spawn all pests at this position
                         for (var pest : pestsAtPos) {
                             String pestType = pest.getPestType();
-                            boolean isHarmful = !pest.isBeneficial();
                             
-                            // Spawn in UI
-                            gardenPanel.onPestSpawned(pos, pestType, isHarmful);
+                            // Spawn in UI (all pests are harmful now)
+                            gardenPanel.onPestSpawned(pos, pestType, true);
                         }
                     } else if (currentCount > uiPestCount && uiPestCount > 0) {
                         // More pests than UI shows - spawn additional ones
@@ -639,8 +633,8 @@ public class SmartGardenApplication extends Application {
                         for (var pest : pestsAtPos) {
                             if (spawned >= toSpawn) break;
                             String pestType = pest.getPestType();
-                            boolean isHarmful = !pest.isBeneficial();
-                            gardenPanel.onPestSpawned(pos, pestType, isHarmful);
+                            // All pests are harmful now
+                            gardenPanel.onPestSpawned(pos, pestType, true);
                             spawned++;
                         }
                     }

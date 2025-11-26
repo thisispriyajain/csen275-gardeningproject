@@ -46,7 +46,8 @@ public class GrassTile extends StackPane {
         baseTile.setMinSize(BASE_SIZE, BASE_SIZE);
         baseTile.setMaxSize(BASE_SIZE, BASE_SIZE);
         baseTile.setStyle(getGrassTileStyle());
-        baseTile.setEffect(createSoftShadow());
+        // Defer effect application until node is in scene
+        safeSetEffect(baseTile, createSoftShadow());
         
         // Canvas for grass texture and animation
         grassCanvas = new Canvas(BASE_SIZE, BASE_SIZE);
@@ -81,6 +82,28 @@ public class GrassTile extends StackPane {
                "-fx-border-color: rgba(76, 175, 80, 0.3); " +
                "-fx-border-width: 1; " +
                "-fx-border-radius: 8;";
+    }
+    
+    /**
+     * Safely applies an effect to a node, deferring if not in scene.
+     */
+    private void safeSetEffect(javafx.scene.Node node, javafx.scene.effect.Effect effect) {
+        if (node.getScene() != null && node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+            // Node is in scene and has valid bounds, apply immediately
+            node.setEffect(effect);
+        } else {
+            // Defer until node is in scene
+            node.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    // Use Platform.runLater to ensure layout is complete
+                    javafx.application.Platform.runLater(() -> {
+                        if (node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+                            node.setEffect(effect);
+                        }
+                    });
+                }
+            });
+        }
     }
     
     /**
