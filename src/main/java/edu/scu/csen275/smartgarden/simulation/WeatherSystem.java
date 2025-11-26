@@ -3,7 +3,9 @@ package edu.scu.csen275.smartgarden.simulation;
 import edu.scu.csen275.smartgarden.model.Garden;
 import edu.scu.csen275.smartgarden.model.Plant;
 import edu.scu.csen275.smartgarden.util.Logger;
+import javafx.animation.*;
 import javafx.beans.property.*;
+import javafx.util.Duration;
 import java.util.Random;
 
 /**
@@ -15,6 +17,8 @@ public class WeatherSystem {
     private int weatherDuration; // minutes
     private final Random random;
     private boolean rainTestMode = false; // TEST MODE: Force rain every minute
+    private boolean rotateSunnyRainyMode = false; // Rotate between sunny and rainy every minute
+    private Timeline realTimeRotationTimer; // Timer for real-world time rotation
     
     private static final Logger logger = Logger.getInstance();
     private static final int MIN_WEATHER_DURATION = 30; // minutes
@@ -34,12 +38,16 @@ public class WeatherSystem {
     
     /**
      * Updates weather system each simulation tick.
+     * Note: In rotation mode, weather changes are handled by real-time timer, not simulation ticks.
      */
     public void update() {
-        weatherDuration--;
-        
-        if (weatherDuration <= 0) {
-            changeWeather();
+        // Skip weather duration countdown in rotation mode (real-time timer handles it)
+        if (!rotateSunnyRainyMode) {
+            weatherDuration--;
+            
+            if (weatherDuration <= 0) {
+                changeWeather();
+            }
         }
         
         // Apply weather effects - rain should water plants continuously
@@ -48,7 +56,7 @@ public class WeatherSystem {
             applyWeatherEffects();
         } else {
             // For other weather, apply effects periodically (every 10 minutes)
-            if (weatherDuration % 10 == 0) {
+            if (!rotateSunnyRainyMode && weatherDuration % 10 == 0) {
                 applyWeatherEffects();
             }
         }
@@ -60,6 +68,7 @@ public class WeatherSystem {
      */
     public void enableRainTestMode() {
         rainTestMode = true;
+        rotateSunnyRainyMode = false; // Disable rotation mode
         // Force rain immediately
         currentWeather.set(Weather.RAINY);
         garden.setWeather(Weather.RAINY.name());
@@ -72,7 +81,54 @@ public class WeatherSystem {
      */
     public void disableRainTestMode() {
         rainTestMode = false;
+        rotateSunnyRainyMode = false;
         logger.info("Weather", "TEST MODE DISABLED: Returning to normal weather behavior");
+    }
+    
+    /**
+     * Enables rotation between SUNNY and RAINY every 1 REAL minute (60 seconds).
+     */
+    public void enableSunnyRainyRotation() {
+        rotateSunnyRainyMode = true;
+        rainTestMode = false; // Disable rain-only test mode
+        // Start with sunny
+        currentWeather.set(Weather.SUNNY);
+        garden.setWeather(Weather.SUNNY.name());
+        weatherDuration = 1; // Keep for display purposes
+        
+        // Stop any existing timer
+        if (realTimeRotationTimer != null) {
+            realTimeRotationTimer.stop();
+        }
+        
+        // Create real-time timer that rotates weather every 60 seconds (1 actual minute)
+        realTimeRotationTimer = new Timeline(
+            new KeyFrame(Duration.seconds(60), e -> {
+                // Rotate weather every 60 seconds (1 real minute)
+                Weather current = currentWeather.get();
+                Weather newWeather = (current == Weather.SUNNY) ? Weather.RAINY : Weather.SUNNY;
+                currentWeather.set(newWeather);
+                garden.setWeather(newWeather.name());
+                logger.info("Weather", "REAL-TIME ROTATION: Weather changed from " + current + " to " + 
+                           newWeather + " (after 1 actual minute)");
+            })
+        );
+        realTimeRotationTimer.setCycleCount(Timeline.INDEFINITE);
+        realTimeRotationTimer.play();
+        
+        logger.info("Weather", "REAL-TIME ROTATION MODE ENABLED: Weather will rotate between SUNNY and RAINY every 1 actual minute (60 seconds)");
+    }
+    
+    /**
+     * Disables sunny/rainy rotation mode.
+     */
+    public void disableSunnyRainyRotation() {
+        rotateSunnyRainyMode = false;
+        if (realTimeRotationTimer != null) {
+            realTimeRotationTimer.stop();
+            realTimeRotationTimer = null;
+        }
+        logger.info("Weather", "ROTATION MODE DISABLED: Returning to normal weather behavior");
     }
     
     /**
@@ -82,8 +138,19 @@ public class WeatherSystem {
         Weather oldWeather = currentWeather.get();
         Weather newWeather;
         
+        // ROTATION MODE: Rotate between SUNNY and RAINY every minute
+        if (rotateSunnyRainyMode) {
+            if (oldWeather == Weather.SUNNY) {
+                newWeather = Weather.RAINY;
+            } else {
+                newWeather = Weather.SUNNY;
+            }
+            weatherDuration = 1; // 1 minute
+            logger.info("Weather", "ROTATION MODE: Weather changed from " + oldWeather + " to " + 
+                       newWeather + " (Duration: 1 min)");
+        }
         // TEST MODE: Force rain every minute
-        if (rainTestMode) {
+        else if (rainTestMode) {
             newWeather = Weather.RAINY;
             weatherDuration = 1; // 1 minute
             logger.info("Weather", "TEST MODE: Weather forced to RAINY (Duration: 1 min)");

@@ -245,7 +245,14 @@ public class AnimatedTile extends StackPane {
         
         // Determine health-based style with pastel base
         String healthColor = plant.getHealthColor();
-        String style = getPastelPlantStyle(healthColor);
+        String style;
+        
+        // When pests attack, show light brown unhealthy background instead of normal colors
+        if (isUnderAttack) {
+            style = getUnhealthyPestStyle(); // Light brown background for pest attacks
+        } else {
+            style = getPastelPlantStyle(healthColor);
+        }
         
         // PRESERVE attack border if under attack
         if (isUnderAttack && !style.contains("border-color: #FF4444")) {
@@ -254,6 +261,7 @@ public class AnimatedTile extends StackPane {
             style = style.replace("-fx-border-color: #FFD54F;", "-fx-border-color: #FF4444;");
             style = style.replace("-fx-border-color: #FFB74D;", "-fx-border-color: #FF4444;");
             style = style.replace("-fx-border-color: #E57373;", "-fx-border-color: #FF4444;");
+            style = style.replace("-fx-border-color: #D7CCC8;", "-fx-border-color: #FF4444;");
         }
         
         baseTile.setStyle(style);
@@ -598,6 +606,18 @@ public class AnimatedTile extends StackPane {
                "-fx-border-color: #212121; " +
                "-fx-border-width: 1; " +
                "-fx-border-radius: 4;";
+    }
+    
+    /**
+     * Gets light brown unhealthy style for tiles under pest attack.
+     */
+    private String getUnhealthyPestStyle() {
+        // Light brown colors for unhealthy appearance during pest attacks
+        return "-fx-background-color: linear-gradient(to bottom, #D7CCC8 0%, #BCAAA4 100%); " +
+               "-fx-background-radius: 6; " +
+               "-fx-border-color: #A1887F; " +
+               "-fx-border-width: 3px; " +
+               "-fx-border-radius: 6;";
     }
     
     /**

@@ -78,9 +78,9 @@ public class SmartGardenApplication extends Application {
             // Setup pest event handlers
             setupPestEventHandlers();
             
-            // TEST MODE: Enable rain every 1 minute for testing
-            controller.getSimulationEngine().getWeatherSystem().enableRainTestMode();
-            System.out.println("[SmartGardenApplication] TEST MODE: Rain enabled every 1 minute");
+            // ROTATION MODE: Rotate between sunny and rainy every 1 minute
+            controller.getSimulationEngine().getWeatherSystem().enableSunnyRainyRotation();
+            System.out.println("[SmartGardenApplication] ROTATION MODE: Weather rotating between SUNNY and RAINY every 1 minute");
             
             // Add initial test log entry to verify log display
             controller.getLogger().info("System", "Smart Garden Simulation started");
@@ -431,6 +431,11 @@ public class SmartGardenApplication extends Application {
             // Update weather display and rain animation
             WeatherSystem.Weather weather = engine.getWeatherSystem().getCurrentWeather();
             infoPanel.getWeatherDisplay().updateWeather(weather);
+            
+            // Update background brightness based on weather
+            if (animatedBackground != null) {
+                animatedBackground.setWeather(weather == WeatherSystem.Weather.SUNNY);
+            }
             
             // Show/hide rain animation based on weather changes
             if (previousWeather != weather) {
