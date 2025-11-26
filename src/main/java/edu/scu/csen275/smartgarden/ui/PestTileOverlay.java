@@ -103,34 +103,11 @@ public class PestTileOverlay extends StackPane {
         spriteContainer.getChildren().add(pest);
         isUnderAttack = true;
         
-        // Create label showing pest type name - make it VERY visible
-        Label pestLabel = new Label(pest.getPestType());
-        pestLabel.setStyle(
-            "-fx-font-size: 10px; " +
-            "-fx-font-weight: bold; " +
-            "-fx-text-fill: #FFFFFF; " +  // White text
-            "-fx-background-color: #FF3333; " +  // Solid red background (no transparency)
-            "-fx-background-radius: 5px; " +
-            "-fx-padding: 3px 6px; " +
-            "-fx-border-color: #CC0000; " +
-            "-fx-border-width: 2px; " +
-            "-fx-border-radius: 5px; " +
-            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0, 0, 1);"
-        );
-        pestLabel.setMouseTransparent(true);
-        pestLabel.setVisible(true);
-        pestLabel.setOpacity(1.0);
-        pestLabel.setManaged(true);
-        pestTypeLabels.add(pestLabel);
-        spriteContainer.getChildren().add(pestLabel);
-        
-        // Position pest and label within tile bounds
+        // Position pest within tile bounds (no label, no warning indicator)
         double pestX = (tileWidth - 40) / 2 + (random.nextDouble() - 0.5) * 15;
         double pestY = (tileHeight - 40) / 2 + (random.nextDouble() - 0.5) * 15;
         pest.setLayoutX(pestX);
         pest.setLayoutY(pestY);
-        pestLabel.setLayoutX(pestX - 8);
-        pestLabel.setLayoutY(pestY + 35); // Below the pest sprite
         
         // CRITICAL: Make sure everything is visible and on top
         this.setVisible(true);
@@ -142,12 +119,9 @@ public class PestTileOverlay extends StackPane {
         pest.setOpacity(1.0);
         pest.setMouseTransparent(true);
         
-        pestLabel.setVisible(true);
-        pestLabel.setOpacity(1.0);
-        pestLabel.setMouseTransparent(true);
-        
-        warningIndicator.setVisible(true);
-        warningIndicator.show();
+        // Hide warning indicator - user only wants to see the pest
+        warningIndicator.setVisible(false);
+        warningIndicator.hide();
         
         // Make sure sprite container is sized correctly and fills the tile
         spriteContainer.setPrefSize(tileWidth, tileHeight);
@@ -161,23 +135,17 @@ public class PestTileOverlay extends StackPane {
         
         // Bring everything to front
         pest.toFront();
-        pestLabel.toFront();
         spriteContainer.toFront();
-        warningIndicator.toFront();
         this.toFront();
         
         // Force layout update
         this.requestLayout();
         spriteContainer.requestLayout();
         pest.requestLayout();
-        pestLabel.requestLayout();
         
         // Verify pest is in container
         if (!spriteContainer.getChildren().contains(pest)) {
             System.err.println("[PestTileOverlay] ERROR: Pest not in spriteContainer!");
-        }
-        if (!spriteContainer.getChildren().contains(pestLabel)) {
-            System.err.println("[PestTileOverlay] ERROR: Pest label not in spriteContainer!");
         }
         
         updateDamageVisuals();
@@ -206,6 +174,7 @@ public class PestTileOverlay extends StackPane {
         
         if (pests.isEmpty() && beneficialInsects.isEmpty()) {
             isUnderAttack = false;
+            warningIndicator.setVisible(false);
             warningIndicator.hide();
             stopDamageVisualAnimation();
             clearDamageVisuals();
@@ -236,6 +205,7 @@ public class PestTileOverlay extends StackPane {
         
         // Reset state
         isUnderAttack = false;
+        warningIndicator.setVisible(false);
         warningIndicator.hide();
         stopDamageVisualAnimation();
         clearDamageVisuals();
