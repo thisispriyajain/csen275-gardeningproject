@@ -43,6 +43,28 @@ public class GardenGridPanel extends VBox {
     }
     
     /**
+     * Safely applies an effect to a node, deferring if not in scene.
+     */
+    private void safeSetEffect(javafx.scene.Node node, javafx.scene.effect.Effect effect) {
+        if (node.getScene() != null && node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+            // Node is in scene and has valid bounds, apply immediately
+            node.setEffect(effect);
+        } else {
+            // Defer until node is in scene
+            node.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    // Use Platform.runLater to ensure layout is complete
+                    javafx.application.Platform.runLater(() -> {
+                        if (node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+                            node.setEffect(effect);
+                        }
+                    });
+                }
+            });
+        }
+    }
+    
+    /**
      * Helper to find particle system and trigger sparkles.
      */
     private void findAndTriggerSparkles(javafx.scene.Node node, double x, double y) {
@@ -374,7 +396,7 @@ public class GardenGridPanel extends VBox {
                 }
             } else {
                 // Hover effect on grass - make it glow slightly
-                grassTile.setEffect(new javafx.scene.effect.Glow(0.2));
+                safeSetEffect(grassTile, new javafx.scene.effect.Glow(0.2));
             }
         });
         
@@ -628,16 +650,8 @@ public class GardenGridPanel extends VBox {
             if (tile != null && tile.isVisible()) {
                 if (isHarmful) {
                     tile.spawnPest(pestType);
-                } else {
-                    // Beneficial insect - determine healing amount
-                    int healing = switch (pestType.toLowerCase()) {
-                        case "monarch butterfly" -> 3;
-                        case "honey bee" -> 2;
-                        case "blue dragonfly" -> 2;
-                        default -> 2;
-                    };
-                    tile.spawnBeneficial(pestType, healing);
                 }
+                // Beneficial insects removed - only harmful pests spawn
             } else {
                 System.err.println("[GardenGridPanel] ERROR: Cannot spawn pest - tile is null or not visible");
             }
@@ -690,20 +704,6 @@ public class GardenGridPanel extends VBox {
             AnimatedTile tile = tiles[position.row()][position.column()];
             if (tile != null && tile.isVisible() && tile.hasPests()) {
                 tile.applyPesticide();
-            }
-        }
-    }
-    
-    /**
-     * Handles beneficial insect healing event.
-     */
-    public void onBeneficialInsectHealing(Position position, int healing) {
-        if (position.row() >= 0 && position.row() < GRID_SIZE && 
-            position.column() >= 0 && position.column() < GRID_SIZE) {
-            
-            AnimatedTile tile = tiles[position.row()][position.column()];
-            if (tile != null && tile.isVisible()) {
-                tile.showHealingVisual(healing);
             }
         }
     }

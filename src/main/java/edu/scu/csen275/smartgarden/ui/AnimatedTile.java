@@ -34,7 +34,6 @@ public class AnimatedTile extends StackPane {
     // Pest management
     private PestTileOverlay pestOverlay;
     private List<PestSprite> activePests;
-    private List<BeneficialInsectSprite> activeBeneficialInsects;
     private Timeline damageTickTimeline;
     private boolean isUnderAttack;
     private Pane animationContainer; // For floating text animations
@@ -73,7 +72,8 @@ public class AnimatedTile extends StackPane {
         baseTile.setMinSize(BASE_SIZE, BASE_SIZE);
         baseTile.setMaxSize(BASE_SIZE, BASE_SIZE);
         baseTile.setStyle(getPastelEmptyStyle());
-        baseTile.setEffect(createSoftShadow());
+        // Defer effect application until node is in scene
+        safeSetEffect(baseTile, createSoftShadow());
         
         // Plant image view (using emoji images from CDN instead of fonts)
         plantImageView = new ImageView();
@@ -81,7 +81,8 @@ public class AnimatedTile extends StackPane {
         plantImageView.setFitHeight(PLANT_IMAGE_SIZE);
         plantImageView.setPreserveRatio(true);
         plantImageView.setSmooth(true);
-        plantImageView.setEffect(createPlantShadow()); // Shadow under plant
+        // Defer effect application until node is in scene
+        safeSetEffect(plantImageView, createPlantShadow()); // Shadow under plant
         StackPane.setAlignment(plantImageView, Pos.CENTER);
         
         // Pest overlay
@@ -90,7 +91,6 @@ public class AnimatedTile extends StackPane {
         
         // Initialize pest lists
         activePests = new ArrayList<>();
-        activeBeneficialInsects = new ArrayList<>();
         isUnderAttack = false;
         
         // CRITICAL: Add children in correct z-order
@@ -105,6 +105,28 @@ public class AnimatedTile extends StackPane {
         
         // Initialize animations
         setupAnimations();
+    }
+    
+    /**
+     * Safely applies an effect to a node, deferring if not in scene.
+     */
+    private void safeSetEffect(javafx.scene.Node node, Effect effect) {
+        if (node.getScene() != null && node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+            // Node is in scene and has valid bounds, apply immediately
+            node.setEffect(effect);
+        } else {
+            // Defer until node is in scene
+            node.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    // Use Platform.runLater to ensure layout is complete
+                    javafx.application.Platform.runLater(() -> {
+                        if (node.getBoundsInLocal().getWidth() > 0 && node.getBoundsInLocal().getHeight() > 0) {
+                            node.setEffect(effect);
+                        }
+                    });
+                }
+            });
+        }
     }
     
     /**
@@ -168,8 +190,7 @@ public class AnimatedTile extends StackPane {
         
         // PRESERVE pest overlay visibility - don't clear it when updating
         if (pestOverlay != null && (isUnderAttack || 
-            (activePests != null && !activePests.isEmpty()) ||
-            (activeBeneficialInsects != null && !activeBeneficialInsects.isEmpty()))) {
+            (activePests != null && !activePests.isEmpty()))) {
             pestOverlay.setVisible(true);
             pestOverlay.toFront();
             
@@ -269,7 +290,7 @@ public class AnimatedTile extends StackPane {
         // PRESERVE attack glow effect if under attack
         if (!isUnderAttack) {
             baseTile.setOpacity(1.0);
-            baseTile.setEffect(createSoftShadow());
+            safeSetEffect(baseTile, createSoftShadow());
         }
         // If under attack, updateTileBorderForAttack() will set the effect
         
@@ -341,7 +362,7 @@ public class AnimatedTile extends StackPane {
         darkeningBlend.setMode(BlendMode.MULTIPLY);
         darkeningBlend.setBottomInput(colorAdjust);
         darkeningBlend.setTopInput(createSoftShadow());
-        baseTile.setEffect(darkeningBlend);
+        safeSetEffect(baseTile, darkeningBlend);
         
         // Temporarily darken the background style
         String darkenedStyle = darkenStyle(originalStyle);
@@ -353,7 +374,7 @@ public class AnimatedTile extends StackPane {
         darkenFade.setToValue(1.0);    // Back to normal
         darkenFade.setOnFinished(e -> {
             isWatering = false;
-            baseTile.setEffect(createSoftShadow()); // Restore original effect
+            safeSetEffect(baseTile, createSoftShadow()); // Restore original effect
             // Restore original style
             if (originalStyle != null) {
                 baseTile.setStyle(originalStyle);
@@ -625,7 +646,7 @@ public class AnimatedTile extends StackPane {
      */
     public void applyHoverEffect() {
         if (!currentStyle.equals("dead")) {
-            baseTile.setEffect(new Glow(0.3));
+            safeSetEffect(baseTile, new Glow(0.3));
         }
     }
     
@@ -633,7 +654,7 @@ public class AnimatedTile extends StackPane {
      * Removes hover effect.
      */
     public void removeHoverEffect() {
-        baseTile.setEffect(createSoftShadow());
+        safeSetEffect(baseTile, createSoftShadow());
     }
     
     /**
@@ -660,7 +681,6 @@ public class AnimatedTile extends StackPane {
             pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
             pestOverlay.setVisible(false);
             activePests = new ArrayList<>();
-            activeBeneficialInsects = new ArrayList<>();
             this.getChildren().add(pestOverlay);
         }
         
@@ -703,23 +723,6 @@ public class AnimatedTile extends StackPane {
     }
     
     /**
-     * Spawns a beneficial insect on this tile.
-     */
-    public void spawnBeneficial(String insectType, int healingAmount) {
-        if (pestOverlay == null) {
-            pestOverlay = new PestTileOverlay(BASE_SIZE, BASE_SIZE);
-            pestOverlay.setVisible(false);
-            activePests = new ArrayList<>();
-            activeBeneficialInsects = new ArrayList<>();
-            this.getChildren().add(pestOverlay);
-        }
-        
-        BeneficialInsectSprite insect = new BeneficialInsectSprite(insectType, healingAmount);
-        activeBeneficialInsects.add(insect);
-        pestOverlay.addBeneficialInsect(insect);
-    }
-    
-    /**
      * Shows damage visual when pest attacks.
      */
     public void showDamageVisual(int damage) {
@@ -742,28 +745,6 @@ public class AnimatedTile extends StackPane {
                 for (PestSprite pest : activePests) {
                     pest.animateAttack();
                 }
-            }
-        }
-    }
-    
-    /**
-     * Shows healing visual when beneficial insect helps.
-     */
-    public void showHealingVisual(int healing) {
-        // Show floating healing text
-        if (animationContainer != null) {
-            javafx.geometry.Bounds bounds = this.localToScene(this.getBoundsInLocal());
-            javafx.geometry.Bounds containerBounds = animationContainer.sceneToLocal(bounds);
-            DamageTextAnimation.createHealingText(animationContainer,
-                containerBounds.getMinX() + containerBounds.getWidth() / 2,
-                containerBounds.getMinY() + containerBounds.getHeight() / 2,
-                healing);
-        }
-        
-        // Animate beneficial insects
-        if (activeBeneficialInsects != null) {
-            for (BeneficialInsectSprite insect : activeBeneficialInsects) {
-                insect.animateHealing();
             }
         }
     }
@@ -793,12 +774,10 @@ public class AnimatedTile extends StackPane {
         
         // Get copies of pest lists before clearing (for animation)
         List<PestSprite> pestsToAnimate = activePests != null ? new ArrayList<>(activePests) : new ArrayList<>();
-        List<BeneficialInsectSprite> insectsToAnimate = activeBeneficialInsects != null ? new ArrayList<>(activeBeneficialInsects) : new ArrayList<>();
         
         // Animate spray effect (this will handle pest death animations)
         PesticideSprayEngine.animateSpray(this, 
             pestsToAnimate,
-            insectsToAnimate,
             animationContainer,
             centerX,
             centerY);
@@ -821,7 +800,7 @@ public class AnimatedTile extends StackPane {
         if (pestOverlay != null) {
             pestOverlay.clearDamageVisuals();
             isUnderAttack = false;
-            pestOverlay.setVisible(activeBeneficialInsects != null && activeBeneficialInsects.size() > 0);
+            pestOverlay.setVisible(false);
         }
         
         // Restore healthy border
@@ -850,7 +829,7 @@ public class AnimatedTile extends StackPane {
             redShadow.setRadius(8);
             redShadow.setOffsetX(0);
             redShadow.setOffsetY(0);
-            baseTile.setEffect(redShadow);
+            safeSetEffect(baseTile, redShadow);
         }
     }
     
@@ -886,8 +865,7 @@ public class AnimatedTile extends StackPane {
         
         if (pestOverlay != null) {
             // Update overlay visibility
-            pestOverlay.setVisible(isUnderAttack || 
-                (activeBeneficialInsects != null && activeBeneficialInsects.size() > 0));
+            pestOverlay.setVisible(isUnderAttack);
         }
         
         // Update attack state
@@ -910,11 +888,5 @@ public class AnimatedTile extends StackPane {
         return activePests != null ? activePests.size() : 0;
     }
     
-    /**
-     * Gets active beneficial insect count.
-     */
-    public int getActiveBeneficialCount() {
-        return activeBeneficialInsects != null ? activeBeneficialInsects.size() : 0;
-    }
 }
 
