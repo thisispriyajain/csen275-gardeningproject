@@ -86,10 +86,10 @@ public class BeneficialInsectSprite extends StackPane {
      */
     private String getInsectEmoji(String type) {
         return switch (type.toLowerCase()) {
-            case "monarch butterfly" -> "🦋🟧";    // Monarch Butterfly
-            case "honey bee" -> "🐝🟨";           // Honey Bee
-            case "blue dragonfly" -> "🟦🐉";      // Blue Dragonfly
-            default -> "🐝🟨";                    // Honey Bee (default)
+            case "monarch butterfly" -> "🦋";    // Just the butterfly emoji
+            case "honey bee" -> "🐝";           // Just the bee emoji
+            case "blue dragonfly" -> "🐉";      // Just the dragonfly emoji
+            default -> "🐝";                    // Honey Bee (default)
         };
     }
     

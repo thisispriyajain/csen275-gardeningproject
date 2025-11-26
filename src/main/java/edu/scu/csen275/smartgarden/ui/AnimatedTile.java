@@ -234,11 +234,7 @@ public class AnimatedTile extends StackPane {
         }
         
         // For all plants, ensure image view properties are stable (prevents blinking)
-        // Stop any running animations that might interfere
-        if (growthAnimation.getStatus() == Animation.Status.RUNNING) {
-            growthAnimation.stop();
-        }
-        // Ensure image view is always at stable state
+        // Ensure image view is always at stable state and full size
         plantImageView.setVisible(true);
         plantImageView.setOpacity(1.0);
         plantImageView.setScaleX(1.0);
@@ -271,10 +267,10 @@ public class AnimatedTile extends StackPane {
         
         currentStyle = healthColor.toLowerCase();
         
-        // Animate plant appearance only if it's a new plant (not on every update)
-        if (isNewPlant) {
-            animateGrowth();
-        }
+        // Plants appear at full size immediately (no growth animation)
+        // Ensure image view is at full scale from the start
+        plantImageView.setScaleX(1.0);
+        plantImageView.setScaleY(1.0);
     }
     
     /**
