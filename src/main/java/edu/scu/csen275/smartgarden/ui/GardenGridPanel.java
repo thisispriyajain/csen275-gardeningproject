@@ -342,7 +342,7 @@ public class GardenGridPanel extends VBox {
             if (existing == null) {
                 PlantType selectedType = plantSelector.getValue();
                 if (selectedType != null && controller.plantSeed(selectedType, position)) {
-                    tile.animateGrowth();
+                    // Plant appears at full size immediately (no growth animation)
                     updateTile(row, col);
                     
                     // Float petals from grass when planting (only if there was a flower)

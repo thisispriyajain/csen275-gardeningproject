@@ -82,11 +82,11 @@ public class PestSprite extends StackPane {
      */
     private String getPestEmoji(String type) {
         return switch (type.toLowerCase()) {
-            case "red mite" -> "🔴🐞";           // Red Mite
-            case "green leaf worm" -> "🟢🐛";    // Green Leaf Worm
-            case "black beetle" -> "⚫🪲";        // Black Beetle
-            case "brown caterpillar" -> "🟤🐛";  // Brown Caterpillar
-            default -> "🔴🐞";                   // Red Mite (default)
+            case "red mite" -> "🐞";           // Just the mite emoji
+            case "green leaf worm" -> "🐛";    // Just the worm emoji
+            case "black beetle" -> "🪲";        // Just the beetle emoji
+            case "brown caterpillar" -> "🐛";  // Just the caterpillar emoji (same as worm)
+            default -> "🐞";                   // Red Mite (default)
         };
     }
     
