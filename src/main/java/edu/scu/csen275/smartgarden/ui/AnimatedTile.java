@@ -49,6 +49,7 @@ public class AnimatedTile extends StackPane {
     };
     
     private static final double BASE_SIZE = 60;
+    private static final double PLANT_IMAGE_SIZE = 44; // Plant image size (larger than before)
     
     public AnimatedTile() {
         this(0); // Default index
@@ -76,8 +77,8 @@ public class AnimatedTile extends StackPane {
         
         // Plant image view (using emoji images from CDN instead of fonts)
         plantImageView = new ImageView();
-        plantImageView.setFitWidth(32);
-        plantImageView.setFitHeight(32);
+        plantImageView.setFitWidth(PLANT_IMAGE_SIZE);
+        plantImageView.setFitHeight(PLANT_IMAGE_SIZE);
         plantImageView.setPreserveRatio(true);
         plantImageView.setSmooth(true);
         plantImageView.setEffect(createPlantShadow()); // Shadow under plant
@@ -209,13 +210,13 @@ public class AnimatedTile extends StackPane {
                 String imagePath = getPlantImagePath(plant);
                 if (imagePath != null) {
                     // Always create new image for new plant type
-                    cachedImage = new Image(getClass().getResourceAsStream(imagePath), 32, 32, true, true);
+                    cachedImage = new Image(getClass().getResourceAsStream(imagePath), PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
                     plantImageView.setImage(cachedImage);
                 } else {
                     // Fallback to emoji if image not found
                     String emoji = getPlantEmoji(plant);
                     String imageUrl = getEmojiImageUrl(emoji);
-                    cachedImage = new Image(imageUrl, 32, 32, true, true);
+                    cachedImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
                     plantImageView.setImage(cachedImage);
                 }
             } catch (Exception e) {
@@ -223,7 +224,7 @@ public class AnimatedTile extends StackPane {
                 try {
                     String emoji = getPlantEmoji(plant);
                     String imageUrl = getEmojiImageUrl(emoji);
-                    cachedImage = new Image(imageUrl, 32, 32, true, true);
+                    cachedImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
                     plantImageView.setImage(cachedImage);
                 } catch (Exception e2) {
                     cachedImage = null;
@@ -282,7 +283,7 @@ public class AnimatedTile extends StackPane {
     private void setDead() {
         try {
             String imageUrl = getEmojiImageUrl("💀");
-            Image emojiImage = new Image(imageUrl, 32, 32, true, true);
+            Image emojiImage = new Image(imageUrl, PLANT_IMAGE_SIZE, PLANT_IMAGE_SIZE, true, true);
             plantImageView.setImage(emojiImage);
         } catch (Exception e) {
             plantImageView.setImage(null);
