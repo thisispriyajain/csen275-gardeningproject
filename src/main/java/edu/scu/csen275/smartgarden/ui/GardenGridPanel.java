@@ -517,8 +517,23 @@ public class GardenGridPanel extends VBox {
     
     /**
      * Animates watering effect on a zone.
+     * Only shows animation if it's not raining.
      */
     public void animateWatering(int zoneId) {
+        // Check weather - don't show sprinkler animation if it's raining
+        try {
+            if (controller != null && controller.getSimulationEngine() != null) {
+                edu.scu.csen275.smartgarden.simulation.WeatherSystem.Weather currentWeather = 
+                    controller.getSimulationEngine().getWeatherSystem().getCurrentWeather();
+                if (currentWeather == edu.scu.csen275.smartgarden.simulation.WeatherSystem.Weather.RAINY) {
+                    // It's raining - don't show sprinkler animation
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            // If we can't check weather, proceed (shouldn't happen, but be safe)
+        }
+        
         // Calculate zone boundaries (3x3 grid of zones)
         int zoneRow = (zoneId - 1) / 3;
         int zoneCol = (zoneId - 1) % 3;
@@ -551,7 +566,7 @@ public class GardenGridPanel extends VBox {
         }
         
         if (container != null) {
-            // Show sprinkler animation
+            // Show sprinkler animation (only if not raining - checked by caller)
             SprinklerAnimationEngine.animateSprinkler(zoneId, zoneTiles, container);
             // Also show water droplets/ripples
             WaterAnimationEngine.animateZoneWatering(zoneTiles, container);
@@ -560,8 +575,23 @@ public class GardenGridPanel extends VBox {
     
     /**
      * Animates watering effect on all tiles with full visual effects.
+     * Only shows animation if it's not raining.
      */
     public void animateAllTilesWatering() {
+        // Check weather - don't show sprinkler animation if it's raining
+        try {
+            if (controller != null && controller.getSimulationEngine() != null) {
+                edu.scu.csen275.smartgarden.simulation.WeatherSystem.Weather currentWeather = 
+                    controller.getSimulationEngine().getWeatherSystem().getCurrentWeather();
+                if (currentWeather == edu.scu.csen275.smartgarden.simulation.WeatherSystem.Weather.RAINY) {
+                    // It's raining - don't show sprinkler animation
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            // If we can't check weather, proceed (shouldn't happen, but be safe)
+        }
+        
         List<AnimatedTile> allTiles = new java.util.ArrayList<>();
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {

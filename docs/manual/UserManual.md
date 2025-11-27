@@ -20,13 +20,14 @@
 Welcome to the Smart Garden Simulation System! This application simulates an automated garden with intelligent systems that water plants, control temperature, and manage pests. It's designed for educational purposes to demonstrate object-oriented design principles and simulation systems.
 
 **Key Features:**
-- 9x9 garden grid with multiple plant types
-- Automated watering system with 9 zones
+- 9x9 garden grid with 9 plant types (Fruits, Vegetables, Flowers)
+- Automated watering system with 9 zones (weather-aware)
 - Temperature control system
-- Pest detection and control
-- Dynamic weather simulation
-- Real-time visualization and logging
+- Pest detection and control (harmful pests only)
+- Dynamic weather simulation (5 weather types)
+- Real-time visualization with smooth animations
 - Variable simulation speed (1x to 10x)
+- Smart sprinkler control (stops automatically when raining)
 
 ---
 
@@ -148,41 +149,59 @@ java -jar smartGarden-1.0.0.jar
 
 ### Available Plant Types
 
-#### 1. **Flower** 🌸
-- **Growth Rate**: Moderate (7 days per stage)
-- **Water Needs**: Low (30%)
-- **Special Traits**: Beautiful blooms, relatively hardy
-- **Best For**: Decorative purposes, beginners
+#### Fruits
+1. **Strawberry** 🍓
+   - **Growth Rate**: Moderate
+   - **Water Needs**: Medium
+   - **Special Traits**: Sweet fruit producer, moderate maintenance
+   
+2. **Grapevine** 🍇
+   - **Growth Rate**: Moderate to Fast
+   - **Water Needs**: Medium to High
+   - **Special Traits**: Vine growth, fruit production
+   
+3. **Apple Sapling** 🍎
+   - **Growth Rate**: Slow (tree growth)
+   - **Water Needs**: Medium
+   - **Special Traits**: Long-term investment, tree structure
 
-#### 2. **Tomato** (Vegetable) 🍅
-- **Growth Rate**: Fast (5 days per stage)
-- **Water Needs**: High (60%)
-- **Special Traits**: Quick growth, high yield, pest-prone
-- **Best For**: Experienced gardeners, high-maintenance crops
+#### Vegetables
+4. **Carrot** 🥕
+   - **Growth Rate**: Moderate
+   - **Water Needs**: Medium
+   - **Special Traits**: Root vegetable, moderate maintenance
+   
+5. **Tomato** 🍅
+   - **Growth Rate**: Fast
+   - **Water Needs**: High
+   - **Special Traits**: Quick growth, high yield, pest-prone
+   
+6. **Onion** 🧅
+   - **Growth Rate**: Moderate
+   - **Water Needs**: Medium
+   - **Special Traits**: Bulb vegetable, moderate maintenance
 
-#### 3. **Tree** 🌳
-- **Growth Rate**: Very Slow (15 days per stage)
-- **Water Needs**: Medium (50%)
-- **Special Traits**: Long lifespan (200 days), very hardy
-- **Best For**: Long-term simulations, stability
-
-#### 4. **Grass** 🌿
-- **Growth Rate**: Fast (4 days per stage)
-- **Water Needs**: Medium (40%)
-- **Special Traits**: Ground cover, spreads quickly
-- **Best For**: Filling spaces, low maintenance
-
-#### 5. **Basil** (Herb) 🌱
-- **Growth Rate**: Moderate (6 days per stage)
-- **Water Needs**: Low (35%)
-- **Special Traits**: Pest-resistant, aromatic
-- **Best For**: Easy gardening, pest control
+#### Flowers
+7. **Sunflower** 🌻
+   - **Growth Rate**: Fast
+   - **Water Needs**: Medium to High
+   - **Special Traits**: Large blooms, decorative
+   
+8. **Tulip** 🌸
+   - **Growth Rate**: Moderate
+   - **Water Needs**: Medium
+   - **Special Traits**: Beautiful blooms, decorative
+   
+9. **Rose** 🌹
+   - **Growth Rate**: Moderate
+   - **Water Needs**: Medium
+   - **Special Traits**: Classic flower, decorative
 
 ### How to Plant
 
 1. **Select Plant Type**
    - Use the dropdown menu above the garden grid
-   - Choose from: Flower, Tomato, Tree, Grass, or Basil
+   - Choose from: Strawberry, Grapevine, Apple, Carrot, Tomato, Onion, Sunflower, Tulip, or Rose
 
 2. **Click to Plant**
    - Click any empty (brown) cell
@@ -261,6 +280,7 @@ All plants progress through these stages:
 - Garden divided into 9 zones (3x3 arrangement)
 - Each zone has a moisture sensor
 - Sprinklers activate when moisture drops below 40%
+- **Smart Feature**: Sprinklers automatically stop when it starts raining
 - Automatic watering provides 30 units per cycle
 - Watering occurs every 5 simulation minutes (check cycle)
 
@@ -297,10 +317,8 @@ All plants progress through these stages:
 ### Pest Control System
 
 **How It Works:**
-- Pests appear randomly throughout simulation
-- Two types:
-  - **Harmful Pests** (Aphids, Caterpillars, etc.) - damage plants
-  - **Beneficial Insects** (Bees, Ladybugs) - help plants
+- Harmful pests appear randomly throughout simulation
+- Pest types include: Aphids, Caterpillars, Beetles, and more
 - Infestation level tracked per zone
 - Automatic treatment at 60% infestation
 - Pesticide application reduces pest count by 50%
@@ -313,15 +331,15 @@ All plants progress through these stages:
 
 **Indicators:**
 - Pests attack plants gradually
-- Beneficial insects are preserved during treatment (70% survival rate)
 - Low pesticide stock requires refill
+- Treatment is effective but requires monitoring
 
 ### Weather System
 
 **Weather Types:**
 - **Sunny** ☀: Optimal for growth, increases health, evaporates moisture
 - **Cloudy** ☁: Neutral effect, moderate conditions
-- **Rainy** 🌧: Adds moisture naturally, reduces need for watering
+- **Rainy** 🌧: Adds moisture naturally, **automatically stops sprinklers** to conserve water
 - **Windy** 💨: Stresses plants slightly, increases evaporation
 - **Snowy** ❄: Damages plants, requires heating
 
@@ -586,6 +604,15 @@ Enjoy exploring the world of automated gardening! 🌱
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: November 2025  
+**Last Updated**: December 2024  
 **Course**: CSEN 275 - Object-Oriented Analysis & Design
+
+## Recent Updates
+
+- **Version 1.0.0** (December 2024):
+  - Added 9 plant types (3 Fruits, 3 Vegetables, 3 Flowers)
+  - Implemented weather-aware sprinkler control (stops automatically when raining)
+  - All plant images now use local PNG files (no web dependencies)
+  - Improved animation performance and stability
+  - Enhanced pest control system (harmful pests only)
 

@@ -21,8 +21,24 @@ public class SprinklerAnimationEngine {
     private static final double FRAME_RATE = 60.0; // 60 FPS
     private static final double FRAME_INTERVAL = 1000.0 / FRAME_RATE; // ~16.67ms
     
-    // Track active animations to prevent duplicates
+    // Track active animations to prevent duplicates and allow stopping
     private static final java.util.Set<Pane> activeAnimations = new java.util.HashSet<>();
+    private static final java.util.Map<Pane, Timeline> activeTimelines = new java.util.HashMap<>();
+    
+    /**
+     * Stops all active sprinkler animations (called when rain starts).
+     */
+    public static void stopAllAnimations() {
+        synchronized (activeAnimations) {
+            for (Timeline timeline : new ArrayList<>(activeTimelines.values())) {
+                if (timeline != null) {
+                    timeline.stop();
+                }
+            }
+            activeTimelines.clear();
+            activeAnimations.clear();
+        }
+    }
     
     /**
      * Animates sprinkler water for a specific zone.
@@ -181,53 +197,61 @@ public class SprinklerAnimationEngine {
                         }
                     }
                     
-                    // Remove canvas when all particles are gone
-                    if (!hasActiveParticles) {
-                        if (container.getChildren().contains(animationCanvas)) {
-                            container.getChildren().remove(animationCanvas);
+                        // Remove canvas when all particles are gone
+                        if (!hasActiveParticles) {
+                            if (container.getChildren().contains(animationCanvas)) {
+                                container.getChildren().remove(animationCanvas);
+                            }
+                            synchronized (activeAnimations) {
+                                activeAnimations.remove(container);
+                                activeTimelines.remove(container);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        // Handle any drawing errors - clean up
+                        try {
+                            if (container.getChildren().contains(animationCanvas)) {
+                                container.getChildren().remove(animationCanvas);
+                            }
+                        } catch (Exception ex2) {
+                            // Ignore cleanup errors
                         }
                         synchronized (activeAnimations) {
                             activeAnimations.remove(container);
+                            activeTimelines.remove(container);
                         }
                     }
-                } catch (Exception ex) {
-                    // Handle any drawing errors - clean up
+            })
+        );
+            animationTimeline.setCycleCount(Animation.INDEFINITE);
+            
+            // Store timeline for potential stopping
+            synchronized (activeAnimations) {
+                activeTimelines.put(container, animationTimeline);
+            }
+            
+            // Stop after animation duration
+            Timeline stopTimeline = new Timeline(
+                new KeyFrame(Duration.millis(ANIMATION_DURATION), e -> {
+                    if (animationTimeline != null) {
+                        animationTimeline.stop();
+                    }
                     try {
-                        if (container.getChildren().contains(animationCanvas)) {
+                        if (container != null && container.getChildren().contains(animationCanvas)) {
                             container.getChildren().remove(animationCanvas);
                         }
-                    } catch (Exception ex2) {
+                    } catch (Exception ex) {
                         // Ignore cleanup errors
                     }
                     synchronized (activeAnimations) {
                         activeAnimations.remove(container);
+                        activeTimelines.remove(container);
                     }
-                }
-            })
-        );
-        animationTimeline.setCycleCount(Animation.INDEFINITE);
-        
-        // Stop after animation duration
-        Timeline stopTimeline = new Timeline(
-            new KeyFrame(Duration.millis(ANIMATION_DURATION), e -> {
-                if (animationTimeline != null) {
-                    animationTimeline.stop();
-                }
-                try {
-                    if (container != null && container.getChildren().contains(animationCanvas)) {
-                        container.getChildren().remove(animationCanvas);
-                    }
-                } catch (Exception ex) {
-                    // Ignore cleanup errors
-                }
-                synchronized (activeAnimations) {
-                    activeAnimations.remove(container);
-                }
-            })
-        );
-        
-        animationTimeline.play();
-        stopTimeline.play();
+                })
+            );
+            
+            animationTimeline.play();
+            stopTimeline.play();
     }
     
     /**
