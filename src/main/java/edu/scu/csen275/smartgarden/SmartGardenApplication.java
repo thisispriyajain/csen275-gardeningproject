@@ -463,6 +463,12 @@ public class SmartGardenApplication extends Application {
                     if (weather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed to RAINY - starting rain animation");
                         RainAnimationEngine.startRain(centerContainer);
+                        // Stop all sprinklers when rain starts
+                        if (engine != null && engine.getWateringSystem() != null) {
+                            engine.getWateringSystem().stopAllSprinklers();
+                        }
+                        // Stop all sprinkler animations when rain starts
+                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
                     } else if (previousWeather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed from RAINY to " + weather + " - stopping rain animation");
                         RainAnimationEngine.stopRain(centerContainer);
@@ -503,6 +509,13 @@ public class SmartGardenApplication extends Application {
                     List<edu.scu.csen275.smartgarden.util.Logger.LogEntry> logEntries = 
                         logger.getRecentLogs(20);
                     
+                    // Get current weather once - check if it's raining
+                    WeatherSystem.Weather currentWeather = engine.getWeatherSystem().getCurrentWeather();
+                    boolean isRaining = (currentWeather == WeatherSystem.Weather.RAINY);
+                    
+                    // Track processed log entries to avoid duplicate animations
+                    java.util.Set<String> processedWateringLogs = new java.util.HashSet<>();
+                    
                     for (edu.scu.csen275.smartgarden.util.Logger.LogEntry entry : logEntries) {
                         try {
                             String logEntry = entry.toDisplayFormat();
@@ -511,6 +524,18 @@ public class SmartGardenApplication extends Application {
                                 
                                 // Detect automatic watering from logs
                                 if (logEntry.contains("Auto-watered Zone")) {
+                                    // Always skip if it's currently raining
+                                    if (isRaining) {
+                                        continue;
+                                    }
+                                    
+                                    // Create unique key from timestamp and message to prevent duplicates
+                                    String logKey = entry.timestamp().toString() + ":" + logEntry;
+                                    if (processedWateringLogs.contains(logKey)) {
+                                        continue; // Already processed this log entry
+                                    }
+                                    processedWateringLogs.add(logKey);
+                                    
                                     // Extract zone ID from log message
                                     try {
                                         int zoneId = Integer.parseInt(logEntry.substring(

@@ -10,12 +10,13 @@ A comprehensive computerized garden simulation system that models an automated g
 
 ## Features
 
-- **Multi-Plant Support**: Flowers, Vegetables, Trees, Grass, and Herbs
-- **Automated Systems**: Watering, Heating, and Pest Control
+- **Multi-Plant Support**: 9 plant types including Fruits (Strawberry, Grapevine, Apple), Vegetables (Carrot, Tomato, Onion), and Flowers (Sunflower, Tulip, Rose)
+- **Automated Systems**: Watering (with weather-aware sprinklers), Heating, and Pest Control
 - **Real-time Simulation**: Multi-threaded time-based simulation engine
-- **Interactive UI**: JavaFX-based graphical interface
+- **Interactive UI**: JavaFX-based graphical interface with smooth animations
 - **Comprehensive Logging**: Detailed event tracking and analysis
-- **Random Events**: Weather changes, pest infestations, and environmental factors
+- **Dynamic Weather System**: 5 weather types (Sunny, Cloudy, Rainy, Windy, Snowy) that affect plant growth and system behavior
+- **Smart Watering**: Sprinklers automatically stop when it rains to conserve water
 
 ## Quick Start
 

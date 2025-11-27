@@ -59,6 +59,7 @@ edu.scu.csen275.smartgarden/
 │   ├── Zone.java
 │   ├── Position.java
 │   ├── GrowthStage.java (enum)
+│   ├── PlantType.java (enum)
 │   ├── Plant.java (abstract)
 │   ├── Flower.java
 │   ├── Vegetable.java
@@ -74,11 +75,15 @@ edu.scu.csen275.smartgarden/
 │   ├── HeatingSystem.java
 │   ├── Pest.java (abstract)
 │   ├── HarmfulPest.java
-│   ├── BeneficialInsect.java
 │   └── PestControlSystem.java
 ├── simulation/
 │   ├── SimulationEngine.java
 │   └── WeatherSystem.java
+├── ui/
+│   ├── AnimatedTile.java
+│   ├── GardenGridPanel.java
+│   ├── SprinklerAnimationEngine.java
+│   └── WaterAnimationEngine.java
 └── util/
     └── Logger.java
 ```
@@ -96,6 +101,8 @@ edu.scu.csen275.smartgarden/
 - Event log viewer
 - Simulation controls (Start/Pause/Stop/Speed)
 - Manual override buttons
+- Smooth animations (sprinkler effects, water ripples)
+- Local plant images (all 9 plant types use local PNG images)
 
 ### ✅ Simulation Engine (Complete)
 
@@ -144,12 +151,22 @@ edu.scu.csen275.smartgarden/
 - Position-based plant management
 - Zone-based system coordination
 
-### 2. Plant Types (5 Total)
-1. **Flower** - Decorative, moderate growth
-2. **Vegetable (Tomato)** - Fast growth, high water needs
-3. **Tree** - Very slow growth, long lifespan (200 days)
-4. **Grass** - Fast growth, ground cover
-5. **Herb (Basil)** - Pest-resistant, aromatic
+### 2. Plant Types (9 Total)
+
+**Fruits (3):**
+1. **Strawberry** 🍓 - Moderate growth, sweet fruit
+2. **Grapevine** 🍇 - Moderate to fast growth, vine structure
+3. **Apple Sapling** 🍎 - Slow growth, tree structure
+
+**Vegetables (3):**
+4. **Carrot** 🥕 - Moderate growth, root vegetable
+5. **Tomato** 🍅 - Fast growth, high water needs
+6. **Onion** 🧅 - Moderate growth, bulb vegetable
+
+**Flowers (3):**
+7. **Sunflower** 🌻 - Fast growth, large blooms
+8. **Tulip** 🌸 - Moderate growth, decorative
+9. **Rose** 🌹 - Moderate growth, classic flower
 
 **Growth Stages**: Seed → Seedling → Mature → Flowering → Fruiting
 
@@ -159,6 +176,7 @@ edu.scu.csen275.smartgarden/
 - 9 zones with individual moisture sensors
 - 9 sprinklers (one per zone)
 - Automatic watering when moisture < threshold
+- **Weather-aware**: Sprinklers automatically stop when rain is detected
 - Water supply management (10,000L initial)
 - Manual override capability
 
@@ -171,11 +189,10 @@ edu.scu.csen275.smartgarden/
 
 #### Pest Control System
 - Random pest spawning
-- Harmful pests (Aphids, Caterpillars, Beetles, etc.)
-- Beneficial insects (Bees, Ladybugs, Butterflies)
+- Harmful pests only (Aphids, Caterpillars, Beetles, etc.)
 - Automatic treatment at 60% infestation
 - Pesticide stock management (50 initial)
-- Selective treatment (preserves 70% of beneficial insects)
+- Effective pest reduction (50% reduction per treatment)
 
 ### 4. Weather System
 - 5 weather types: Sunny ☀, Cloudy ☁, Rainy 🌧, Windy 💨, Snowy ❄
@@ -183,6 +200,7 @@ edu.scu.csen275.smartgarden/
 - Weather duration: 30-120 minutes
 - Weather effects on plant health
 - Natural moisture addition (rain)
+- **Smart Integration**: Rain automatically stops sprinkler animations and system watering
 
 ### 5. Simulation Features
 - Real-time clock (1 tick = 1 minute simulation time)
@@ -257,8 +275,7 @@ Sensor (abstract)
 └── (extensible)
 
 Pest (abstract)
-├── HarmfulPest
-└── BeneficialInsect
+└── HarmfulPest
 ```
 
 ## Technical Highlights
@@ -306,7 +323,7 @@ Pest (abstract)
 - **Lines of Code**: ~5,000+
 - **Documentation Pages**: 150+
 - **UML Diagrams**: 10
-- **Plant Types**: 5
+- **Plant Types**: 9 (3 Fruits, 3 Vegetables, 3 Flowers)
 - **Automation Systems**: 3 (Watering, Heating, Pest Control) + Weather
 - **Simulation Speed Options**: 4 (1x, 2x, 5x, 10x)
 - **Garden Capacity**: 81 plants (9x9 grid)
@@ -419,4 +436,15 @@ The Smart Garden Simulation is a fully functional, well-documented, and extensib
 
 **Built with ❤️ for CSEN 275**  
 *Demonstrating the power of object-oriented design*
+
+---
+
+## Recent Updates (v1.0.0 - December 2024)
+
+- **Expanded Plant Types**: Now supports 9 plant types (3 Fruits, 3 Vegetables, 3 Flowers)
+- **Weather-Aware Sprinklers**: Sprinklers automatically stop when rain is detected to conserve water
+- **Local Image Resources**: All plant images use local PNG files (no web dependencies)
+- **Simplified Pest System**: Removed beneficial insects, focusing on harmful pest control
+- **Enhanced Animations**: Improved sprinkler and water animation engines with better stability
+- **Better Error Handling**: Enhanced null safety and exception handling throughout
 

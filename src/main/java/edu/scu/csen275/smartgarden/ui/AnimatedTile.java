@@ -454,7 +454,7 @@ public class AnimatedTile extends StackPane {
         if (lowerName.contains("apple")) return "/images/apple.png";
         if (lowerName.contains("carrot")) return "/images/carrot.png";
         if (lowerName.contains("tomato")) return "/images/tomato.png";
-        if (lowerName.contains("onion")) return null; // No onion.png available, will use emoji fallback
+        if (lowerName.contains("onion")) return "/images/onion.png";
         if (lowerName.contains("sunflower")) return "/images/sunflower.png";
         if (lowerName.contains("tulip")) return "/images/tulip.png";
         if (lowerName.contains("rose")) return "/images/rose.png";
@@ -472,7 +472,7 @@ public class AnimatedTile extends StackPane {
             case APPLE -> "/images/apple.png";
             case CARROT -> "/images/carrot.png";
             case TOMATO -> "/images/tomato.png";
-            case ONION -> null; // No onion.png available
+            case ONION -> "/images/onion.png";
             case SUNFLOWER -> "/images/sunflower.png";
             case TULIP -> "/images/tulip.png";
             case ROSE -> "/images/rose.png";
