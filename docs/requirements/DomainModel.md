@@ -192,7 +192,6 @@ Organisms that can harm plants.
 
 **Concrete Types:**
 - **HarmfulPest** - Damages plants, should be eliminated
-- **BeneficialInsect** - Helps plants (pollinators), should be protected
 
 **Relationships:**
 - Targets: 1..* Plants
