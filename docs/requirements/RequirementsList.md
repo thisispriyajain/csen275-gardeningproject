@@ -5,7 +5,7 @@
 ### FR-1: Garden Management
 - **FR-1.1**: The system shall support a grid-based garden layout with configurable dimensions (minimum 9x9)
 - **FR-1.2**: The system shall allow users to place plants in any empty grid cell
-- **FR-1.3**: The system shall support at least 5 different plant types with unique characteristics
+- **FR-1.3**: The system shall support 9 different plant types (3 Fruits, 3 Vegetables, 3 Flowers) with unique characteristics
 - **FR-1.4**: The system shall track individual plant states including health, growth stage, and resource levels
 - **FR-1.5**: The system shall remove dead plants from the simulation after a configurable decay period
 
@@ -20,9 +20,10 @@
 - **FR-3.1**: The system shall automatically water plants when soil moisture drops below threshold
 - **FR-3.2**: The system shall divide the garden into zones with independent watering schedules
 - **FR-3.3**: Each zone shall have moisture sensors that report current levels
-- **FR-3.4**: Users shall be able to manually trigger watering for specific zones
-- **FR-3.5**: The system shall track total water consumption
-- **FR-3.6**: The system shall prevent over-watering by checking current moisture levels
+- **FR-3.4**: The system shall automatically stop sprinklers when rain is detected
+- **FR-3.5**: Users shall be able to manually trigger watering for specific zones
+- **FR-3.6**: The system shall track total water consumption
+- **FR-3.7**: The system shall prevent over-watering by checking current moisture levels
 
 ### FR-4: Heating System
 - **FR-4.1**: The system shall monitor ambient temperature continuously
@@ -32,12 +33,11 @@
 - **FR-4.5**: Users shall be able to manually override heating system
 
 ### FR-5: Pest Control System
-- **FR-5.1**: The system shall simulate random pest infestations
+- **FR-5.1**: The system shall simulate random pest infestations (harmful pests only)
 - **FR-5.2**: The system shall detect pest presence in affected zones
 - **FR-5.3**: The system shall automatically apply treatment when infestation level exceeds threshold
 - **FR-5.4**: The system shall track pest damage to individual plants
-- **FR-5.5**: The system shall distinguish between harmful and beneficial insects
-- **FR-5.6**: Pesticide application shall not harm beneficial insects below a tolerance level
+- **FR-5.5**: The system shall effectively reduce pest populations through treatment
 
 ### FR-6: Simulation Engine
 - **FR-6.1**: The simulation shall use discrete time steps (1 tick = 1 minute simulation time)
@@ -47,10 +47,10 @@
 - **FR-6.5**: Random events shall be triggered based on probability distributions
 
 ### FR-7: Weather System
-- **FR-7.1**: The system shall simulate at least 4 weather conditions (Sunny, Rainy, Cloudy, Windy)
+- **FR-7.1**: The system shall simulate 5 weather conditions (Sunny, Rainy, Cloudy, Windy, Snowy)
 - **FR-7.2**: Weather shall change randomly based on realistic probabilities
 - **FR-7.3**: Weather conditions shall affect plant health and growth
-- **FR-7.4**: Rainy weather shall contribute to soil moisture levels
+- **FR-7.4**: Rainy weather shall contribute to soil moisture levels and automatically stop sprinklers
 - **FR-7.5**: The UI shall display current weather with visual indicators
 
 ### FR-8: User Interface

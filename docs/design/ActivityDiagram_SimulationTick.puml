@@ -54,21 +54,28 @@ partition "Update Plants" {
 
 partition "Watering System" {
     if (Watering cycle due?) then (yes)
-        fork
-            :Read moisture sensors;
-        fork again
-            :Check water supply;
-        end fork
-        
-        :Identify zones needing water;
-        
-        if (Zones need water?) then (yes)
-            :For each zone;
-            :Activate sprinkler;
-            :Distribute water to plants;
-            :Update moisture level;
-            :Log watering action;
-            :Deactivate sprinkler;
+        :Check current weather;
+        if (Weather = RAINY?) then (yes)
+            :Stop all sprinklers;
+            :Skip watering (rain provides moisture);
+            :Log "Skipping watering - rain detected";
+        else (no)
+            fork
+                :Read moisture sensors;
+            fork again
+                :Check water supply;
+            end fork
+            
+            :Identify zones needing water;
+            
+            if (Zones need water?) then (yes)
+                :For each zone;
+                :Activate sprinkler;
+                :Distribute water to plants;
+                :Update moisture level;
+                :Log watering action;
+                :Deactivate sprinkler;
+            endif
         endif
     endif
 }
@@ -89,7 +96,7 @@ partition "Heating System" {
 
 partition "Pest Control" {
     if (Pest spawn check?) then (spawn)
-        :Create random pest;
+        :Create random harmful pest;
         :Place in random zone;
         :Log pest appearance;
     endif
@@ -99,7 +106,7 @@ partition "Pest Control" {
     
     if (High infestation detected?) then (yes)
         :Apply pesticide treatment;
-        :Reduce pest count;
+        :Reduce pest count (harmful pests only);
         :Heal affected plants;
         :Log treatment;
     endif

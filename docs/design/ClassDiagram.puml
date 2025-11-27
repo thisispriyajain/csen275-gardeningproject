@@ -51,6 +51,18 @@ package "Model" {
         + getGrowthDuration(): int
     }
     
+    enum PlantType {
+        STRAWBERRY
+        GRAPEVINE
+        APPLE
+        CARROT
+        TOMATO
+        ONION
+        SUNFLOWER
+        TULIP
+        ROSE
+    }
+    
     class Garden {
         - rows: int
         - columns: int
@@ -102,12 +114,15 @@ package "System" {
         - activeZones: Set<Integer>
         - moistureThreshold: int
         - sprinklers: Map<Integer, Sprinkler>
+        - weatherSystem: WeatherSystem
         
         + checkMoistureLevels(): void
         + waterZone(zoneId: int): void
         + calculateWaterNeeded(zone: Zone): int
         + updateSupply(amount: int): void
         + isWaterAvailable(): boolean
+        + stopAllSprinklers(): void
+        + setWeatherSystem(weatherSystem: WeatherSystem): void
     }
     
     class Sprinkler {
@@ -167,13 +182,6 @@ package "System" {
     class HarmfulPest {
         + causeDamage(plant: Plant): void
         + isBeneficial(): boolean
-    }
-    
-    class BeneficialInsect {
-        - pollinationBonus: int
-        + causeDamage(plant: Plant): void
-        + isBeneficial(): boolean
-        + pollinate(plant: Plant): void
     }
     
     enum ThreatLevel {
@@ -364,7 +372,6 @@ Plant <|-- Grass
 Plant <|-- Herb
 
 Pest <|-- HarmfulPest
-Pest <|-- BeneficialInsect
 
 Sensor <|-- MoistureSensor
 Sensor <|-- TemperatureSensor
@@ -379,6 +386,7 @@ Plant "1" -- "1" GrowthStage : has
 WateringSystem "1" o-- "1..*" Sprinkler : controls
 WateringSystem "1" -- "1..*" MoistureSensor : reads from
 WateringSystem "1" -- "1..*" Zone : manages
+WateringSystem "1" -- "1" WeatherSystem : checks weather
 
 HeatingSystem "1" -- "1..*" TemperatureSensor : monitors
 HeatingSystem "1" -- "1" HeatingMode : operates in

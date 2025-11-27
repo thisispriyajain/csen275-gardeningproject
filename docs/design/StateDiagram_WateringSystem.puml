@@ -11,6 +11,7 @@ state Idle {
 state Monitoring {
     Monitoring : Scanning all zones
     Monitoring : Reading sensors
+    Monitoring : Checking weather
     Monitoring : Evaluating needs
 }
 
@@ -41,6 +42,13 @@ state LowWater {
     LowWater : Reduced flow rate
 }
 
+state RainDetected {
+    RainDetected : Weather = RAINY
+    RainDetected : All sprinklers OFF
+    RainDetected : Natural watering active
+    RainDetected : Conserving water supply
+}
+
 state Error {
     Error : Sensor malfunction
     Error : or Sprinkler failure
@@ -50,11 +58,13 @@ state Error {
 Idle --> Monitoring : Timer triggered\n(every 5 sim minutes)
 
 Monitoring --> Idle : All zones adequate
-Monitoring --> Watering : Zone(s) below threshold\n& Plants present
+Monitoring --> RainDetected : Rain detected
+Monitoring --> Watering : Zone(s) below threshold\n& Plants present\n& Not raining
 Monitoring --> LowWater : Water supply < 10%
 Monitoring --> Error : Sensor error detected
 
 Watering --> Idle : Watering complete
+Watering --> RainDetected : Rain starts\nduring watering
 Watering --> LowWater : Supply depleted\nduring watering
 
 LowWater --> Idle : Supply refilled
@@ -63,6 +73,9 @@ LowWater --> Error : Cannot complete watering
 ManualOverride --> Watering : Execute manual water
 ManualOverride --> Error : Cannot execute\n(no water/error)
 Idle --> ManualOverride : User clicks\n"Water Zone" button
+
+RainDetected --> Idle : Rain stops\n& Weather clears
+RainDetected --> Monitoring : Resume monitoring
 
 Error --> Idle : Error resolved\n& System reset
 Error --> [*] : Critical failure\n(system shutdown)
@@ -84,6 +97,14 @@ note bottom of LowWater
   System continues operating
   but warns user to address
   water supply
+end note
+
+note right of RainDetected
+  When rain is detected,
+  all sprinklers stop
+  automatically to conserve
+  water. Natural rain
+  provides moisture.
 end note
 
 @enduml
