@@ -86,7 +86,7 @@ public class WeatherSystem {
     }
     
     /**
-     * Enables rotation between SUNNY and RAINY every 1 REAL minute (60 seconds).
+     * Enables rotation between SUNNY, RAINY, and SNOWY every 1 REAL minute (60 seconds).
      */
     public void enableSunnyRainyRotation() {
         rotateSunnyRainyMode = true;
@@ -104,9 +104,16 @@ public class WeatherSystem {
         // Create real-time timer that rotates weather every 60 seconds (1 actual minute)
         realTimeRotationTimer = new Timeline(
             new KeyFrame(Duration.seconds(60), e -> {
-                // Rotate weather every 60 seconds (1 real minute)
+                // Rotate weather every 60 seconds: SUNNY → RAINY → SNOWY → SUNNY
                 Weather current = currentWeather.get();
-                Weather newWeather = (current == Weather.SUNNY) ? Weather.RAINY : Weather.SUNNY;
+                Weather newWeather;
+                if (current == Weather.SUNNY) {
+                    newWeather = Weather.RAINY;
+                } else if (current == Weather.RAINY) {
+                    newWeather = Weather.SNOWY;
+                } else { // SNOWY
+                    newWeather = Weather.SUNNY;
+                }
                 currentWeather.set(newWeather);
                 garden.setWeather(newWeather.name());
                 logger.info("Weather", "REAL-TIME ROTATION: Weather changed from " + current + " to " + 
@@ -116,7 +123,7 @@ public class WeatherSystem {
         realTimeRotationTimer.setCycleCount(Timeline.INDEFINITE);
         realTimeRotationTimer.play();
         
-        logger.info("Weather", "REAL-TIME ROTATION MODE ENABLED: Weather will rotate between SUNNY and RAINY every 1 actual minute (60 seconds)");
+        logger.info("Weather", "REAL-TIME ROTATION MODE ENABLED: Weather will rotate between SUNNY → RAINY → SNOWY every 1 actual minute (60 seconds)");
     }
     
     /**
@@ -138,11 +145,14 @@ public class WeatherSystem {
         Weather oldWeather = currentWeather.get();
         Weather newWeather;
         
-        // ROTATION MODE: Rotate between SUNNY and RAINY every minute
+        // ROTATION MODE: Rotate between SUNNY, RAINY, and SNOWY
         if (rotateSunnyRainyMode) {
-            if (oldWeather == Weather.SUNNY) {
+            Weather current = oldWeather;
+            if (current == Weather.SUNNY) {
                 newWeather = Weather.RAINY;
-            } else {
+            } else if (current == Weather.RAINY) {
+                newWeather = Weather.SNOWY;
+            } else { // SNOWY
                 newWeather = Weather.SUNNY;
             }
             weatherDuration = 1; // 1 minute

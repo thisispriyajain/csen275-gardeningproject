@@ -1,0 +1,22 @@
+=====================================
+Smart Garden Simulation API Log
+Started: 2025-12-06 22:10:15
+=====================================
+[2025-12-06 22:10:15] Initializing garden - Day 0 begins
+[2025-12-06 22:10:16] Garden initialized with 4 plants.
+[2025-12-06 22:10:16] Rainfall event: 10 units
+[2025-12-06 22:10:16] Rain added water to Strawberry. Current water level: 100
+[2025-12-06 22:10:16] Rain added water to Carrot. Current water level: 100
+[2025-12-06 22:10:16] Rain added water to Tomato. Current water level: 100
+[2025-12-06 22:10:16] Rain added water to Flower (Sunflower). Current water level: 73
+[2025-12-06 22:10:16] Temperature changed to 77°F
+[2025-12-06 22:10:16] Parasite infestation: Red Mite
+[2025-12-06 22:10:16] Strawberry attacked by Red Mite
+[2025-12-06 22:10:16] Carrot attacked by Red Mite
+[2025-12-06 22:10:16] Tomato attacked by Red Mite
+[2025-12-06 22:10:16] Garden State Report - Day 3
+[2025-12-06 22:10:16] Alive: 4, Dead: 0
+[2025-12-06 22:10:16]   - Strawberry at (1,1): ALIVE (Health: 99%, Water: 100%)
+[2025-12-06 22:10:16]   - Carrot at (2,2): ALIVE (Health: 97%, Water: 100%)
+[2025-12-06 22:10:16]   - Tomato at (3,3): ALIVE (Health: 97%, Water: 100%)
+[2025-12-06 22:10:16]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 73%)

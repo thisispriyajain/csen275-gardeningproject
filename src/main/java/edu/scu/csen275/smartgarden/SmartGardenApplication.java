@@ -460,9 +460,12 @@ public class SmartGardenApplication extends Application {
                 }
                 
                 if (centerContainer != null) {
+                    // Handle RAINY weather
                     if (weather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed to RAINY - starting rain animation");
                         RainAnimationEngine.startRain(centerContainer);
+                        // Stop snow if it was snowing
+                        SnowAnimationEngine.stopSnow(centerContainer);
                         // Stop all sprinklers when rain starts
                         if (engine != null && engine.getWateringSystem() != null) {
                             engine.getWateringSystem().stopAllSprinklers();
@@ -473,8 +476,25 @@ public class SmartGardenApplication extends Application {
                         System.out.println("[SmartGardenApplication] Weather changed from RAINY to " + weather + " - stopping rain animation");
                         RainAnimationEngine.stopRain(centerContainer);
                     }
+                    
+                    // Handle SNOWY weather
+                    if (weather == WeatherSystem.Weather.SNOWY) {
+                        System.out.println("[SmartGardenApplication] Weather changed to SNOWY - starting snow animation");
+                        SnowAnimationEngine.startSnow(centerContainer);
+                        // Stop rain if it was raining
+                        RainAnimationEngine.stopRain(centerContainer);
+                        // Stop all sprinklers when snowing
+                        if (engine != null && engine.getWateringSystem() != null) {
+                            engine.getWateringSystem().stopAllSprinklers();
+                        }
+                        // Stop all sprinkler animations when snowing
+                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
+                    } else if (previousWeather == WeatherSystem.Weather.SNOWY) {
+                        System.out.println("[SmartGardenApplication] Weather changed from SNOWY to " + weather + " - stopping snow animation");
+                        SnowAnimationEngine.stopSnow(centerContainer);
+                    }
                 } else {
-                    System.err.println("[SmartGardenApplication] WARNING: Could not find center container for rain animation");
+                    System.err.println("[SmartGardenApplication] WARNING: Could not find center container for weather animation");
                 }
                 previousWeather = weather;
             }
