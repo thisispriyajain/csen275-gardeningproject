@@ -45,7 +45,7 @@ public class SimulationEngine {
         this.wateringSystem = new WateringSystem(garden);
         this.heatingSystem = new HeatingSystem(garden);
         this.pestControlSystem = new PestControlSystem(garden);
-        this.weatherSystem = new WeatherSystem(garden);
+        this.weatherSystem = new WeatherSystem(garden, this.heatingSystem);
         
         // Connect weather system to watering system (so watering skips when raining)
         this.wateringSystem.setWeatherSystem(this.weatherSystem);

@@ -124,19 +124,29 @@ public class HeatingSystem {
      * Increases temperature in all zones.
      */
     private void increaseTemperature(int amount) {
+        int oldTemp = currentTemperature.get();
         for (Zone zone : garden.getZones()) {
             int newTemp = zone.getTemperature() + amount;
             zone.setTemperature(newTemp);
         }
+        // Update current temperature (it's calculated from zones in monitor(), but log here)
+        int newTemp = oldTemp + amount;
+        logger.info("Heating", "Temperature increasing: " + oldTemp + "°C → " + newTemp + "°C (increased by " + amount + "°C)");
     }
     
     /**
      * Decreases temperature in all zones.
      */
     private void decreaseTemperature(int amount) {
+        int oldTemp = currentTemperature.get();
         for (Zone zone : garden.getZones()) {
             int newTemp = Math.max(0, zone.getTemperature() - amount);
             zone.setTemperature(newTemp);
+        }
+        // Update current temperature (it's calculated from zones in monitor(), but log here)
+        int newTemp = Math.max(0, oldTemp - amount);
+        if (oldTemp != newTemp) {
+            logger.info("Heating", "Temperature decreasing: " + oldTemp + "°C → " + newTemp + "°C (decreased by " + amount + "°C)");
         }
     }
     

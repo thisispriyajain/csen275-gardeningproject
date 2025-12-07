@@ -2,6 +2,7 @@ package edu.scu.csen275.smartgarden.simulation;
 
 import edu.scu.csen275.smartgarden.model.Garden;
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.system.HeatingSystem;
 import edu.scu.csen275.smartgarden.util.Logger;
 import javafx.animation.*;
 import javafx.beans.property.*;
@@ -13,6 +14,7 @@ import java.util.Random;
  */
 public class WeatherSystem {
     private final Garden garden;
+    private final HeatingSystem heatingSystem;
     private final ObjectProperty<Weather> currentWeather;
     private int weatherDuration; // minutes
     private final Random random;
@@ -27,8 +29,9 @@ public class WeatherSystem {
     /**
      * Creates a new WeatherSystem for the garden.
      */
-    public WeatherSystem(Garden garden) {
+    public WeatherSystem(Garden garden, HeatingSystem heatingSystem) {
         this.garden = garden;
+        this.heatingSystem = heatingSystem;
         this.currentWeather = new SimpleObjectProperty<>(Weather.SUNNY);
         this.weatherDuration = 60;
         this.random = new Random();
@@ -227,6 +230,40 @@ public class WeatherSystem {
             garden.getZones().forEach(zone -> zone.updateMoisture(5));
         } else if (currentWeather.get() == Weather.SUNNY) {
             garden.getZones().forEach(zone -> zone.evaporate(2));
+        }
+        
+        // Weather affects temperature
+        if (heatingSystem != null) {
+            int currentTemp = heatingSystem.getCurrentTemperature();
+            if (currentWeather.get() == Weather.SNOWY) {
+                // Decrease temperature by 2°C per tick when snowing
+                int tempChange = -2;
+                int newTemp = Math.max(0, currentTemp + tempChange);
+                int actualChange = newTemp - currentTemp;
+                heatingSystem.setAmbientTemperature(newTemp);
+                logger.info("Weather", "SNOWY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
+                           currentTemp + "°C → " + newTemp + "°C)");
+            } else if (currentWeather.get() == Weather.SUNNY) {
+                // Increase temperature by 1°C when sunny (cap at 30°C)
+                int tempChange = 1;
+                int newTemp = Math.min(30, currentTemp + tempChange);
+                int actualChange = newTemp - currentTemp;
+                if (actualChange > 0) {
+                    heatingSystem.setAmbientTemperature(newTemp);
+                    logger.info("Weather", "SUNNY weather: Temperature increased by " + actualChange + "°C (" + 
+                               currentTemp + "°C → " + newTemp + "°C)");
+                }
+            } else if (currentWeather.get() == Weather.RAINY) {
+                // Decrease temperature slightly when raining (min 10°C)
+                int tempChange = -1;
+                int newTemp = Math.max(10, currentTemp + tempChange);
+                int actualChange = newTemp - currentTemp;
+                if (actualChange < 0) {
+                    heatingSystem.setAmbientTemperature(newTemp);
+                    logger.info("Weather", "RAINY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
+                               currentTemp + "°C → " + newTemp + "°C)");
+                }
+            }
         }
     }
     

@@ -13,13 +13,15 @@ public class WateringSystemTest {
 
     private Garden garden;
     private WateringSystem wateringSystem;
+    private HeatingSystem heatingSystem;
     private WeatherSystem weatherSystem;
 
     @BeforeEach
     void setUp() {
         garden = new Garden(3, 3); // Small 3x3 garden
         wateringSystem = new WateringSystem(garden);
-        weatherSystem = new WeatherSystem(garden);
+        heatingSystem = new HeatingSystem(garden);
+        weatherSystem = new WeatherSystem(garden, heatingSystem);
         wateringSystem.setWeatherSystem(weatherSystem);
 
         // Add a plant to Zone 1 (Position 0,0) so sprinklers have something to water
