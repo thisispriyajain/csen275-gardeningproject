@@ -439,6 +439,10 @@ public class SmartGardenApplication extends Application {
             }
             infoPanel.getHeatingStatusLabel().setText(heatingText);
             
+            // Update temperature label
+            int currentTemp = engine.getHeatingSystem().getCurrentTemperature();
+            infoPanel.getTemperatureLabel().setText("🌡️ Current: " + currentTemp + "°C");
+            
             // Update background brightness based on weather
             if (animatedBackground != null) {
                 animatedBackground.setWeather(weather == WeatherSystem.Weather.SUNNY);
@@ -514,12 +518,10 @@ public class SmartGardenApplication extends Application {
             // Update resource bars with animation
             double waterProgress = Math.max(0, Math.min(1, 
                 engine.getWateringSystem().getWaterSupply() / 10000.0));
-            double tempProgress = Math.max(0, Math.min(1,
-                engine.getHeatingSystem().getCurrentTemperature() / 40.0));
             double pesticideProgress = Math.max(0, Math.min(1,
                 engine.getPestControlSystem().getPesticideStock() / 50.0));
             
-            infoPanel.updateProgressBars(waterProgress, tempProgress, pesticideProgress);
+            infoPanel.updateProgressBars(waterProgress, pesticideProgress);
             
             // Update logs and detect automatic watering
             List<String> recentLogs = new ArrayList<>();

@@ -18,9 +18,9 @@ public class InfoPanel extends VBox {
     private final Label timeLabel;
     private final Label statsLabel;
     private final Label heatingStatusLabel;
+    private final Label temperatureLabel;
     private final WeatherDisplay weatherDisplay;
     private final ProgressBar waterBar;
-    private final ProgressBar tempBar;
     private final ProgressBar pesticideBar;
     private final Button refillWaterBtn;
     private final Button refillPesticideBtn;
@@ -37,13 +37,13 @@ public class InfoPanel extends VBox {
         timeLabel = simulationCard.addLabel("Time: --", false);
         statsLabel = simulationCard.addLabel("Plants: 0", false);
         heatingStatusLabel = simulationCard.addLabel("🔥 Heating: Off", false);
+        temperatureLabel = simulationCard.addLabel("🌡️ Current: 20°C", false);
         weatherDisplay = new WeatherDisplay();
         simulationCard.getChildren().add(weatherDisplay);
         
         // Resources Card
         resourcesCard = new InfoCard("💧 Resources");
         waterBar = resourcesCard.addProgressBar("Water Supply", 1.0);
-        tempBar = resourcesCard.addProgressBar("Temperature", 0.5);
         pesticideBar = resourcesCard.addProgressBar("Pesticide Stock", 1.0);
         
         // Controls Card
@@ -70,9 +70,8 @@ public class InfoPanel extends VBox {
     /**
      * Updates progress bars with animation.
      */
-    public void updateProgressBars(double waterProgress, double tempProgress, double pesticideProgress) {
+    public void updateProgressBars(double waterProgress, double pesticideProgress) {
         animateProgressBar(waterBar, waterProgress);
-        animateProgressBar(tempBar, tempProgress);
         animateProgressBar(pesticideBar, pesticideProgress);
         
         // Update styles based on values
@@ -97,9 +96,9 @@ public class InfoPanel extends VBox {
     public Label getTimeLabel() { return timeLabel; }
     public Label getStatsLabel() { return statsLabel; }
     public Label getHeatingStatusLabel() { return heatingStatusLabel; }
+    public Label getTemperatureLabel() { return temperatureLabel; }
     public WeatherDisplay getWeatherDisplay() { return weatherDisplay; }
     public ProgressBar getWaterBar() { return waterBar; }
-    public ProgressBar getTempBar() { return tempBar; }
     public ProgressBar getPesticideBar() { return pesticideBar; }
     public Button getRefillWaterBtn() { return refillWaterBtn; }
     public Button getRefillPesticideBtn() { return refillPesticideBtn; }

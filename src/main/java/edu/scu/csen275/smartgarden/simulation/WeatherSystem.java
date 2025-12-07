@@ -255,14 +255,28 @@ public class WeatherSystem {
                 }
             } else if (currentWeather.get() == Weather.RAINY) {
                 // Decrease temperature slightly when raining (min 10°C)
-                int tempChange = -1;
-                int newTemp = Math.max(10, currentTemp + tempChange);
-                int actualChange = newTemp - currentTemp;
-                if (actualChange < 0) {
-                    heatingSystem.setAmbientTemperature(newTemp);
-                    logger.info("Weather", "RAINY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
-                               currentTemp + "°C → " + newTemp + "°C)");
+                // Only decrease if above 10°C AND heating is not active
+                // Once heating activates, rain stops cooling to allow heating to work
+                edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode heatingMode = 
+                    heatingSystem.getHeatingMode();
+                boolean heatingActive = (heatingMode != edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode.OFF);
+                
+                // Only decrease temperature if:
+                // 1. Temperature is above 10°C, AND
+                // 2. Heating is NOT active (OFF)
+                // This prevents oscillation: once heating activates, rain stops cooling
+                if (currentTemp > 10 && !heatingActive) {
+                    int tempChange = -1;
+                    int newTemp = Math.max(10, currentTemp + tempChange);
+                    int actualChange = newTemp - currentTemp;
+                    if (actualChange < 0) {
+                        heatingSystem.setAmbientTemperature(newTemp);
+                        logger.info("Weather", "RAINY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
+                                   currentTemp + "°C → " + newTemp + "°C)");
+                    }
                 }
+                // If temperature is at 10°C or heating is active, rain doesn't affect temperature anymore
+                // Heating system will log its own temperature increases
             }
         }
     }
