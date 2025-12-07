@@ -114,10 +114,8 @@ public class HeatingSystem {
                        currentTemperature.get() + "°C");
         }
         
-        // Natural cooling
-        if (currentTemperature.get() > DEFAULT_AMBIENT_TEMP) {
-            decreaseTemperature(1);
-        }
+        // Don't apply natural cooling - weather system controls temperature
+        // Natural cooling removed to prevent interference with weather-set temperatures
     }
     
     /**
@@ -188,11 +186,12 @@ public class HeatingSystem {
      * Manually sets ambient temperature (for weather simulation).
      */
     public void setAmbientTemperature(int temperature) {
+        int oldTemp = currentTemperature.get();
         currentTemperature.set(temperature);
         for (Zone zone : garden.getZones()) {
             zone.setTemperature(temperature);
         }
-        logger.debug("Heating", "Ambient temperature set to " + temperature + "°C");
+        logger.info("Heating", "Ambient temperature set to " + temperature + "°C (was " + oldTemp + "°C)");
     }
     
     /**

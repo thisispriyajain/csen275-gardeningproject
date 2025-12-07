@@ -16,6 +16,7 @@ public class WeatherSystem {
     private final Garden garden;
     private final HeatingSystem heatingSystem;
     private final ObjectProperty<Weather> currentWeather;
+    private Weather previousWeather; // Track previous weather to detect changes
     private int weatherDuration; // minutes
     private final Random random;
     private boolean rainTestMode = false; // TEST MODE: Force rain every minute
@@ -33,10 +34,14 @@ public class WeatherSystem {
         this.garden = garden;
         this.heatingSystem = heatingSystem;
         this.currentWeather = new SimpleObjectProperty<>(Weather.SUNNY);
+        this.previousWeather = Weather.SUNNY; // Initialize previous weather
         this.weatherDuration = 60;
         this.random = new Random();
         
         logger.info("Weather", "Weather system initialized. Current: " + Weather.SUNNY);
+        
+        // Set initial temperature based on initial weather
+        applyTemperatureForWeather(Weather.SUNNY);
     }
     
     /**
@@ -73,6 +78,8 @@ public class WeatherSystem {
         rainTestMode = true;
         rotateSunnyRainyMode = false; // Disable rotation mode
         // Force rain immediately
+        applyTemperatureForWeather(Weather.RAINY);
+        previousWeather = currentWeather.get();
         currentWeather.set(Weather.RAINY);
         garden.setWeather(Weather.RAINY.name());
         weatherDuration = 1; // 1 minute duration
@@ -95,6 +102,8 @@ public class WeatherSystem {
         rotateSunnyRainyMode = true;
         rainTestMode = false; // Disable rain-only test mode
         // Start with sunny
+        applyTemperatureForWeather(Weather.SUNNY);
+        previousWeather = currentWeather.get();
         currentWeather.set(Weather.SUNNY);
         garden.setWeather(Weather.SUNNY.name());
         weatherDuration = 1; // Keep for display purposes
@@ -117,6 +126,11 @@ public class WeatherSystem {
                 } else { // SNOWY
                     newWeather = Weather.SUNNY;
                 }
+                
+                // Set temperature for the new weather
+                applyTemperatureForWeather(newWeather);
+                
+                previousWeather = current;
                 currentWeather.set(newWeather);
                 garden.setWeather(newWeather.name());
                 logger.info("Weather", "REAL-TIME ROTATION: Weather changed from " + current + " to " + 
@@ -175,8 +189,44 @@ public class WeatherSystem {
                        newWeather + " (Duration: " + weatherDuration + " min)");
         }
         
+        // Set temperature immediately when weather changes
+        if (oldWeather != newWeather) {
+            applyTemperatureForWeather(newWeather);
+        }
+        
+        previousWeather = oldWeather; // Update previous weather
         currentWeather.set(newWeather);
         garden.setWeather(newWeather.name());
+    }
+    
+    /**
+     * Sets temperature based on weather type and activates/deactivates heating accordingly.
+     */
+    private void applyTemperatureForWeather(Weather weather) {
+        if (heatingSystem == null) {
+            return;
+        }
+        
+        int targetTemp;
+        if (weather == Weather.SUNNY) {
+            targetTemp = 20;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "SUNNY weather: Temperature set to " + targetTemp + "°C");
+            // Turn off heating when sunny (temp >= 17°C threshold)
+            heatingSystem.update(); // This will deactivate heating
+        } else if (weather == Weather.RAINY) {
+            targetTemp = 10;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "RAINY weather: Temperature set to " + targetTemp + "°C");
+            // Heating will activate (temp < 15°C, deficit = 5 = LOW mode)
+            heatingSystem.update();
+        } else if (weather == Weather.SNOWY) {
+            targetTemp = 5;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "SNOWY weather: Temperature set to " + targetTemp + "°C");
+            // Heating will activate (temp < 15°C, deficit > 10 = HIGH mode)
+            heatingSystem.update();
+        }
     }
     
     /**
@@ -232,59 +282,19 @@ public class WeatherSystem {
             garden.getZones().forEach(zone -> zone.evaporate(2));
         }
         
-        // Weather affects temperature
-        if (heatingSystem != null) {
-            int currentTemp = heatingSystem.getCurrentTemperature();
-            if (currentWeather.get() == Weather.SNOWY) {
-                // Decrease temperature by 2°C per tick when snowing
-                int tempChange = -2;
-                int newTemp = Math.max(0, currentTemp + tempChange);
-                int actualChange = newTemp - currentTemp;
-                heatingSystem.setAmbientTemperature(newTemp);
-                logger.info("Weather", "SNOWY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
-                           currentTemp + "°C → " + newTemp + "°C)");
-            } else if (currentWeather.get() == Weather.SUNNY) {
-                // Increase temperature by 1°C when sunny (cap at 30°C)
-                int tempChange = 1;
-                int newTemp = Math.min(30, currentTemp + tempChange);
-                int actualChange = newTemp - currentTemp;
-                if (actualChange > 0) {
-                    heatingSystem.setAmbientTemperature(newTemp);
-                    logger.info("Weather", "SUNNY weather: Temperature increased by " + actualChange + "°C (" + 
-                               currentTemp + "°C → " + newTemp + "°C)");
-                }
-            } else if (currentWeather.get() == Weather.RAINY) {
-                // Decrease temperature slightly when raining (min 10°C)
-                // Only decrease if above 10°C AND heating is not active
-                // Once heating activates, rain stops cooling to allow heating to work
-                edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode heatingMode = 
-                    heatingSystem.getHeatingMode();
-                boolean heatingActive = (heatingMode != edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode.OFF);
-                
-                // Only decrease temperature if:
-                // 1. Temperature is above 10°C, AND
-                // 2. Heating is NOT active (OFF)
-                // This prevents oscillation: once heating activates, rain stops cooling
-                if (currentTemp > 10 && !heatingActive) {
-                    int tempChange = -1;
-                    int newTemp = Math.max(10, currentTemp + tempChange);
-                    int actualChange = newTemp - currentTemp;
-                    if (actualChange < 0) {
-                        heatingSystem.setAmbientTemperature(newTemp);
-                        logger.info("Weather", "RAINY weather: Temperature decreased by " + Math.abs(actualChange) + "°C (" + 
-                                   currentTemp + "°C → " + newTemp + "°C)");
-                    }
-                }
-                // If temperature is at 10°C or heating is active, rain doesn't affect temperature anymore
-                // Heating system will log its own temperature increases
-            }
-        }
+        // Temperature is set immediately on weather change in changeWeather()
+        // Heating system will gradually increase temperature from the set point to 15°C
+        // No continuous temperature changes here - only moisture effects
     }
     
     /**
      * Manually sets weather (for testing).
      */
     public void setWeather(Weather weather) {
+        if (currentWeather.get() != weather) {
+            applyTemperatureForWeather(weather);
+            previousWeather = currentWeather.get();
+        }
         currentWeather.set(weather);
         garden.setWeather(weather.name());
         weatherDuration = 60;
