@@ -17,6 +17,7 @@ public class InfoPanel extends VBox {
     
     private final Label timeLabel;
     private final Label statsLabel;
+    private final Label heatingStatusLabel;
     private final WeatherDisplay weatherDisplay;
     private final ProgressBar waterBar;
     private final ProgressBar tempBar;
@@ -35,6 +36,7 @@ public class InfoPanel extends VBox {
         simulationCard = new InfoCard("📊 Simulation Info");
         timeLabel = simulationCard.addLabel("Time: --", false);
         statsLabel = simulationCard.addLabel("Plants: 0", false);
+        heatingStatusLabel = simulationCard.addLabel("🔥 Heating: Off", false);
         weatherDisplay = new WeatherDisplay();
         simulationCard.getChildren().add(weatherDisplay);
         
@@ -94,6 +96,7 @@ public class InfoPanel extends VBox {
     // Getters
     public Label getTimeLabel() { return timeLabel; }
     public Label getStatsLabel() { return statsLabel; }
+    public Label getHeatingStatusLabel() { return heatingStatusLabel; }
     public WeatherDisplay getWeatherDisplay() { return weatherDisplay; }
     public ProgressBar getWaterBar() { return waterBar; }
     public ProgressBar getTempBar() { return tempBar; }

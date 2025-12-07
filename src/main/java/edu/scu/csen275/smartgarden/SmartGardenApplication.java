@@ -427,6 +427,18 @@ public class SmartGardenApplication extends Application {
             WeatherSystem.Weather weather = engine.getWeatherSystem().getCurrentWeather();
             infoPanel.getWeatherDisplay().updateWeather(weather);
             
+            // Update heating status
+            edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode heatingMode = 
+                engine.getHeatingSystem().getHeatingMode();
+            String heatingText;
+            if (heatingMode == edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode.OFF) {
+                heatingText = "🔥 Heating: Off";
+            } else {
+                heatingText = "🔥 Heating: " + heatingMode.name() + " (" + 
+                              engine.getHeatingSystem().getCurrentTemperature() + "°C)";
+            }
+            infoPanel.getHeatingStatusLabel().setText(heatingText);
+            
             // Update background brightness based on weather
             if (animatedBackground != null) {
                 animatedBackground.setWeather(weather == WeatherSystem.Weather.SUNNY);
