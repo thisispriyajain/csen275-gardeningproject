@@ -18,7 +18,6 @@ import java.util.Random;
 public class PestTileOverlay extends StackPane {
     private final Canvas damageCanvas; // For brown tint and bite marks
     private final StackPane spriteContainer; // For pest sprites
-    private final WarningIndicator warningIndicator;
     private final List<PestSprite> pests;
     private final List<Label> pestTypeLabels; // Labels showing pest type names
     private final Random random;
@@ -57,14 +56,8 @@ public class PestTileOverlay extends StackPane {
         spriteContainer.setMinSize(tileWidth, tileHeight);
         spriteContainer.setMaxSize(tileWidth, tileHeight);
         
-        // Warning indicator (positioned at top)
-        warningIndicator = new WarningIndicator();
-        warningIndicator.setVisible(false);
-        StackPane.setAlignment(warningIndicator, Pos.TOP_CENTER);
-        warningIndicator.setTranslateY(-35);
-        
         // CRITICAL: Add children in correct z-order - sprites must be ABOVE damage canvas
-        this.getChildren().addAll(damageCanvas, spriteContainer, warningIndicator);
+        this.getChildren().addAll(damageCanvas, spriteContainer);
         
         // Ensure sprite container is always on top of damage canvas
         spriteContainer.toFront();
@@ -117,10 +110,6 @@ public class PestTileOverlay extends StackPane {
         pest.setOpacity(1.0);
         pest.setMouseTransparent(true);
         
-        // Hide warning indicator - user only wants to see the pest
-        warningIndicator.setVisible(false);
-        warningIndicator.hide();
-        
         // Make sure sprite container is sized correctly and fills the tile
         spriteContainer.setPrefSize(tileWidth, tileHeight);
         spriteContainer.setMinSize(tileWidth, tileHeight);
@@ -172,8 +161,6 @@ public class PestTileOverlay extends StackPane {
         
         if (pests.isEmpty()) {
             isUnderAttack = false;
-            warningIndicator.setVisible(false);
-            warningIndicator.hide();
             stopDamageVisualAnimation();
             clearDamageVisuals();
         }
@@ -197,8 +184,6 @@ public class PestTileOverlay extends StackPane {
         
         // Reset state
         isUnderAttack = false;
-        warningIndicator.setVisible(false);
-        warningIndicator.hide();
         stopDamageVisualAnimation();
         clearDamageVisuals();
     }
