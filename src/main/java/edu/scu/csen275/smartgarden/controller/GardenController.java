@@ -90,9 +90,8 @@ public class GardenController {
             case "flower" -> new Flower(position);
             case "vegetable", "tomato" -> new Vegetable(position, "Tomato");
             case "carrot" -> new Vegetable(position, "Carrot");
-            case "tree" -> new Tree(position);
-            case "grass" -> new Grass(position);
-            case "herb", "basil" -> new Herb(position, "Basil");
+            // Tree, Herb, and Grass plant models have been removed
+            // Only PlantType enum values are supported now
             default -> null;
         };
     }

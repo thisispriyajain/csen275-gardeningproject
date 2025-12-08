@@ -60,13 +60,6 @@ set ERROR_CODE=0
 @REM ==== START VALIDATION ====
 if not "%JAVA_HOME%" == "" goto OkJHome
 
-echo JAVA_HOME is not set. Attempting to auto-detect...
-if exist "C:\Program Files\Java\jdk-25" (
-    set "JAVA_HOME=C:\Program Files\Java\jdk-25"
-    echo Auto-detected JAVA_HOME: C:\Program Files\Java\jdk-25
-    goto OkJHome
-)
-
 echo.
 echo Error: JAVA_HOME not found in your environment. >&2
 echo Please set the JAVA_HOME variable in your environment to match the >&2

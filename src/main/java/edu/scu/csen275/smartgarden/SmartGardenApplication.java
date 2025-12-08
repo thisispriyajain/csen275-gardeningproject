@@ -427,6 +427,22 @@ public class SmartGardenApplication extends Application {
             WeatherSystem.Weather weather = engine.getWeatherSystem().getCurrentWeather();
             infoPanel.getWeatherDisplay().updateWeather(weather);
             
+            // Update heating status
+            edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode heatingMode = 
+                engine.getHeatingSystem().getHeatingMode();
+            String heatingText;
+            if (heatingMode == edu.scu.csen275.smartgarden.system.HeatingSystem.HeatingMode.OFF) {
+                heatingText = "🔥 Heating: Off";
+            } else {
+                heatingText = "🔥 Heating: " + heatingMode.name() + " (" + 
+                              engine.getHeatingSystem().getCurrentTemperature() + "°C)";
+            }
+            infoPanel.getHeatingStatusLabel().setText(heatingText);
+            
+            // Update temperature label
+            int currentTemp = engine.getHeatingSystem().getCurrentTemperature();
+            infoPanel.getTemperatureLabel().setText("🌡️ Current: " + currentTemp + "°C");
+            
             // Update background brightness based on weather
             if (animatedBackground != null) {
                 animatedBackground.setWeather(weather == WeatherSystem.Weather.SUNNY);
@@ -460,9 +476,12 @@ public class SmartGardenApplication extends Application {
                 }
                 
                 if (centerContainer != null) {
+                    // Handle RAINY weather
                     if (weather == WeatherSystem.Weather.RAINY) {
                         System.out.println("[SmartGardenApplication] Weather changed to RAINY - starting rain animation");
                         RainAnimationEngine.startRain(centerContainer);
+                        // Stop snow if it was snowing
+                        SnowAnimationEngine.stopSnow(centerContainer);
                         // Stop all sprinklers when rain starts
                         if (engine != null && engine.getWateringSystem() != null) {
                             engine.getWateringSystem().stopAllSprinklers();
@@ -473,8 +492,25 @@ public class SmartGardenApplication extends Application {
                         System.out.println("[SmartGardenApplication] Weather changed from RAINY to " + weather + " - stopping rain animation");
                         RainAnimationEngine.stopRain(centerContainer);
                     }
+                    
+                    // Handle SNOWY weather
+                    if (weather == WeatherSystem.Weather.SNOWY) {
+                        System.out.println("[SmartGardenApplication] Weather changed to SNOWY - starting snow animation");
+                        SnowAnimationEngine.startSnow(centerContainer);
+                        // Stop rain if it was raining
+                        RainAnimationEngine.stopRain(centerContainer);
+                        // Stop all sprinklers when snowing
+                        if (engine != null && engine.getWateringSystem() != null) {
+                            engine.getWateringSystem().stopAllSprinklers();
+                        }
+                        // Stop all sprinkler animations when snowing
+                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
+                    } else if (previousWeather == WeatherSystem.Weather.SNOWY) {
+                        System.out.println("[SmartGardenApplication] Weather changed from SNOWY to " + weather + " - stopping snow animation");
+                        SnowAnimationEngine.stopSnow(centerContainer);
+                    }
                 } else {
-                    System.err.println("[SmartGardenApplication] WARNING: Could not find center container for rain animation");
+                    System.err.println("[SmartGardenApplication] WARNING: Could not find center container for weather animation");
                 }
                 previousWeather = weather;
             }
@@ -482,12 +518,10 @@ public class SmartGardenApplication extends Application {
             // Update resource bars with animation
             double waterProgress = Math.max(0, Math.min(1, 
                 engine.getWateringSystem().getWaterSupply() / 10000.0));
-            double tempProgress = Math.max(0, Math.min(1,
-                engine.getHeatingSystem().getCurrentTemperature() / 40.0));
             double pesticideProgress = Math.max(0, Math.min(1,
                 engine.getPestControlSystem().getPesticideStock() / 50.0));
             
-            infoPanel.updateProgressBars(waterProgress, tempProgress, pesticideProgress);
+            infoPanel.updateProgressBars(waterProgress, pesticideProgress);
             
             // Update logs and detect automatic watering
             List<String> recentLogs = new ArrayList<>();

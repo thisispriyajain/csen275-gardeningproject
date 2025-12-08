@@ -23,14 +23,8 @@ echo.
 
 REM Check if JAVA_HOME is set
 if "%JAVA_HOME%"=="" (
-    echo JAVA_HOME is not set. Attempting to auto-detect...
-    if exist "C:\Program Files\Java\jdk-25" (
-        set "JAVA_HOME=C:\Program Files\Java\jdk-25"
-        echo Auto-detected JAVA_HOME: C:\Program Files\Java\jdk-25
-    ) else (
-        echo WARNING: JAVA_HOME is not set and auto-detection failed!
-        echo Maven wrapper will try to use Java from PATH...
-    )
+    echo WARNING: JAVA_HOME is not set!
+    echo Maven wrapper will try to use Java from PATH...
     echo.
 )
 

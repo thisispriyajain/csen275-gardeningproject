@@ -2,6 +2,7 @@ package edu.scu.csen275.smartgarden.simulation;
 
 import edu.scu.csen275.smartgarden.model.Garden;
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.system.HeatingSystem;
 import edu.scu.csen275.smartgarden.util.Logger;
 import javafx.animation.*;
 import javafx.beans.property.*;
@@ -13,7 +14,9 @@ import java.util.Random;
  */
 public class WeatherSystem {
     private final Garden garden;
+    private final HeatingSystem heatingSystem;
     private final ObjectProperty<Weather> currentWeather;
+    private Weather previousWeather; // Track previous weather to detect changes
     private int weatherDuration; // minutes
     private final Random random;
     private boolean rainTestMode = false; // TEST MODE: Force rain every minute
@@ -27,13 +30,18 @@ public class WeatherSystem {
     /**
      * Creates a new WeatherSystem for the garden.
      */
-    public WeatherSystem(Garden garden) {
+    public WeatherSystem(Garden garden, HeatingSystem heatingSystem) {
         this.garden = garden;
+        this.heatingSystem = heatingSystem;
         this.currentWeather = new SimpleObjectProperty<>(Weather.SUNNY);
+        this.previousWeather = Weather.SUNNY; // Initialize previous weather
         this.weatherDuration = 60;
         this.random = new Random();
         
         logger.info("Weather", "Weather system initialized. Current: " + Weather.SUNNY);
+        
+        // Set initial temperature based on initial weather
+        applyTemperatureForWeather(Weather.SUNNY);
     }
     
     /**
@@ -70,6 +78,8 @@ public class WeatherSystem {
         rainTestMode = true;
         rotateSunnyRainyMode = false; // Disable rotation mode
         // Force rain immediately
+        applyTemperatureForWeather(Weather.RAINY);
+        previousWeather = currentWeather.get();
         currentWeather.set(Weather.RAINY);
         garden.setWeather(Weather.RAINY.name());
         weatherDuration = 1; // 1 minute duration
@@ -86,12 +96,14 @@ public class WeatherSystem {
     }
     
     /**
-     * Enables rotation between SUNNY and RAINY every 1 REAL minute (60 seconds).
+     * Enables rotation between SUNNY, RAINY, and SNOWY every 1 REAL minute (60 seconds).
      */
     public void enableSunnyRainyRotation() {
         rotateSunnyRainyMode = true;
         rainTestMode = false; // Disable rain-only test mode
         // Start with sunny
+        applyTemperatureForWeather(Weather.SUNNY);
+        previousWeather = currentWeather.get();
         currentWeather.set(Weather.SUNNY);
         garden.setWeather(Weather.SUNNY.name());
         weatherDuration = 1; // Keep for display purposes
@@ -104,9 +116,21 @@ public class WeatherSystem {
         // Create real-time timer that rotates weather every 60 seconds (1 actual minute)
         realTimeRotationTimer = new Timeline(
             new KeyFrame(Duration.seconds(60), e -> {
-                // Rotate weather every 60 seconds (1 real minute)
+                // Rotate weather every 60 seconds: SUNNY → RAINY → SNOWY → SUNNY
                 Weather current = currentWeather.get();
-                Weather newWeather = (current == Weather.SUNNY) ? Weather.RAINY : Weather.SUNNY;
+                Weather newWeather;
+                if (current == Weather.SUNNY) {
+                    newWeather = Weather.RAINY;
+                } else if (current == Weather.RAINY) {
+                    newWeather = Weather.SNOWY;
+                } else { // SNOWY
+                    newWeather = Weather.SUNNY;
+                }
+                
+                // Set temperature for the new weather
+                applyTemperatureForWeather(newWeather);
+                
+                previousWeather = current;
                 currentWeather.set(newWeather);
                 garden.setWeather(newWeather.name());
                 logger.info("Weather", "REAL-TIME ROTATION: Weather changed from " + current + " to " + 
@@ -116,7 +140,7 @@ public class WeatherSystem {
         realTimeRotationTimer.setCycleCount(Timeline.INDEFINITE);
         realTimeRotationTimer.play();
         
-        logger.info("Weather", "REAL-TIME ROTATION MODE ENABLED: Weather will rotate between SUNNY and RAINY every 1 actual minute (60 seconds)");
+        logger.info("Weather", "REAL-TIME ROTATION MODE ENABLED: Weather will rotate between SUNNY → RAINY → SNOWY every 1 actual minute (60 seconds)");
     }
     
     /**
@@ -138,11 +162,14 @@ public class WeatherSystem {
         Weather oldWeather = currentWeather.get();
         Weather newWeather;
         
-        // ROTATION MODE: Rotate between SUNNY and RAINY every minute
+        // ROTATION MODE: Rotate between SUNNY, RAINY, and SNOWY
         if (rotateSunnyRainyMode) {
-            if (oldWeather == Weather.SUNNY) {
+            Weather current = oldWeather;
+            if (current == Weather.SUNNY) {
                 newWeather = Weather.RAINY;
-            } else {
+            } else if (current == Weather.RAINY) {
+                newWeather = Weather.SNOWY;
+            } else { // SNOWY
                 newWeather = Weather.SUNNY;
             }
             weatherDuration = 1; // 1 minute
@@ -162,8 +189,44 @@ public class WeatherSystem {
                        newWeather + " (Duration: " + weatherDuration + " min)");
         }
         
+        // Set temperature immediately when weather changes
+        if (oldWeather != newWeather) {
+            applyTemperatureForWeather(newWeather);
+        }
+        
+        previousWeather = oldWeather; // Update previous weather
         currentWeather.set(newWeather);
         garden.setWeather(newWeather.name());
+    }
+    
+    /**
+     * Sets temperature based on weather type and activates/deactivates heating accordingly.
+     */
+    private void applyTemperatureForWeather(Weather weather) {
+        if (heatingSystem == null) {
+            return;
+        }
+        
+        int targetTemp;
+        if (weather == Weather.SUNNY) {
+            targetTemp = 20;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "SUNNY weather: Temperature set to " + targetTemp + "°C");
+            // Turn off heating when sunny (temp >= 17°C threshold)
+            heatingSystem.update(); // This will deactivate heating
+        } else if (weather == Weather.RAINY) {
+            targetTemp = 10;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "RAINY weather: Temperature set to " + targetTemp + "°C");
+            // Heating will activate (temp < 15°C, deficit = 5 = LOW mode)
+            heatingSystem.update();
+        } else if (weather == Weather.SNOWY) {
+            targetTemp = 5;
+            heatingSystem.setAmbientTemperature(targetTemp);
+            logger.info("Weather", "SNOWY weather: Temperature set to " + targetTemp + "°C");
+            // Heating will activate (temp < 15°C, deficit > 10 = HIGH mode)
+            heatingSystem.update();
+        }
     }
     
     /**
@@ -218,12 +281,20 @@ public class WeatherSystem {
         } else if (currentWeather.get() == Weather.SUNNY) {
             garden.getZones().forEach(zone -> zone.evaporate(2));
         }
+        
+        // Temperature is set immediately on weather change in changeWeather()
+        // Heating system will gradually increase temperature from the set point to 15°C
+        // No continuous temperature changes here - only moisture effects
     }
     
     /**
      * Manually sets weather (for testing).
      */
     public void setWeather(Weather weather) {
+        if (currentWeather.get() != weather) {
+            applyTemperatureForWeather(weather);
+            previousWeather = currentWeather.get();
+        }
         currentWeather.set(weather);
         garden.setWeather(weather.name());
         weatherDuration = 60;
