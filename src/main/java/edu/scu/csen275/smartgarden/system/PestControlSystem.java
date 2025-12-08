@@ -8,11 +8,15 @@ import edu.scu.csen275.smartgarden.ui.PestEventBridge;
 import edu.scu.csen275.smartgarden.util.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Automated pest control system that detects and treats infestations.
@@ -25,6 +29,8 @@ public class PestControlSystem {
     private final IntegerProperty treatmentThreshold;
     private final Random random;
     private PestEventBridge pestEventBridge;
+    private boolean apiModeEnabled = false; // When enabled, automatic pest spawning is disabled
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
     
     private static final Logger logger = Logger.getInstance();
     private static final int INITIAL_PESTICIDE_STOCK = 50;
@@ -48,11 +54,33 @@ public class PestControlSystem {
     }
     
     /**
+     * Sets whether API mode is enabled.
+     * When enabled, automatic pest spawning is disabled (pests only via API calls).
+     * Automatic pesticide application still works when pests are detected.
+     */
+    public void setApiModeEnabled(boolean enabled) {
+        this.apiModeEnabled = enabled;
+        logger.info("PestControl", "API mode " + (enabled ? "enabled" : "disabled") + 
+                   " - automatic pest spawning " + (enabled ? "disabled" : "enabled"));
+    }
+    
+    /**
+     * Checks if API mode is enabled.
+     */
+    public boolean isApiModeEnabled() {
+        return apiModeEnabled;
+    }
+    
+    /**
      * Updates pest system - spawns pests, applies damage, checks for treatment.
      */
     public void update() {
-        // Randomly spawn pests
-        if (random.nextDouble() < PEST_SPAWN_PROBABILITY && garden.getLivingPlants().size() > 0) {
+        // Clean up null pests first (defensive programming for concurrent access)
+        pests.removeIf(p -> p == null);
+        
+        // Randomly spawn pests (skip if API mode enabled)
+        // In API mode, pests are only spawned via API calls (api.parasite())
+        if (!apiModeEnabled && random.nextDouble() < PEST_SPAWN_PROBABILITY && garden.getLivingPlants().size() > 0) {
             spawnPest();
         }
         
@@ -98,10 +126,41 @@ public class PestControlSystem {
     }
     
     /**
+     * Registers a pest from external source (e.g., API).
+     * This allows API-created pests to be tracked and automatically treated.
+     * 
+     * @param pest The pest to register
+     */
+    public void registerPest(Pest pest) {
+        if (pest != null && pest.isAlive()) {
+            pests.add(pest);
+            logger.info("PestControl", "Registered external pest: " + pest.getPestType() + 
+                       " at " + pest.getPosition());
+            
+            // Notify UI
+            if (pestEventBridge != null) {
+                pestEventBridge.notifyPestSpawned(pest.getPosition(), pest.getPestType(), true);
+            }
+            
+            // Immediately check for treatment (don't wait for next tick)
+            Zone zone = garden.getZoneForPosition(pest.getPosition());
+            if (zone != null) {
+                assessAndTreat(zone);
+            }
+        }
+    }
+    
+    /**
      * Applies damage from all pests to their target plants.
      */
     private void applyPestDamage() {
         for (Pest pest : new ArrayList<>(pests)) {
+            // Skip null pests
+            if (pest == null) {
+                pests.remove(pest);
+                continue;
+            }
+            
             if (!pest.isAlive()) {
                 pests.remove(pest);
                 continue;
@@ -120,6 +179,7 @@ public class PestControlSystem {
     /**
      * Assesses threat level and applies treatment if needed.
      * ADDED: Delay before treatment so pests are visible for a few seconds.
+     * Works in both UI mode (JavaFX Timeline) and headless mode (thread-based delay).
      */
     private void assessAndTreat(Zone zone) {
         ThreatLevel threat = assessThreat(zone);
@@ -129,13 +189,24 @@ public class PestControlSystem {
             logger.info("PestControl", "Threat detected in Zone " + zone.getZoneId() + 
                        " (" + threat + ") - delaying treatment by 3 seconds for visibility");
             
+            // Try to use JavaFX Timeline if available (UI mode)
+            // If JavaFX toolkit not initialized, fall back to thread-based delay (headless/API mode)
             Timeline delayTreatment = new Timeline(
                 new KeyFrame(Duration.seconds(3), e -> {
                     logger.info("PestControl", "Applying delayed treatment to Zone " + zone.getZoneId());
                     applyTreatment(zone);
                 })
             );
-            delayTreatment.play();
+            
+            try {
+                delayTreatment.play();
+            } catch (RuntimeException e) {
+                // JavaFX toolkit not initialized - use thread-based delay (headless/API mode)
+                scheduler.schedule(() -> {
+                    logger.info("PestControl", "Applying delayed treatment to Zone " + zone.getZoneId());
+                    applyTreatment(zone);
+                }, 3, TimeUnit.SECONDS);
+            }
         }
     }
     
@@ -148,7 +219,7 @@ public class PestControlSystem {
         
         // Check for actual pests in this zone
         long harmfulPestCount = pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p != null && p.isAlive())
             .filter(p -> zone.containsPosition(p.getPosition()))
             .count();
         
@@ -199,6 +270,11 @@ public class PestControlSystem {
         int pestsEliminated = 0;
         
         for (Pest pest : new ArrayList<>(pests)) {
+            if (pest == null) {
+                pests.remove(pest);
+                continue;
+            }
+            
             if (zone.containsPosition(pest.getPosition())) {
                 pest.eliminate();
                 pests.remove(pest);
@@ -228,9 +304,12 @@ public class PestControlSystem {
      * Updates infestation levels for all zones.
      */
     private void updateInfestationLevels() {
+        // First, remove any null pests (defensive programming)
+        pests.removeIf(p -> p == null);
+        
         for (Zone zone : garden.getZones()) {
             int pestCount = (int) pests.stream()
-                .filter(p -> p.isAlive())
+                .filter(p -> p != null && p.isAlive())
                 .filter(p -> zone.containsPosition(p.getPosition()))
                 .count();
             
@@ -268,8 +347,10 @@ public class PestControlSystem {
      * Gets count of pests.
      */
     public int getHarmfulPestCount() {
+        // Remove nulls first (defensive)
+        pests.removeIf(p -> p == null);
         return (int) pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p != null && p.isAlive())
             .count();
     }
     
@@ -278,7 +359,7 @@ public class PestControlSystem {
      */
     public int getActivePestCountAtPosition(edu.scu.csen275.smartgarden.model.Position position) {
         return (int) pests.stream()
-            .filter(p -> p.isAlive())
+            .filter(p -> p != null && p.isAlive())
             .filter(p -> p.getPosition().equals(position))
             .count();
     }

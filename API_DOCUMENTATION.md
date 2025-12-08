@@ -180,10 +180,32 @@ The API does **NOT** disrupt existing smartGarden code. It:
 3. **Integration**: Can be used by external systems
 4. **No Disruption**: Works with existing code
 
+## Headless Simulation Engine
+
+The API now includes a `HeadlessSimulationEngine` that runs continuously in the background:
+
+- **Automatic Plant Updates**: Plants update every tick (water decreases, health changes)
+- **Continuous System Responses**: Sprinklers, heating, and pest control respond automatically
+- **True Survival Testing**: Enables 24-hour survival tests where plants must survive continuous simulation
+- **Headless Mode**: Works without JavaFX toolkit (uses ScheduledExecutorService)
+
+**How it works:**
+1. `initializeGarden()` automatically starts the headless simulation loop
+2. Plants update continuously in the background
+3. API methods (`rain()`, `temperature()`, `parasite()`) trigger immediate events
+4. Both API events and continuous simulation work together
+
+**Methods:**
+- `startHeadlessSimulation()` - Manually start continuous simulation
+- `stopHeadlessSimulation()` - Stop continuous simulation
+- `isHeadlessSimulationRunning()` - Check if simulation is running
+- `getHeadlessDayCount()` - Get days from continuous simulation (separate from API dayCount)
+
 ## Notes
 
 - The API uses smartGarden's **Celsius** temperature scale (not Fahrenheit)
 - Day count increments automatically with environmental events
 - All operations are logged through smartGarden's Logger system
 - The API is thread-safe when used with a single GardenController instance
+- Headless simulation runs automatically when `initializeGarden()` is called
 

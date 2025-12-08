@@ -7,6 +7,9 @@ import edu.scu.csen275.smartgarden.simulation.SimulationEngine;
 import edu.scu.csen275.smartgarden.simulation.WeatherSystem;
 import edu.scu.csen275.smartgarden.ui.*;
 import edu.scu.csen275.smartgarden.util.Logger;
+import edu.scu.csen275.smartgarden.util.EventBus;
+import edu.scu.csen275.smartgarden.events.*;
+import edu.scu.csen275.smartgarden.api.GardenSimulationAPI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -44,6 +47,9 @@ public class SmartGardenApplication extends Application {
     // Track previous weather to detect changes
     private WeatherSystem.Weather previousWeather = null;
     
+    // API instance (optional - only created if API mode is enabled)
+    private GardenSimulationAPI api = null;
+    
     private static final int GRID_SIZE = 9;
     
     @Override
@@ -78,9 +84,29 @@ public class SmartGardenApplication extends Application {
             // Setup pest event handlers
             setupPestEventHandlers();
             
-            // ROTATION MODE: Rotate between sunny and rainy every 1 minute
-            controller.getSimulationEngine().getWeatherSystem().enableSunnyRainyRotation();
-            System.out.println("[SmartGardenApplication] ROTATION MODE: Weather rotating between SUNNY and RAINY every 1 minute");
+            // Setup EventBus subscriptions for API events
+            setupEventBusSubscriptions();
+            
+            // Check if API mode is enabled (via system property)
+            boolean apiModeEnabled = Boolean.getBoolean("smartgarden.api.enabled") || 
+                                    System.getenv("SMARTGARDEN_API_ENABLED") != null;
+            
+            if (apiModeEnabled) {
+                // API mode enabled - create API using same controller (shared state)
+                System.out.println("[SmartGardenApplication] API MODE ENABLED - API and UI will share garden state");
+                controller.getLogger().info("System", "API mode enabled - UI and API sharing garden state");
+                
+                // Create API using the same controller
+                api = new GardenSimulationAPI(controller);
+                api.initializeGarden();
+                
+                // Schedule API calls (similar to Smart_Garden_System 3)
+                scheduleAPICalls(api);
+            } else {
+                // Normal mode - enable weather rotation
+                controller.getSimulationEngine().getWeatherSystem().enableSunnyRainyRotation();
+                System.out.println("[SmartGardenApplication] ROTATION MODE: Weather rotating between SUNNY and RAINY every 1 minute");
+            }
             
             // Add initial test log entry to verify log display
             controller.getLogger().info("System", "Smart Garden Simulation started");
@@ -373,6 +399,104 @@ public class SmartGardenApplication extends Application {
                 // Not explicitly handled in UI yet, but can be added
             }
         });
+    }
+    
+    /**
+     * Sets up EventBus subscriptions for API events.
+     * This allows API calls to trigger UI updates even when API runs separately.
+     */
+    private void setupEventBusSubscriptions() {
+        // Subscribe to rain events
+        EventBus.subscribe("RainEvent", event -> {
+            if (event instanceof RainEvent) {
+                RainEvent rainEvent = (RainEvent) event;
+                System.out.println("[SmartGardenApplication] Received RainEvent: " + rainEvent.getAmount() + " units");
+                
+                // Find container for rain animation
+                Pane centerContainer = findCenterContainer();
+                if (centerContainer != null) {
+                    RainAnimationEngine.startRain(centerContainer);
+                    // Stop sprinklers when rain starts
+                    if (controller != null && controller.getSimulationEngine() != null) {
+                        controller.getSimulationEngine().getWateringSystem().stopAllSprinklers();
+                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
+                    }
+                }
+            }
+        });
+        
+        // Subscribe to temperature events
+        EventBus.subscribe("TemperatureEvent", event -> {
+            if (event instanceof TemperatureEvent) {
+                TemperatureEvent tempEvent = (TemperatureEvent) event;
+                System.out.println("[SmartGardenApplication] Received TemperatureEvent: " + tempEvent.getTemperatureFahrenheit() + "°F");
+                
+                // Update weather display based on temperature
+                if (controller != null && controller.getSimulationEngine() != null) {
+                    WeatherSystem.Weather weather = controller.getSimulationEngine().getWeatherSystem().getCurrentWeather();
+                    if (infoPanel != null && infoPanel.getWeatherDisplay() != null) {
+                        infoPanel.getWeatherDisplay().updateWeather(weather);
+                    }
+                    
+                    // Handle snow animation if temperature is cold
+                    Pane centerContainer = findCenterContainer();
+                    if (centerContainer != null) {
+                        if (weather == WeatherSystem.Weather.SNOWY) {
+                            SnowAnimationEngine.startSnow(centerContainer);
+                        } else {
+                            SnowAnimationEngine.stopSnow(centerContainer);
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Subscribe to parasite events
+        EventBus.subscribe("ParasiteEvent", event -> {
+            if (event instanceof ParasiteEvent) {
+                ParasiteEvent parasiteEvent = (ParasiteEvent) event;
+                System.out.println("[SmartGardenApplication] Received ParasiteEvent: " + 
+                                parasiteEvent.getParasiteType() + " at " + parasiteEvent.getPosition());
+                
+                // Trigger pest animation on the affected tile
+                if (gardenPanel != null) {
+                    gardenPanel.onPestSpawned(parasiteEvent.getPosition(), 
+                                            parasiteEvent.getParasiteType(), true);
+                }
+            }
+        });
+        
+        // Subscribe to garden initialization
+        EventBus.subscribe("InitializeGardenEvent", event -> {
+            System.out.println("[SmartGardenApplication] Received InitializeGardenEvent - garden initialized");
+            // UI will update automatically via polling, but we can add special handling here if needed
+        });
+    }
+    
+    /**
+     * Helper method to find the center container for animations.
+     */
+    private Pane findCenterContainer() {
+        if (scene == null) return null;
+        
+        javafx.scene.Node root = scene.getRoot();
+        if (root instanceof BorderPane) {
+            BorderPane borderPane = (BorderPane) root;
+            javafx.scene.Node center = borderPane.getCenter();
+            if (center instanceof Pane) {
+                return (Pane) center;
+            }
+            // Sometimes center is a StackPane containing the actual container
+            if (center instanceof StackPane) {
+                StackPane stackPane = (StackPane) center;
+                for (javafx.scene.Node child : stackPane.getChildren()) {
+                    if (child instanceof Pane) {
+                        return (Pane) child;
+                    }
+                }
+            }
+        }
+        return null;
     }
     
     /**
@@ -758,7 +882,57 @@ public class SmartGardenApplication extends Application {
         alert.showAndWait();
     }
     
+    /**
+     * Schedules API calls using JavaFX Timeline (similar to Smart_Garden_System 3).
+     * Only called when API mode is enabled.
+     * 
+     * Note: In a real scenario, the professor's script would call API methods externally.
+     * This method can optionally schedule API calls for testing/demonstration.
+     * By default, it's disabled - API calls should come from external scripts.
+     */
+    private void scheduleAPICalls(GardenSimulationAPI api) {
+        // API mode is enabled - UI and API share the same controller
+        // External API calls will be visible in UI via EventBus
+        System.out.println("[SmartGardenApplication] API mode active - external API calls will be visible in UI");
+        controller.getLogger().info("System", "API mode active - API calls can be made externally, UI will update via EventBus");
+        
+        // Optional: Enable scheduled API calls for testing/demonstration
+        // Uncomment below to enable automatic API calls (like Smart_Garden_System 3):
+        /*
+        Random rand = new Random();
+        
+        // Schedule rain every 60 seconds
+        Timeline rainTimeline = new Timeline(new KeyFrame(Duration.seconds(60), ev -> {
+            api.rain(rand.nextInt(40));
+        }));
+        rainTimeline.setCycleCount(Timeline.INDEFINITE);
+        rainTimeline.play();
+        
+        // Schedule temperature every 40 seconds
+        Timeline tempTimeline = new Timeline(new KeyFrame(Duration.seconds(40), ev -> {
+            api.temperature(40 + rand.nextInt(80)); // 40-120°F
+        }));
+        tempTimeline.setCycleCount(Timeline.INDEFINITE);
+        tempTimeline.play();
+        
+        // Schedule parasite every 30 seconds
+        Timeline parasiteTimeline = new Timeline(new KeyFrame(Duration.seconds(30), ev -> {
+            String[] pests = {"Red Mite", "Green Leaf Worm", "Black Beetle", "Brown Caterpillar"};
+            api.parasite(pests[rand.nextInt(pests.length)]);
+        }));
+        parasiteTimeline.setCycleCount(Timeline.INDEFINITE);
+        parasiteTimeline.play();
+        */
+    }
+    
     public static void main(String[] args) {
+        // Check command-line arguments for API mode
+        for (String arg : args) {
+            if (arg.equals("--api") || arg.equals("-api")) {
+                System.setProperty("smartgarden.api.enabled", "true");
+                break;
+            }
+        }
         launch(args);
     }
 }

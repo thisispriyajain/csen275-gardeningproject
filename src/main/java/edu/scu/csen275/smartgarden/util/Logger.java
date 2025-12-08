@@ -27,6 +27,11 @@ public class Logger {
     private LogLevel minLogLevel;
     private BufferedWriter writer;
     
+    // API logging support - write to log.txt when API mode is enabled
+    private static BufferedWriter apiLogWriter;
+    private static boolean apiModeEnabled = false;
+    private static final Object apiLogLock = new Object();
+    
     private static final DateTimeFormatter TIME_FORMATTER = 
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final int BUFFER_FLUSH_SIZE = 10;
@@ -84,9 +89,31 @@ public class Logger {
         buffer.add(entry);
         memoryLog.add(entry);
         
+        // Also write to log.txt if API mode is enabled (for API monitoring)
+        if (apiModeEnabled) {
+            writeToApiLog(entry);
+        }
+        
         // Flush if buffer is full
         if (buffer.size() >= BUFFER_FLUSH_SIZE) {
             flush();
+        }
+    }
+    
+    /**
+     * Writes a log entry to the API log.txt file (when API mode is enabled).
+     */
+    private static void writeToApiLog(LogEntry entry) {
+        synchronized (apiLogLock) {
+            try {
+                if (apiLogWriter != null) {
+                    apiLogWriter.write(entry.toFileFormat());
+                    apiLogWriter.newLine();
+                    apiLogWriter.flush();
+                }
+            } catch (IOException e) {
+                // Silently fail - don't disrupt logging if log.txt write fails
+            }
         }
     }
     
@@ -184,6 +211,57 @@ public class Logger {
     public void setMinLogLevel(LogLevel level) {
         this.minLogLevel = level;
         info("Logger", "Minimum log level set to: " + level);
+    }
+    
+    /**
+     * Enables API logging mode - writes all logs to log.txt file as well as normal log file.
+     * This allows API monitoring scripts to see all system responses in one file.
+     * 
+     * @param apiLogFile Path to the log.txt file (typically "log.txt" in project root)
+     */
+    public static void enableApiLogging(Path apiLogFile) {
+        synchronized (apiLogLock) {
+            try {
+                // Write header to log.txt
+                apiLogWriter = Files.newBufferedWriter(apiLogFile, 
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                
+                // Write separator for new session
+                apiLogWriter.write("\n");
+                apiLogWriter.write("=====================================");
+                apiLogWriter.newLine();
+                apiLogWriter.write("Smart Garden Simulation API Log");
+                apiLogWriter.newLine();
+                apiLogWriter.write("Session Started: " + LocalDateTime.now().format(TIME_FORMATTER));
+                apiLogWriter.newLine();
+                apiLogWriter.write("=====================================");
+                apiLogWriter.newLine();
+                apiLogWriter.flush();
+                
+                apiModeEnabled = true;
+            } catch (IOException e) {
+                System.err.println("Warning: Failed to enable API logging: " + e.getMessage());
+                apiModeEnabled = false;
+            }
+        }
+    }
+    
+    /**
+     * Disables API logging and closes the log.txt file.
+     */
+    public static void disableApiLogging() {
+        synchronized (apiLogLock) {
+            try {
+                if (apiLogWriter != null) {
+                    apiLogWriter.flush();
+                    apiLogWriter.close();
+                    apiLogWriter = null;
+                }
+                apiModeEnabled = false;
+            } catch (IOException e) {
+                System.err.println("Error closing API log: " + e.getMessage());
+            }
+        }
     }
     
     /**

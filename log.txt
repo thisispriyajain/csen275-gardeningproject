@@ -20,3 +20,1687 @@ Started: 2025-12-06 22:10:15
 [2025-12-06 22:10:16]   - Carrot at (2,2): ALIVE (Health: 97%, Water: 100%)
 [2025-12-06 22:10:16]   - Tomato at (3,3): ALIVE (Health: 97%, Water: 100%)
 [2025-12-06 22:10:16]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 73%)
+[2025-12-08 07:32:20] Initializing garden - Day 0 begins
+[2025-12-08 07:32:20] Garden initialized with 4 plants.
+[2025-12-08 07:32:20] Rainfall event: 10 units
+[2025-12-08 07:32:20] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 07:32:20] Rain added water to Carrot. Current water level: 100
+[2025-12-08 07:32:20] Rain added water to Tomato. Current water level: 100
+[2025-12-08 07:32:20] Rain added water to Flower (Sunflower). Current water level: 73
+[2025-12-08 07:32:20] Temperature changed to 77°F
+[2025-12-08 07:32:20] Parasite infestation: Red Mite
+[2025-12-08 07:32:20] Strawberry attacked by Red Mite
+[2025-12-08 07:32:20] Carrot attacked by Red Mite
+[2025-12-08 07:32:20] Tomato attacked by Red Mite
+[2025-12-08 07:32:20] Garden State Report - Day 3
+[2025-12-08 07:32:20] Alive: 4, Dead: 0
+[2025-12-08 07:32:20]   - Strawberry at (1,1): ALIVE (Health: 99%, Water: 100%)
+[2025-12-08 07:32:20]   - Carrot at (2,2): ALIVE (Health: 97%, Water: 100%)
+[2025-12-08 07:32:20]   - Tomato at (3,3): ALIVE (Health: 97%, Water: 100%)
+[2025-12-08 07:32:20]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 73%)
+[2025-12-08 07:34:55] Initializing garden - Day 0 begins
+[2025-12-08 07:34:55] Garden initialized with 4 plants.
+[2025-12-08 07:34:55] Rainfall event: 10 units
+[2025-12-08 07:34:55] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 07:34:55] Rain added water to Carrot. Current water level: 100
+[2025-12-08 07:34:55] Rain added water to Tomato. Current water level: 100
+[2025-12-08 07:34:55] Rain added water to Flower (Sunflower). Current water level: 73
+[2025-12-08 07:34:55] Temperature changed to 77°F
+[2025-12-08 07:34:55] Parasite infestation: Red Mite
+[2025-12-08 07:34:55] Strawberry attacked by Red Mite
+[2025-12-08 07:34:55] Carrot attacked by Red Mite
+[2025-12-08 07:34:55] Tomato attacked by Red Mite
+[2025-12-08 07:34:55] Garden State Report - Day 3
+[2025-12-08 07:34:55] Alive: 4, Dead: 0
+[2025-12-08 07:34:55]   - Strawberry at (1,1): ALIVE (Health: 99%, Water: 100%)
+[2025-12-08 07:34:55]   - Carrot at (2,2): ALIVE (Health: 97%, Water: 100%)
+[2025-12-08 07:34:55]   - Tomato at (3,3): ALIVE (Health: 97%, Water: 100%)
+[2025-12-08 07:34:55]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 73%)
+[2025-12-08 09:39:19] Initializing garden - Day 0 begins
+[2025-12-08 09:39:19] Garden initialized with 4 plants.
+[2025-12-08 09:39:19] Rainfall event: 25 units
+[2025-12-08 09:39:19] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 09:39:19] Rain added water to Carrot. Current water level: 100
+[2025-12-08 09:39:19] Rain added water to Tomato. Current water level: 100
+[2025-12-08 09:39:19] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 09:39:20] Temperature changed to 40°F
+[2025-12-08 09:39:21] Temperature changed to 110°F
+[2025-12-08 09:39:22] Parasite infestation: Red Mite
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 09:48:47
+=====================================
+[2025-12-08 09:48:47] Initializing garden - Day 0 begins
+[2025-12-08 09:48:47] Garden initialized with 4 plants.
+[2025-12-08 09:48:47] Rainfall event: 25 units
+[2025-12-08 09:48:47] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 09:48:47] Rain added water to Carrot. Current water level: 100
+[2025-12-08 09:48:47] Rain added water to Tomato. Current water level: 100
+[2025-12-08 09:48:47] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 09:48:48] Temperature changed to 40°F
+[2025-12-08 09:48:49] Temperature changed to 110°F
+[2025-12-08 09:48:50] Parasite infestation: Red Mite
+[2025-12-08 09:48:50] Strawberry attacked by Red Mite
+[2025-12-08 09:48:50] Carrot attacked by Red Mite
+[2025-12-08 09:48:50] Tomato attacked by Red Mite
+[2025-12-08 09:48:55] Rainfall event: 15 units
+[2025-12-08 09:48:55] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 09:48:55] Rain added water to Carrot. Current water level: 100
+[2025-12-08 09:48:55] Rain added water to Tomato. Current water level: 100
+[2025-12-08 09:48:55] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 09:48:56] Parasite infestation: Green Leaf Worm
+[2025-12-08 09:48:56] Strawberry attacked by Green Leaf Worm
+[2025-12-08 09:49:01] Garden State Report - Day 6
+[2025-12-08 09:49:01] Alive: 4, Dead: 0
+[2025-12-08 09:49:01]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 09:49:01]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 09:49:01]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 09:49:01]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 10:15:43
+=====================================
+[2025-12-08 10:15:43] Initializing garden - Day 0 begins
+[2025-12-08 10:15:43] Garden initialized with 4 plants.
+[2025-12-08 10:15:43] Rainfall event: 25 units
+[2025-12-08 10:15:43] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:15:43] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:15:43] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:15:43] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 10:15:44] Temperature changed to 40°F
+[2025-12-08 10:15:45] Temperature changed to 110°F
+[2025-12-08 10:15:46] Parasite infestation: Red Mite
+[2025-12-08 10:15:46] Strawberry attacked by Red Mite
+[2025-12-08 10:15:46] Carrot attacked by Red Mite
+[2025-12-08 10:15:46] Tomato attacked by Red Mite
+[2025-12-08 10:15:46] Pest control system checked - 3 active pests still present
+[2025-12-08 10:15:50] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 10:15:51] Rainfall event: 15 units
+[2025-12-08 10:15:51] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:15:51] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:15:51] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:15:51] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 10:15:52] Parasite infestation: Green Leaf Worm
+[2025-12-08 10:15:52] Strawberry attacked by Green Leaf Worm
+[2025-12-08 10:15:52] Pest control system checked - 1 active pests still present
+[2025-12-08 10:15:56] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 43)
+[2025-12-08 10:15:57] Garden State Report - Day 6
+[2025-12-08 10:15:57] Alive: 4, Dead: 0
+[2025-12-08 10:15:57]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:15:57]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:15:57]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 10:15:57]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 10:37:37
+=====================================
+[2025-12-08 10:37:37] Initializing garden - Day 0 begins
+[2025-12-08 10:37:37] Garden initialized with 4 plants.
+[2025-12-08 10:37:37] Rainfall event: 25 units
+[2025-12-08 10:37:37] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:37:37] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:37:37] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:37:37] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 10:37:38] Temperature changed to 40°F
+[2025-12-08 10:37:39] Temperature changed to 110°F
+[2025-12-08 10:37:39] Pest control system: 1 new pest(s) detected - 1 total active pests
+[2025-12-08 10:37:39] Pesticide treatment scheduled (will apply in 3 seconds if threat level is HIGH/CRITICAL)
+[2025-12-08 10:37:40] Parasite infestation: Red Mite
+[2025-12-08 10:37:40] Strawberry attacked by Red Mite
+[2025-12-08 10:37:40] Carrot attacked by Red Mite
+[2025-12-08 10:37:40] Tomato attacked by Red Mite
+[2025-12-08 10:37:40] Pest control system checked - 4 active pests still present
+[2025-12-08 10:37:44] Pesticide applied automatically - 4 pest(s) eliminated (Stock remaining: 44)
+[2025-12-08 10:37:45] Rainfall event: 15 units
+[2025-12-08 10:37:45] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:37:45] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:37:45] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:37:45] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 10:37:46] Parasite infestation: Green Leaf Worm
+[2025-12-08 10:37:46] Strawberry attacked by Green Leaf Worm
+[2025-12-08 10:37:46] Pest control system checked - 1 active pests still present
+[2025-12-08 10:37:50] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 42)
+[2025-12-08 10:37:51] Garden State Report - Day 6
+[2025-12-08 10:37:51] Alive: 4, Dead: 0
+[2025-12-08 10:37:51]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:37:51]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:37:51]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 10:37:51]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 10:46:06
+=====================================
+[2025-12-08 10:46:06] Initializing garden - Day 0 begins
+[2025-12-08 10:46:06] Garden initialized with 4 plants.
+[2025-12-08 10:46:06] Rainfall event: 25 units
+[2025-12-08 10:46:06] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:46:06] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:46:06] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:46:06] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 10:46:06] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 10:46:07] Temperature changed to 40°F
+[2025-12-08 10:46:07] Temperature set to 4°C (40°F) - Heating threshold: 15°C
+[2025-12-08 10:46:07] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 10:46:08] Temperature changed to 110°F
+[2025-12-08 10:46:08] Temperature set to 43°C (110°F) - Heating threshold: 15°C
+[2025-12-08 10:46:09] Parasite infestation: Red Mite
+[2025-12-08 10:46:09] Strawberry attacked by Red Mite
+[2025-12-08 10:46:09] Carrot attacked by Red Mite
+[2025-12-08 10:46:09] Tomato attacked by Red Mite
+[2025-12-08 10:46:09] Pest control system checked - 3 active pests still present
+[2025-12-08 10:46:12] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 10:46:14] Rainfall event: 15 units
+[2025-12-08 10:46:14] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:46:14] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:46:14] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:46:14] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 10:46:14] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 10:46:15] Parasite infestation: Green Leaf Worm
+[2025-12-08 10:46:15] Strawberry attacked by Green Leaf Worm
+[2025-12-08 10:46:15] Heating system is ON - Mode: LOW (Temperature: 12°C, Threshold: 15°C)
+[2025-12-08 10:46:15] Pest control system checked - 1 active pests still present
+[2025-12-08 10:46:18] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 43)
+[2025-12-08 10:46:20] Garden State Report - Day 6
+[2025-12-08 10:46:20] Alive: 4, Dead: 0
+[2025-12-08 10:46:20]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:46:20]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:46:20]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 10:46:20]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 10:54:17
+=====================================
+[2025-12-08 10:54:17] Initializing garden - Day 0 begins
+[2025-12-08 10:54:17] Garden initialized with 4 plants.
+[2025-12-08 10:54:17] Rainfall event: 25 units
+[2025-12-08 10:54:17] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:54:17] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:54:17] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:54:17] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 10:54:17] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 10:54:18] Temperature changed to 40°F
+[2025-12-08 10:54:18] Temperature set to 4°C (40°F) - Heating range: 15°C to 28°C
+[2025-12-08 10:54:18] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 10:54:19] Temperature changed to 110°F
+[2025-12-08 10:54:19] Temperature set to 43°C (110°F) - Heating range: 15°C to 28°C
+[2025-12-08 10:54:20] Parasite infestation: Red Mite
+[2025-12-08 10:54:20] Strawberry attacked by Red Mite
+[2025-12-08 10:54:20] Carrot attacked by Red Mite
+[2025-12-08 10:54:20] Tomato attacked by Red Mite
+[2025-12-08 10:54:20] Pest control system: 1 new pest(s) detected - 4 total active pests
+[2025-12-08 10:54:20] Pesticide treatment scheduled (will apply in 3 seconds if threat level is HIGH/CRITICAL)
+[2025-12-08 10:54:24] Pesticide applied automatically - 4 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 10:54:25] Rainfall event: 15 units
+[2025-12-08 10:54:25] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 10:54:25] Rain added water to Carrot. Current water level: 100
+[2025-12-08 10:54:25] Rain added water to Tomato. Current water level: 100
+[2025-12-08 10:54:25] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 10:54:25] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 10:54:26] Parasite infestation: Green Leaf Worm
+[2025-12-08 10:54:26] Strawberry attacked by Green Leaf Worm
+[2025-12-08 10:54:26] Heating system is ON - Mode: LOW (Temperature: 12°C, Threshold: 15°C)
+[2025-12-08 10:54:26] Pest control system checked - 1 active pests still present
+[2025-12-08 10:54:30] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 43)
+[2025-12-08 10:54:31] Garden State Report - Day 6
+[2025-12-08 10:54:31] Alive: 4, Dead: 0
+[2025-12-08 10:54:31]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:54:31]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 10:54:31]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 10:54:31]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 11:00:58
+=====================================
+[2025-12-08 11:00:58] Initializing garden - Day 0 begins
+[2025-12-08 11:00:58] Garden initialized with 4 plants.
+[2025-12-08 11:00:58] Rainfall event: 25 units
+[2025-12-08 11:00:58] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 11:00:58] Rain added water to Carrot. Current water level: 100
+[2025-12-08 11:00:58] Rain added water to Tomato. Current water level: 100
+[2025-12-08 11:00:58] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 11:00:58] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 11:00:59] Temperature changed to 40°F
+[2025-12-08 11:00:59] Temperature set to 4°C (40°F) - Heating range: 15°C to 28°C
+[2025-12-08 11:00:59] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 11:01:00] Temperature changed to 110°F
+[2025-12-08 11:01:00] Temperature set to 43°C (110°F) - Heating range: 15°C to 28°C
+[2025-12-08 11:01:01] Parasite infestation: Red Mite
+[2025-12-08 11:01:01] Strawberry attacked by Red Mite
+[2025-12-08 11:01:01] Carrot attacked by Red Mite
+[2025-12-08 11:01:01] Tomato attacked by Red Mite
+[2025-12-08 11:01:01] Pest control system checked - 3 active pests still present
+[2025-12-08 11:01:05] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 11:01:06] Rainfall event: 15 units
+[2025-12-08 11:01:06] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 11:01:06] Rain added water to Carrot. Current water level: 100
+[2025-12-08 11:01:06] Rain added water to Tomato. Current water level: 100
+[2025-12-08 11:01:06] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 11:01:06] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 11:01:07] Parasite infestation: Green Leaf Worm
+[2025-12-08 11:01:07] Strawberry attacked by Green Leaf Worm
+[2025-12-08 11:01:07] Heating system is ON - Mode: LOW (Temperature: 12°C, Threshold: 15°C)
+[2025-12-08 11:01:07] Pest control system checked - 1 active pests still present
+[2025-12-08 11:01:11] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 43)
+[2025-12-08 11:01:12] Garden State Report - Day 6
+[2025-12-08 11:01:12] Alive: 4, Dead: 0
+[2025-12-08 11:01:12]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 11:01:12]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 11:01:12]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 11:01:12]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 11:09:51
+=====================================
+[2025-12-08 11:09:51] Initializing garden - Day 0 begins
+[2025-12-08 11:09:51] Garden initialized with 4 plants.
+[2025-12-08 11:09:51] Rainfall event: 25 units
+[2025-12-08 11:09:51] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 11:09:51] Rain added water to Carrot. Current water level: 100
+[2025-12-08 11:09:51] Rain added water to Tomato. Current water level: 100
+[2025-12-08 11:09:51] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 11:09:51] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 11:09:52] Temperature changed to 40°F
+[2025-12-08 11:09:52] Temperature set to 4°C (40°F) - Heating range: 15°C to 28°C
+[2025-12-08 11:09:52] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 11:09:53] Temperature changed to 110°F
+[2025-12-08 11:09:53] Temperature set to 43°C (110°F) - Heating range: 15°C to 28°C
+[2025-12-08 11:09:53] NOTE: Temperature 43°C is above max threshold 28°C - heating system should be OFF
+[2025-12-08 11:09:53] Heating system is OFF (Temperature: 43°C is above max threshold 28°C)
+[2025-12-08 11:09:54] Parasite infestation: Red Mite
+[2025-12-08 11:09:54] Strawberry attacked by Red Mite
+[2025-12-08 11:09:54] Carrot attacked by Red Mite
+[2025-12-08 11:09:54] Tomato attacked by Red Mite
+[2025-12-08 11:09:54] Pest control system checked - 3 active pests still present
+[2025-12-08 11:09:58] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 11:09:59] Rainfall event: 15 units
+[2025-12-08 11:09:59] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 11:09:59] Rain added water to Carrot. Current water level: 100
+[2025-12-08 11:09:59] Rain added water to Tomato. Current water level: 100
+[2025-12-08 11:09:59] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 11:09:59] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 11:10:00] Parasite infestation: Green Leaf Worm
+[2025-12-08 11:10:00] Strawberry attacked by Green Leaf Worm
+[2025-12-08 11:10:00] Heating system is ON - Mode: LOW (Temperature: 12°C, Threshold: 15°C)
+[2025-12-08 11:10:00] Pest control system checked - 1 active pests still present
+[2025-12-08 11:10:04] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 43)
+[2025-12-08 11:10:06] Garden State Report - Day 6
+[2025-12-08 11:10:06] Alive: 4, Dead: 0
+[2025-12-08 11:10:06]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 11:10:06]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 11:10:06]   - Tomato at (3,3): ALIVE (Health: 96%, Water: 100%)
+[2025-12-08 11:10:06]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 12:14:36
+=====================================
+[2025-12-08 12:14:36] Initializing garden - Day 0 begins
+[2025-12-08 12:14:37] Garden initialized with 4 plants.
+[2025-12-08 12:14:37] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 12:14:37] Rainfall event: 25 units
+[2025-12-08 12:14:37] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 12:14:37] Rain added water to Carrot. Current water level: 100
+[2025-12-08 12:14:37] Rain added water to Tomato. Current water level: 100
+[2025-12-08 12:14:37] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 12:14:37] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 12:14:37] Pest control system checked - 1 active pests still present
+[2025-12-08 12:14:38] Temperature changed to 40°F
+[2025-12-08 12:14:38] Temperature set to 4°C (40°F) - Heating range: 15°C to 28°C
+[2025-12-08 12:14:38] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 12:14:38] Pest control system checked - 2 active pests still present
+[2025-12-08 12:14:39] Temperature changed to 110°F
+[2025-12-08 12:14:39] Temperature set to 43°C (110°F) - Heating range: 15°C to 28°C
+[2025-12-08 12:14:39] NOTE: Temperature 43°C is above max threshold 28°C - heating system should be OFF
+[2025-12-08 12:14:39] Heating system is OFF (Temperature: 43°C is above max threshold 28°C)
+[2025-12-08 12:14:39] Pest control system checked - 2 active pests still present
+[2025-12-08 12:14:40] Parasite infestation: Red Mite
+[2025-12-08 12:14:40] Strawberry attacked by Red Mite
+[2025-12-08 12:14:40] Carrot attacked by Red Mite
+[2025-12-08 12:14:40] Tomato attacked by Red Mite
+[2025-12-08 12:14:40] Pest control system checked - 3 active pests still present
+[2025-12-08 12:14:41] Pesticide treatment attempted - 2 pest(s) still active (Stock remaining: 46)
+[2025-12-08 12:14:42] Pesticide treatment attempted - 2 pest(s) still active (Stock remaining: 44)
+[2025-12-08 12:14:43] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 38)
+[2025-12-08 12:14:45] Rainfall event: 15 units
+[2025-12-08 12:14:45] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 12:14:45] Rain added water to Carrot. Current water level: 100
+[2025-12-08 12:14:45] Rain added water to Tomato. Current water level: 100
+[2025-12-08 12:14:45] Rain added water to Flower (Sunflower). Current water level: 100
+[2025-12-08 12:14:45] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 12:14:46] Parasite infestation: Green Leaf Worm
+[2025-12-08 12:14:46] Strawberry attacked by Green Leaf Worm
+[2025-12-08 12:14:46] Heating system is ON - Mode: LOW (Temperature: 13°C, Threshold: 15°C)
+[2025-12-08 12:14:46] Pest control system checked - 1 active pests still present
+[2025-12-08 12:14:49] Pesticide applied automatically - 1 pest(s) eliminated (Stock remaining: 32)
+[2025-12-08 12:14:51] Garden State Report - Day 6
+[2025-12-08 12:14:51] Alive: 4, Dead: 0
+[2025-12-08 12:14:51]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 12:14:51]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 12:14:51]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 12:14:51]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 12:14:51] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 12:25:05
+=====================================
+[2025-12-08 12:25:05] Initializing garden - Day 0 begins
+[2025-12-08 12:25:05] Garden initialized with 4 plants.
+[2025-12-08 12:25:05] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 12:25:13] Rainfall event: 25 units
+[2025-12-08 12:25:13] Rain added water to Strawberry. Current water level: 100
+[2025-12-08 12:25:13] Rain added water to Carrot. Current water level: 100
+[2025-12-08 12:25:13] Rain added water to Tomato. Current water level: 100
+[2025-12-08 12:25:13] Rain added water to Flower (Sunflower). Current water level: 88
+[2025-12-08 12:25:13] Heating system is ON - Mode: LOW (Temperature: 11°C, Threshold: 15°C)
+[2025-12-08 12:25:15] Temperature changed to 40°F
+[2025-12-08 12:25:15] Temperature set to 4°C (40°F) - Heating range: 15°C to 28°C
+[2025-12-08 12:25:15] Heating system is ON - Mode: MEDIUM (Temperature: 7°C, Threshold: 15°C)
+[2025-12-08 12:25:17] Temperature changed to 110°F
+[2025-12-08 12:25:17] Temperature set to 43°C (110°F) - Heating range: 15°C to 28°C
+[2025-12-08 12:25:17] NOTE: Temperature 43°C is above max threshold 28°C - heating system should be OFF
+[2025-12-08 12:25:17] Heating system is OFF (Temperature: 43°C is above max threshold 28°C)
+[2025-12-08 12:25:19] Parasite infestation: Red Mite
+[2025-12-08 12:25:19] Strawberry attacked by Red Mite
+[2025-12-08 12:25:19] Carrot attacked by Red Mite
+[2025-12-08 12:25:19] Tomato attacked by Red Mite
+[2025-12-08 12:25:19] Pest control system checked - 3 active pests still present
+[2025-12-08 12:25:23] Pesticide applied automatically - 3 pest(s) eliminated (Stock remaining: 45)
+[2025-12-08 12:25:23] Parasite infestation: Green Leaf Worm
+[2025-12-08 12:25:23] Strawberry attacked by Green Leaf Worm
+[2025-12-08 12:25:23] Pest control system: 1 new pest(s) detected - 2 total active pests
+[2025-12-08 12:25:23] Pesticide treatment scheduled (will apply in 3 seconds if threat level is HIGH/CRITICAL)
+[2025-12-08 12:25:27] Pesticide applied automatically - 2 pest(s) eliminated (Stock remaining: 38)
+[2025-12-08 12:25:37] Garden State Report - Day 5
+[2025-12-08 12:25:37] Alive: 4, Dead: 0
+[2025-12-08 12:25:37]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 12:25:37]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 12:25:37]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 12:25:37]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 93%)
+[2025-12-08 12:25:37] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 13:06:55
+=====================================
+[2025-12-08 13:06:55] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 13:06:55] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 13:06:55] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 13:06:55] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 13:06:55] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 13:06:55] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 13:06:55] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 13:06:55] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 13:06:55] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 13:06:55] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 13:06:55] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 13:06:55] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 13:06:55] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 13:06:55] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 13:06:55] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 13:06:55] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 13:06:55] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 13:07:03] WARNING [PestControl    ] Green Leaf Worm appeared at (3,3)
+[2025-12-08 13:07:03] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:04] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:05] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:06] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:06] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:06] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:06] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 49
+[2025-12-08 13:07:07] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:07] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:07] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 48
+[2025-12-08 13:07:08] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:08] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:08] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 47
+[2025-12-08 13:07:09] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:09] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:09] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 46
+[2025-12-08 13:07:11] WARNING [PestControl    ] Green Leaf Worm appeared at (4,4)
+[2025-12-08 13:07:11] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:12] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:13] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:14] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:14] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:14] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:14] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 45
+[2025-12-08 13:07:15] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:15] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:15] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 44
+[2025-12-08 13:07:16] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:16] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:16] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 43
+[2025-12-08 13:07:17] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:17] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:17] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 42
+[2025-12-08 13:07:19] WARNING [PestControl    ] Black Beetle appeared at (3,3)
+[2025-12-08 13:07:19] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:20] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:21] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:22] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:22] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:22] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:22] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 41
+[2025-12-08 13:07:23] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:23] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:23] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 40
+[2025-12-08 13:07:24] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:24] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:24] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 39
+[2025-12-08 13:07:25] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:25] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:25] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 38
+[2025-12-08 13:07:26] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 13:07:26] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 13:07:26] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 13:07:26] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 13:07:26] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 13:07:26] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 13:07:26] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 13:07:26] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 13:07:26] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 13:07:26] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 13:07:26] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 87
+[2025-12-08 13:07:26] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 13:07:26] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 13:07:26] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 13:07:26] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 13:07:27] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 13:07:27] INFO    [Heating        ] Temperature increasing: 13°C → 14°C (increased by 1°C)
+[2025-12-08 13:07:28] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 13:07:28] INFO    [Heating        ] Ambient temperature set to 4°C (was 13°C)
+[2025-12-08 13:07:28] INFO    [Heating        ] Ambient temperature set to 5°C (was 4°C)
+[2025-12-08 13:07:28] INFO    [Weather        ] SNOWY weather: Temperature set to 5°C
+[2025-12-08 13:07:28] INFO    [Heating        ] Temperature increasing: 5°C → 7°C (increased by 2°C)
+[2025-12-08 13:07:28] INFO    [Weather        ] Weather manually set to SNOWY
+[2025-12-08 13:07:28] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 13:07:28] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 13:07:28] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 13:07:28] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 13:07:28] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 13:07:28] INFO    [Heating        ] Temperature increasing: 9°C → 11°C (increased by 2°C)
+[2025-12-08 13:07:29] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 13:07:30] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 13:07:30] INFO    [Heating        ] Ambient temperature set to 43°C (was 11°C)
+[2025-12-08 13:07:30] INFO    [Heating        ] Ambient temperature set to 20°C (was 43°C)
+[2025-12-08 13:07:30] INFO    [Weather        ] SUNNY weather: Temperature set to 20°C
+[2025-12-08 13:07:30] INFO    [Heating        ] Heating deactivated. Current temp: 20°C
+[2025-12-08 13:07:30] INFO    [Weather        ] Weather manually set to SUNNY
+[2025-12-08 13:07:30] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 13:07:30] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 13:07:30] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 13:07:30] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 13:07:32] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 13:07:32] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 13:07:32] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 13:07:32] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:32] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:33] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:33] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:34] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 13:07:34] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 13:07:34] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 13)
+[2025-12-08 13:07:34] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:34] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 37
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 36
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 34
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 33
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 32
+[2025-12-08 13:07:35] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:35] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 31
+[2025-12-08 13:07:36] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 13:07:36] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 13:07:36] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:36] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 13:07:36] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:36] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:36] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:36] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:36] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 13:07:36] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 30
+[2025-12-08 13:07:36] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:36] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 29
+[2025-12-08 13:07:36] ERROR   [Simulation     ] Error during headless tick 42: Cannot invoke "edu.scu.csen275.smartgarden.system.Pest.isAlive()" because "p" is null
+[2025-12-08 13:07:36] ERROR   [Simulation     ] Stack trace: edu.scu.csen275.smartgarden.system.PestControlSystem.lambda$updateInfestationLevels$4(PestControlSystem.java:275); java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:178); java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708); java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509); java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499); java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921); java.base/java.util.stream.ReduceOps$5.evaluateSequential(ReduceOps.java:258); java.base/java.util.stream.ReduceOps$5.evaluateSequential(ReduceOps.java:248); java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234); java.base/java.util.stream.ReferencePipeline.count(ReferencePipeline.java:709); edu.scu.csen275.smartgarden.system.PestControlSystem.updateInfestationLevels(PestControlSystem.java:277); edu.scu.csen275.smartgarden.system.PestControlSystem.update(PestControlSystem.java:75); edu.scu.csen275.smartgarden.simulation.HeadlessSimulationEngine.tick(HeadlessSimulationEngine.java:159); java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572); java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358); java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305); java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144); java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642); java.base/java.lang.Thread.run(Thread.java:1583); 
+[2025-12-08 13:07:37] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:37] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:37] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:37] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:37] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 28
+[2025-12-08 13:07:37] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 27
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:39] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 26
+[2025-12-08 13:07:39] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 25
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 13:07:39] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 13:07:39] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 24
+[2025-12-08 13:07:54] WARNING [PestControl    ] Black Beetle appeared at (4,4)
+[2025-12-08 13:07:54] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:55] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:56] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:57] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:57] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:57] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:57] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 23
+[2025-12-08 13:07:58] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:58] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 13:07:58] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 22
+[2025-12-08 13:07:59] WARNING [PestControl    ] Brown Caterpillar appeared at (3,3)
+[2025-12-08 13:07:59] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 13:07:59] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 13:07:59] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 13:07:59] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 21
+[2025-12-08 13:08:00] INFO    [API            ] Garden State Report - Day 5
+[2025-12-08 13:08:00] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 13:08:00] INFO    [API            ] Total Plants: 4
+[2025-12-08 13:08:00] INFO    [API            ] Zones: 9
+[2025-12-08 13:08:00] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 13:08:00] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 13:08:00] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 99%)
+[2025-12-08 13:08:00] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 92%)
+[2025-12-08 13:08:00] INFO    [Simulation     ] Headless simulation stopped at tick 65
+[2025-12-08 13:08:00] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 14:07:34
+=====================================
+[2025-12-08 14:07:34] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 14:07:34] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 14:07:34] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 14:07:34] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 14:07:34] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 14:07:34] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 14:07:34] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 14:07:34] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 14:07:34] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 14:07:34] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 14:07:34] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 14:07:34] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 14:07:34] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 14:07:34] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 14:07:34] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 14:07:34] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 14:07:34] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 14:07:34] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 14:07:34] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 14:07:34] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 14:07:34] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 14:07:34] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 14:07:34] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:07:34] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:07:34] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:07:34] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:07:34] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:07:34] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:07:34] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:07:34] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:07:34] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:07:34] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 14:07:34] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:07:34] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:35] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:35] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:07:35] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 14:07:35] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 14:07:35] INFO    [Heating        ] Ambient temperature set to 5°C (was 4°C)
+[2025-12-08 14:07:35] INFO    [Weather        ] SNOWY weather: Temperature set to 5°C
+[2025-12-08 14:07:35] INFO    [Heating        ] Temperature increasing: 5°C → 7°C (increased by 2°C)
+[2025-12-08 14:07:35] INFO    [Weather        ] Weather manually set to SNOWY
+[2025-12-08 14:07:35] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 14:07:35] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 14:07:35] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 14:07:35] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 14:07:35] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 14:07:36] INFO    [Heating        ] Temperature increasing: 9°C → 11°C (increased by 2°C)
+[2025-12-08 14:07:36] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 14:07:36] INFO    [Heating        ] Ambient temperature set to 43°C (was 9°C)
+[2025-12-08 14:07:36] INFO    [Heating        ] Ambient temperature set to 20°C (was 43°C)
+[2025-12-08 14:07:36] INFO    [Weather        ] SUNNY weather: Temperature set to 20°C
+[2025-12-08 14:07:36] INFO    [Heating        ] Heating deactivated. Current temp: 20°C
+[2025-12-08 14:07:36] INFO    [Weather        ] Weather manually set to SUNNY
+[2025-12-08 14:07:36] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 14:07:36] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 14:07:36] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 14:07:36] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 14:07:37] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 14:07:37] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 14:07:37] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:37] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 14:07:37] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 14:07:37] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:37] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 14:07:37] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 14:07:37] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:37] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 14:07:37] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:37] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:38] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:38] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:39] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:39] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:40] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:07:40] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:07:40] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:07:40] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:40] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:40] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:40] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 48
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 14:07:40] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 46
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:07:40] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:07:40] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 47
+[2025-12-08 14:07:40] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 45
+[2025-12-08 14:07:41] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:41] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:41] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 44
+[2025-12-08 14:07:41] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:07:41] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:07:41] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 43
+[2025-12-08 14:07:42] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:42] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:42] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:07:42] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:07:42] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 41
+[2025-12-08 14:07:42] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 42
+[2025-12-08 14:07:42] INFO    [API            ] Rainfall event: 15 units
+[2025-12-08 14:07:42] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:07:42] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:07:42] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:07:42] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:07:42] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:07:42] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:07:42] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:07:42] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:07:42] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:07:42] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 100
+[2025-12-08 14:07:42] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:07:42] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:43] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:43] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:07:43] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:43] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:43] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 40
+[2025-12-08 14:07:43] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:07:43] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:07:43] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 39
+[2025-12-08 14:07:43] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 14:07:43] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 14:07:43] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:43] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 14:07:43] INFO    [Heating        ] Temperature increasing: 13°C → 14°C (increased by 1°C)
+[2025-12-08 14:07:43] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:43] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:44] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:44] INFO    [Heating        ] Temperature increasing: 14°C → 15°C (increased by 1°C)
+[2025-12-08 14:07:44] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:45] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:45] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:46] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:46] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 10)
+[2025-12-08 14:07:46] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:07:46] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:46] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 14:07:46] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:46] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:46] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 14:07:46] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 38
+[2025-12-08 14:07:47] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:47] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:47] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:47] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 36
+[2025-12-08 14:07:48] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:07:48] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:07:48] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 14:07:48] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:07:48] INFO    [API            ] Garden State Report - Day 6
+[2025-12-08 14:07:48] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 14:07:48] INFO    [API            ] Total Plants: 4
+[2025-12-08 14:07:48] INFO    [API            ] Zones: 9
+[2025-12-08 14:07:48] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:07:48] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:07:48] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:07:48] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:07:48] INFO    [Simulation     ] Headless simulation stopped at tick 15
+[2025-12-08 14:07:48] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 14:19:01
+=====================================
+[2025-12-08 14:19:01] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 14:19:01] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 14:19:01] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 14:19:01] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 14:19:01] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 14:19:01] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 14:19:01] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 14:19:01] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 14:19:01] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 14:19:01] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 14:19:01] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 14:19:01] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 14:19:01] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 14:19:01] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 14:19:01] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 14:19:01] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 14:19:01] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 14:19:01] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 14:19:01] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 14:19:01] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 14:19:01] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 14:19:01] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 14:19:01] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 14:19:01] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:19:01] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:19:01] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:19:01] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:19:01] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:19:01] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:19:01] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:19:01] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:19:01] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:19:01] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 14:19:01] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:19:01] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:02] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:02] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:19:02] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 14:19:02] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 14:19:02] INFO    [Heating        ] Ambient temperature set to 5°C (was 4°C)
+[2025-12-08 14:19:02] INFO    [Weather        ] SNOWY weather: Temperature set to 5°C
+[2025-12-08 14:19:02] INFO    [Heating        ] Temperature increasing: 5°C → 7°C (increased by 2°C)
+[2025-12-08 14:19:02] INFO    [Weather        ] Weather manually set to SNOWY
+[2025-12-08 14:19:02] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 14:19:02] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 14:19:02] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 14:19:02] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 14:19:02] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 14:19:03] INFO    [Heating        ] Temperature increasing: 9°C → 11°C (increased by 2°C)
+[2025-12-08 14:19:03] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 14:19:03] INFO    [Heating        ] Ambient temperature set to 43°C (was 9°C)
+[2025-12-08 14:19:03] INFO    [Heating        ] Ambient temperature set to 20°C (was 43°C)
+[2025-12-08 14:19:03] INFO    [Weather        ] SUNNY weather: Temperature set to 20°C
+[2025-12-08 14:19:03] INFO    [Heating        ] Heating deactivated. Current temp: 20°C
+[2025-12-08 14:19:03] INFO    [Weather        ] Weather manually set to SUNNY
+[2025-12-08 14:19:03] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 14:19:03] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 14:19:03] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 14:19:03] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 14:19:04] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 14:19:04] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 14:19:04] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:04] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 14:19:04] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 14:19:04] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:04] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 14:19:04] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 14:19:04] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:04] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 14:19:04] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:04] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:05] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:05] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:06] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:06] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:07] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:19:07] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:19:07] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:19:07] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:07] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:07] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 48
+[2025-12-08 14:19:07] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 14:19:07] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 47
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:07] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 46
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:19:07] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:19:07] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 45
+[2025-12-08 14:19:08] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:08] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:08] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:19:08] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 44
+[2025-12-08 14:19:08] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:19:08] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 43
+[2025-12-08 14:19:09] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:09] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:09] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:19:09] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:19:09] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 42
+[2025-12-08 14:19:09] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 41
+[2025-12-08 14:19:09] INFO    [API            ] Rainfall event: 15 units
+[2025-12-08 14:19:09] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:19:09] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:19:09] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:19:09] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:19:09] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:19:09] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:19:09] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:19:09] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:19:09] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:19:09] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 100
+[2025-12-08 14:19:09] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:19:09] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:10] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:10] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:19:10] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:10] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:10] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 40
+[2025-12-08 14:19:10] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:19:10] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:19:10] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 39
+[2025-12-08 14:19:10] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 14:19:10] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 14:19:10] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:10] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 14:19:10] INFO    [Heating        ] Temperature increasing: 13°C → 14°C (increased by 1°C)
+[2025-12-08 14:19:10] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:10] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:11] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:11] INFO    [Heating        ] Temperature increasing: 14°C → 15°C (increased by 1°C)
+[2025-12-08 14:19:11] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:12] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:12] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:13] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:13] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 10)
+[2025-12-08 14:19:13] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:19:13] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:13] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 14:19:13] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:13] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:13] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 38
+[2025-12-08 14:19:13] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 14:19:14] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:14] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:14] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:14] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 36
+[2025-12-08 14:19:15] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:19:15] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:19:15] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:19:15] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 14:19:15] INFO    [API            ] Garden State Report - Day 6
+[2025-12-08 14:19:15] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 14:19:15] INFO    [API            ] Total Plants: 4
+[2025-12-08 14:19:15] INFO    [API            ] Zones: 9
+[2025-12-08 14:19:15] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:19:15] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:19:15] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:19:15] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:19:15] INFO    [Simulation     ] Headless simulation stopped at tick 15
+[2025-12-08 14:19:15] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 14:22:35
+=====================================
+[2025-12-08 14:22:35] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 14:22:35] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 14:22:35] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 14:22:35] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 14:22:35] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 14:22:35] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 14:22:35] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 14:22:35] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 14:22:35] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 14:22:35] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 14:22:35] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 14:22:35] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 14:22:35] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 14:22:35] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 14:22:35] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 14:22:35] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 14:22:35] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 14:22:35] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 14:22:35] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 14:22:35] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 14:22:35] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 14:22:35] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 14:22:35] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 14:22:35] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:22:35] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:22:35] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:22:35] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:22:35] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:22:35] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:22:35] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:22:35] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:22:35] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:22:35] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 14:22:35] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:22:35] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:36] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:36] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:22:36] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 14:22:36] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 14:22:36] INFO    [Heating        ] Ambient temperature set to 5°C (was 4°C)
+[2025-12-08 14:22:36] INFO    [Weather        ] SNOWY weather: Temperature set to 5°C
+[2025-12-08 14:22:36] INFO    [Heating        ] Temperature increasing: 5°C → 7°C (increased by 2°C)
+[2025-12-08 14:22:36] INFO    [Weather        ] Weather manually set to SNOWY
+[2025-12-08 14:22:36] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 14:22:36] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 14:22:36] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 14:22:36] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 14:22:36] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 14:22:37] INFO    [Heating        ] Temperature increasing: 9°C → 11°C (increased by 2°C)
+[2025-12-08 14:22:37] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 14:22:37] INFO    [Heating        ] Ambient temperature set to 43°C (was 9°C)
+[2025-12-08 14:22:37] INFO    [Heating        ] Ambient temperature set to 20°C (was 43°C)
+[2025-12-08 14:22:37] INFO    [Weather        ] SUNNY weather: Temperature set to 20°C
+[2025-12-08 14:22:37] INFO    [Heating        ] Heating deactivated. Current temp: 20°C
+[2025-12-08 14:22:37] INFO    [Weather        ] Weather manually set to SUNNY
+[2025-12-08 14:22:37] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 14:22:37] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 14:22:37] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 14:22:37] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 14:22:38] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 14:22:38] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 14:22:38] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:38] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 14:22:38] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 14:22:38] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:38] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 14:22:38] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 14:22:38] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:38] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 14:22:38] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:38] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:39] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:39] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:40] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:40] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:41] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:22:41] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:22:41] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:22:41] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:41] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:41] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:41] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 48
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 14:22:41] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 47
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:41] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 46
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:22:41] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:22:41] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 45
+[2025-12-08 14:22:42] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:42] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:42] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:22:42] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:22:42] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 44
+[2025-12-08 14:22:42] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 43
+[2025-12-08 14:22:43] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:43] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:22:43] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:22:43] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:43] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 41
+[2025-12-08 14:22:43] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 42
+[2025-12-08 14:22:43] INFO    [API            ] Rainfall event: 15 units
+[2025-12-08 14:22:43] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:22:43] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:22:43] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:22:43] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:22:43] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:22:43] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:22:43] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:22:43] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:22:43] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:22:43] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 100
+[2025-12-08 14:22:43] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:22:43] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:44] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:44] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:22:44] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:22:44] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:22:44] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 40
+[2025-12-08 14:22:44] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:44] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:44] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 39
+[2025-12-08 14:22:44] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 14:22:44] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 14:22:44] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:44] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 14:22:44] INFO    [Heating        ] Temperature increasing: 13°C → 14°C (increased by 1°C)
+[2025-12-08 14:22:44] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:44] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:45] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:45] INFO    [Heating        ] Temperature increasing: 14°C → 15°C (increased by 1°C)
+[2025-12-08 14:22:45] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:46] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:46] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:47] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:47] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 10)
+[2025-12-08 14:22:47] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:22:47] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:47] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 14:22:47] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 38
+[2025-12-08 14:22:47] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:47] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:47] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 14:22:48] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:48] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:48] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:48] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 36
+[2025-12-08 14:22:49] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:22:49] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:22:49] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 14:22:49] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:22:49] INFO    [API            ] Garden State Report - Day 6
+[2025-12-08 14:22:49] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 14:22:49] INFO    [API            ] Total Plants: 4
+[2025-12-08 14:22:49] INFO    [API            ] Zones: 9
+[2025-12-08 14:22:49] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:22:49] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:22:49] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:22:49] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:22:49] INFO    [Simulation     ] Headless simulation stopped at tick 15
+[2025-12-08 14:22:49] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 14:32:47
+=====================================
+[2025-12-08 14:32:47] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 14:32:47] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 14:32:47] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 14:32:47] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 14:32:47] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 14:32:47] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 14:32:47] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 14:32:47] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 14:32:47] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 14:32:47] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 14:32:47] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 14:32:47] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 14:32:47] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 14:32:47] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 14:32:47] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 14:32:47] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 14:32:47] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 14:32:47] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 14:32:47] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 14:32:47] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 14:32:47] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 14:32:47] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 14:32:47] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 14:32:47] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 14:32:47] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 14:32:47] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 14:32:47] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 14:32:47] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 14:32:47] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:32:47] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:32:47] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:32:47] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:32:47] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 14:32:47] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 14:32:47] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:48] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:48] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 14:32:48] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 14:32:48] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 14:32:48] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 14:32:48] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 14:32:48] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 14:32:48] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 14:32:48] INFO    [Heating        ] Temperature increasing: 4°C → 7°C (increased by 3°C)
+[2025-12-08 14:32:48] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:49] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:49] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 14:32:49] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 14:32:49] INFO    [Heating        ] Ambient temperature set to 43°C (was 7°C)
+[2025-12-08 14:32:49] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 14:32:49] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 14:32:49] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 14:32:49] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 14:32:49] INFO    [Heating        ] Heating deactivated. Current temp: 43°C
+[2025-12-08 14:32:49] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:50] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:50] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 14:32:50] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 14:32:50] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:50] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 14:32:50] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 14:32:50] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:50] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 14:32:50] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 14:32:50] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:50] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 14:32:50] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:50] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:50] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:51] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:51] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:51] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:52] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:52] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:52] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:53] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:53] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:32:53] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:32:53] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 14:32:53] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:53] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:53] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:32:53] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 48
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 14:32:53] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 47
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:32:53] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 46
+[2025-12-08 14:32:53] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:32:53] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 45
+[2025-12-08 14:32:54] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:54] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:54] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:32:54] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 44
+[2025-12-08 14:32:54] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:32:54] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:32:54] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 43
+[2025-12-08 14:32:55] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:55] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:32:55] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:32:55] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:32:55] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:55] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 42
+[2025-12-08 14:32:55] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 41
+[2025-12-08 14:32:55] INFO    [API            ] Rainfall event: 15 units
+[2025-12-08 14:32:55] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 14:32:55] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 14:32:55] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 14:32:55] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 14:32:55] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 100
+[2025-12-08 14:32:55] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:56] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:56] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:56] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 14:32:56] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 14:32:56] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 40
+[2025-12-08 14:32:56] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:32:56] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 39
+[2025-12-08 14:32:56] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 14:32:56] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 14:32:56] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:56] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 14:32:56] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:56] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:57] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:57] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:58] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:58] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:59] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:32:59] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 10)
+[2025-12-08 14:32:59] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 14:32:59] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:59] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 14:32:59] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:32:59] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 14:32:59] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 38
+[2025-12-08 14:32:59] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 14:33:00] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:33:00] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:33:00] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:33:00] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 36
+[2025-12-08 14:33:01] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 14:33:01] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 14:33:01] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 14:33:01] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 14:33:01] INFO    [API            ] Garden State Report - Day 6
+[2025-12-08 14:33:01] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 14:33:01] INFO    [API            ] Total Plants: 4
+[2025-12-08 14:33:01] INFO    [API            ] Zones: 9
+[2025-12-08 14:33:01] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:33:01] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:33:01] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:33:01] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 14:33:01] INFO    [Simulation     ] Headless simulation stopped at tick 15
+[2025-12-08 14:33:01] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 15:00:37
+=====================================
+[2025-12-08 15:00:37] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 15:00:37] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 15:00:37] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 15:00:37] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 15:00:37] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 15:00:37] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 15:00:37] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 15:00:37] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 15:00:37] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 15:00:37] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 15:00:37] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 15:00:37] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 15:00:37] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 15:00:37] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 15:00:37] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 15:00:37] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 15:00:37] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 15:00:37] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 15:00:37] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 15:00:37] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 15:00:37] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 15:00:37] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 15:00:37] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 15:00:37] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 15:00:37] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 15:00:37] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 15:00:37] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 15:00:37] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 15:00:37] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 15:00:37] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 15:00:37] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 15:00:37] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 15:00:37] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 15:00:37] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 15:00:37] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:00:38] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:00:38] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 15:00:38] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 15:00:38] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 15:00:38] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 15:00:38] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 15:00:38] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 15:00:38] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 15:00:38] INFO    [Heating        ] Temperature increasing: 4°C → 7°C (increased by 3°C)
+[2025-12-08 15:00:38] INFO    [Watering       ] Skipping watering - it's currently raining
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 15:01:15
+=====================================
+[2025-12-08 15:01:15] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 15:01:15] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 15:01:15] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 15:01:15] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 15:01:15] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 15:01:15] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 15:01:15] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 15:01:15] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 15:01:15] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 15:01:15] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 15:01:15] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 15:01:15] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 15:01:15] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 15:01:15] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 15:01:15] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 15:01:15] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 15:01:15] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 15:01:15] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 15:01:15] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 15:01:15] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 15:01:15] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 15:01:15] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 15:01:15] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 15:01:15] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 15:01:15] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 15:01:15] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 15:01:15] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 15:01:15] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 15:01:15] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 15:01:15] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 15:01:15] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 15:01:15] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 15:01:15] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 88
+[2025-12-08 15:01:15] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 15:01:15] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:16] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:16] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 15:01:16] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 15:01:16] INFO    [Heating        ] Ambient temperature set to 4°C (was 12°C)
+[2025-12-08 15:01:16] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 15:01:16] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 15:01:16] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 15:01:16] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 15:01:16] INFO    [Heating        ] Temperature increasing: 4°C → 7°C (increased by 3°C)
+[2025-12-08 15:01:16] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:17] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:17] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 15:01:17] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 15:01:17] INFO    [Heating        ] Ambient temperature set to 43°C (was 7°C)
+[2025-12-08 15:01:17] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 15:01:17] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 15:01:17] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 15:01:17] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 15:01:17] INFO    [Heating        ] Heating deactivated. Current temp: 43°C
+[2025-12-08 15:01:17] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:18] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:18] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 15:01:18] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 15:01:18] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:18] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 15:01:18] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 15:01:18] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:18] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 15:01:18] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 15:01:18] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:18] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 15:01:18] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:18] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:18] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:19] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:19] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:19] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:20] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:20] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:20] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:21] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:21] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:01:21] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:01:21] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:01:21] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:21] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 15:01:21] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 15:01:21] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 48
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:21] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 47
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:01:21] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 46
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:21] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:21] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 45
+[2025-12-08 15:01:22] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:22] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:22] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:01:22] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:01:22] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 44
+[2025-12-08 15:01:22] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:22] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 43
+[2025-12-08 15:01:23] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:23] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:23] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:23] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:01:23] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 42
+[2025-12-08 15:01:23] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:01:23] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 41
+[2025-12-08 15:01:23] INFO    [API            ] Rainfall event: 15 units
+[2025-12-08 15:01:23] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 15:01:23] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 15:01:23] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 15:01:23] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 15:01:23] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 100
+[2025-12-08 15:01:23] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:24] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:24] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:01:24] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:24] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:24] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:01:24] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 40
+[2025-12-08 15:01:24] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 39
+[2025-12-08 15:01:24] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 15:01:24] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 15:01:24] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:24] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 15:01:24] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:24] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:25] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:25] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:26] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:26] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:27] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:27] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 10)
+[2025-12-08 15:01:27] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:01:27] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:27] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:27] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 15:01:27] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 15:01:27] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 38
+[2025-12-08 15:01:27] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 15:01:28] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:28] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:28] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:28] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 36
+[2025-12-08 15:01:29] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:01:29] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:01:29] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:01:29] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 35
+[2025-12-08 15:01:29] INFO    [API            ] Garden State Report - Day 6
+[2025-12-08 15:01:29] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 15:01:29] INFO    [API            ] Total Plants: 4
+[2025-12-08 15:01:29] INFO    [API            ] Zones: 9
+[2025-12-08 15:01:29] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:01:29] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:01:29] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:01:29] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:01:29] INFO    [Simulation     ] Headless simulation stopped at tick 15
+[2025-12-08 15:01:29] INFO    [API            ] Headless simulation loop stopped
+
+=====================================
+Smart Garden Simulation API Log
+Session Started: 2025-12-08 15:16:46
+=====================================
+[2025-12-08 15:16:46] INFO    [API            ] Initializing garden - Day 0 begins
+[2025-12-08 15:16:46] INFO    [Garden         ] Planted Strawberry at (1,1) with initial water: 50
+[2025-12-08 15:16:46] INFO    [Controller     ] Plant Strawberry added at (1,1)
+[2025-12-08 15:16:46] INFO    [API            ] Added plant: Strawberry at (1,1)
+[2025-12-08 15:16:46] INFO    [Garden         ] Planted Carrot at (2,2) with initial water: 60
+[2025-12-08 15:16:46] INFO    [Controller     ] Plant Carrot added at (2,2)
+[2025-12-08 15:16:46] INFO    [API            ] Added plant: Carrot at (2,2)
+[2025-12-08 15:16:46] INFO    [Garden         ] Planted Tomato at (3,3) with initial water: 60
+[2025-12-08 15:16:46] INFO    [Controller     ] Plant Tomato added at (3,3)
+[2025-12-08 15:16:46] INFO    [API            ] Added plant: Tomato at (3,3)
+[2025-12-08 15:16:46] INFO    [Garden         ] Planted Flower (Sunflower) at (4,4) with initial water: 30
+[2025-12-08 15:16:46] INFO    [Controller     ] Plant Sunflower added at (4,4)
+[2025-12-08 15:16:46] INFO    [API            ] Added plant: Sunflower at (4,4)
+[2025-12-08 15:16:46] INFO    [API            ] Garden initialized with 4 plants.
+[2025-12-08 15:16:46] INFO    [PestControl    ] API mode enabled - automatic pest spawning disabled
+[2025-12-08 15:16:46] INFO    [Weather        ] Stopped weather rotation timer - weather changes now only via API
+[2025-12-08 15:16:46] INFO    [Weather        ] API mode enabled - automatic weather changes disabled
+[2025-12-08 15:16:46] INFO    [API            ] API mode enabled - automatic pest spawning and weather changes disabled
+[2025-12-08 15:16:46] INFO    [API            ] Pesticide, heating, sprinklers, and water monitoring remain automatic
+[2025-12-08 15:16:46] INFO    [Simulation     ] Headless simulation started - plants will update continuously
+[2025-12-08 15:16:46] INFO    [API            ] Headless simulation loop started - plants will update continuously, water will decrease automatically
+[2025-12-08 15:16:46] INFO    [API            ] Retrieved plant information for 4 plants.
+[2025-12-08 15:17:16] INFO    [API            ] Rainfall event: 25 units
+[2025-12-08 15:17:16] INFO    [Heating        ] Ambient temperature set to 10°C (was 20°C)
+[2025-12-08 15:17:16] INFO    [Weather        ] RAINY weather: Temperature set to 10°C
+[2025-12-08 15:17:16] INFO    [Heating        ] Heating activated. Current temp: 10°C
+[2025-12-08 15:17:16] INFO    [Heating        ] Temperature increasing: 10°C → 11°C (increased by 1°C)
+[2025-12-08 15:17:16] INFO    [Watering       ] Rain detected - stopped all active sprinklers
+[2025-12-08 15:17:16] INFO    [Weather        ] Weather manually set to RAINY
+[2025-12-08 15:17:16] INFO    [API            ] Rain added water to Strawberry at (1,1). Current water level: 100
+[2025-12-08 15:17:16] INFO    [API            ] Rain added water to Carrot at (2,2). Current water level: 100
+[2025-12-08 15:17:16] INFO    [API            ] Rain added water to Tomato at (3,3). Current water level: 100
+[2025-12-08 15:17:16] INFO    [API            ] Rain added water to Flower (Sunflower) at (4,4). Current water level: 87
+[2025-12-08 15:17:16] INFO    [Heating        ] Temperature increasing: 11°C → 12°C (increased by 1°C)
+[2025-12-08 15:17:16] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:17] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:17] INFO    [Heating        ] Temperature increasing: 12°C → 13°C (increased by 1°C)
+[2025-12-08 15:17:18] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:18] INFO    [Heating        ] Temperature increasing: 13°C → 14°C (increased by 1°C)
+[2025-12-08 15:17:18] INFO    [API            ] Temperature changed to 40°F (4°C)
+[2025-12-08 15:17:18] INFO    [Heating        ] Ambient temperature set to 4°C (was 13°C)
+[2025-12-08 15:17:18] INFO    [API            ] Strawberry temperature adjusted to 40°F (4°C)
+[2025-12-08 15:17:18] INFO    [API            ] Carrot temperature adjusted to 40°F (4°C)
+[2025-12-08 15:17:18] INFO    [API            ] Tomato temperature adjusted to 40°F (4°C)
+[2025-12-08 15:17:18] INFO    [API            ] Flower (Sunflower) temperature adjusted to 40°F (4°C)
+[2025-12-08 15:17:18] INFO    [Heating        ] Temperature increasing: 4°C → 7°C (increased by 3°C)
+[2025-12-08 15:17:18] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:19] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:19] INFO    [Heating        ] Temperature increasing: 7°C → 9°C (increased by 2°C)
+[2025-12-08 15:17:20] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:20] INFO    [Heating        ] Temperature increasing: 9°C → 11°C (increased by 2°C)
+[2025-12-08 15:17:20] INFO    [API            ] Temperature changed to 110°F (43°C)
+[2025-12-08 15:17:20] INFO    [Heating        ] Ambient temperature set to 43°C (was 9°C)
+[2025-12-08 15:17:20] INFO    [API            ] Strawberry temperature adjusted to 110°F (43°C)
+[2025-12-08 15:17:20] INFO    [API            ] Carrot temperature adjusted to 110°F (43°C)
+[2025-12-08 15:17:20] INFO    [API            ] Tomato temperature adjusted to 110°F (43°C)
+[2025-12-08 15:17:20] INFO    [API            ] Flower (Sunflower) temperature adjusted to 110°F (43°C)
+[2025-12-08 15:17:20] INFO    [Heating        ] Heating deactivated. Current temp: 43°C
+[2025-12-08 15:17:20] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:21] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:22] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:23] INFO    [API            ] Parasite infestation: Red Mite
+[2025-12-08 15:17:23] INFO    [PestControl    ] Registered external pest: Red Mite at (1,1)
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [API            ] Strawberry at (1,1) attacked by Red Mite
+[2025-12-08 15:17:23] INFO    [PestControl    ] Registered external pest: Red Mite at (2,2)
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [API            ] Carrot at (2,2) attacked by Red Mite
+[2025-12-08 15:17:23] INFO    [PestControl    ] Registered external pest: Red Mite at (3,3)
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [API            ] Tomato at (3,3) attacked by Red Mite
+[2025-12-08 15:17:23] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:23] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:24] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:24] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:24] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:25] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:25] WARNING [Plant          ] Fruit at (1,1) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:17:25] WARNING [Plant          ] Vegetable at (2,2) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:17:25] WARNING [Plant          ] Vegetable at (3,3) has suffered 5 pest attacks (Total: 5)
+[2025-12-08 15:17:25] INFO    [PestControl    ] Threat detected in Zone 1 (CRITICAL) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:25] INFO    [PestControl    ] Threat detected in Zone 5 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 50%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 2, Stock remaining: 49
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 48
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 25%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 1, Stock remaining: 47
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 46
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 45
+[2025-12-08 15:17:26] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 44
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:26] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:26] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 43
+[2025-12-08 15:17:27] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:27] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:27] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:27] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 42
+[2025-12-08 15:17:27] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:17:27] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:17:27] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 41
+[2025-12-08 15:17:27] INFO    [API            ] Parasite infestation: Green Leaf Worm
+[2025-12-08 15:17:27] INFO    [PestControl    ] Registered external pest: Green Leaf Worm at (1,1)
+[2025-12-08 15:17:27] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:27] INFO    [API            ] Strawberry at (1,1) attacked by Green Leaf Worm
+[2025-12-08 15:17:27] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:27] INFO    [PestControl    ] Threat detected in Zone 1 (HIGH) - delaying treatment by 3 seconds for visibility
+[2025-12-08 15:17:28] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:28] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 25%
+[2025-12-08 15:17:28] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 1, Stock remaining: 40
+[2025-12-08 15:17:28] INFO    [PestControl    ] Applying delayed treatment to Zone 5
+[2025-12-08 15:17:28] INFO    [PestControl    ] Applying treatment to Zone 5 - Infestation: 0%
+[2025-12-08 15:17:28] INFO    [PestControl    ] Treatment complete for Zone 5. Eliminated: 0, Stock remaining: 39
+[2025-12-08 15:17:28] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:29] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:30] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:30] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:30] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:30] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 38
+[2025-12-08 15:17:30] INFO    [PestControl    ] Applying delayed treatment to Zone 1
+[2025-12-08 15:17:30] INFO    [PestControl    ] Applying treatment to Zone 1 - Infestation: 0%
+[2025-12-08 15:17:30] INFO    [PestControl    ] Treatment complete for Zone 1. Eliminated: 0, Stock remaining: 37
+[2025-12-08 15:17:31] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:32] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:33] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:34] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:35] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:36] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:37] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:38] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:39] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:40] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:41] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:42] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:43] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:44] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:45] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:46] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:47] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:48] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:49] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:50] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:51] INFO    [Watering       ] Skipping watering - it's currently raining
+[2025-12-08 15:17:51] INFO    [API            ] Garden State Report - Day 5
+[2025-12-08 15:17:51] INFO    [API            ] Alive: 4, Dead: 0
+[2025-12-08 15:17:51] INFO    [API            ] Total Plants: 4
+[2025-12-08 15:17:51] INFO    [API            ] Zones: 9
+[2025-12-08 15:17:51] INFO    [API            ]   - Strawberry at (1,1): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:17:51] INFO    [API            ]   - Carrot at (2,2): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:17:51] INFO    [API            ]   - Tomato at (3,3): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:17:51] INFO    [API            ]   - Flower (Sunflower) at (4,4): ALIVE (Health: 100%, Water: 100%)
+[2025-12-08 15:17:51] INFO    [Simulation     ] Headless simulation stopped at tick 66
+[2025-12-08 15:17:51] INFO    [API            ] Headless simulation loop stopped

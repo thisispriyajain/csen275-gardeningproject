@@ -21,6 +21,7 @@ public class WeatherSystem {
     private final Random random;
     private boolean rainTestMode = false; // TEST MODE: Force rain every minute
     private boolean rotateSunnyRainyMode = false; // Rotate between sunny and rainy every minute
+    private boolean apiModeEnabled = false; // When enabled, automatic weather changes are disabled
     private Timeline realTimeRotationTimer; // Timer for real-world time rotation
     
     private static final Logger logger = Logger.getInstance();
@@ -45,12 +46,48 @@ public class WeatherSystem {
     }
     
     /**
+     * Sets whether API mode is enabled.
+     * When enabled, automatic weather changes are disabled (weather only via API calls).
+     * Weather effects (like rain watering plants) still apply normally.
+     */
+    public void setApiModeEnabled(boolean enabled) {
+        this.apiModeEnabled = enabled;
+        
+        // When enabling API mode, stop rotation timer (if running)
+        // This prevents automatic weather changes from rotation timer
+        if (enabled) {
+            if (realTimeRotationTimer != null) {
+                realTimeRotationTimer.stop();
+                realTimeRotationTimer = null;
+            }
+            rotateSunnyRainyMode = false; // Also disable rotation flag
+            logger.info("Weather", "Stopped weather rotation timer - weather changes now only via API");
+        } else {
+            // If disabling API mode and rotation was enabled, disable rotation
+            if (rotateSunnyRainyMode) {
+                disableSunnyRainyRotation();
+            }
+        }
+        
+        logger.info("Weather", "API mode " + (enabled ? "enabled" : "disabled") + 
+                   " - automatic weather changes " + (enabled ? "disabled" : "enabled"));
+    }
+    
+    /**
+     * Checks if API mode is enabled.
+     */
+    public boolean isApiModeEnabled() {
+        return apiModeEnabled;
+    }
+    
+    /**
      * Updates weather system each simulation tick.
      * Note: In rotation mode, weather changes are handled by real-time timer, not simulation ticks.
      */
     public void update() {
-        // Skip weather duration countdown in rotation mode (real-time timer handles it)
-        if (!rotateSunnyRainyMode) {
+        // Skip weather duration countdown in rotation mode OR API mode
+        // In API mode, weather changes only happen via API calls (rain(), temperature())
+        if (!rotateSunnyRainyMode && !apiModeEnabled) {
             weatherDuration--;
             
             if (weatherDuration <= 0) {
