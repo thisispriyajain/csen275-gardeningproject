@@ -83,24 +83,6 @@ AND moisture level should increase
 AND plants should show improved health
 ```
 
-### US-2.2: Manual Watering Override
-**As a** garden manager  
-**I want to** manually water specific zones  
-**So that** I can provide extra water when needed
-
-**Acceptance Criteria:**
-- Manual water button available for each zone
-- Manual watering works even when auto-mode is on
-- Action is logged as "Manual Override"
-
-**Scenario 2.2.1: Emergency Watering**
-```
-GIVEN zone 2 has critically dry soil
-WHEN I click "Water Zone 2" button
-THEN watering should occur immediately
-AND log should show "Manual watering triggered for Zone 2"
-```
-
 ## Epic 3: Temperature Control
 
 ### US-3.1: Automatic Heating
