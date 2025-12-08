@@ -2,7 +2,7 @@
 
 **Course:** CSEN 275 - Object-Oriented Analysis & Design  
 **Version:** 1.0.0  
-**Authors:** Smart Garden Team  
+**Authors:** Algo-rhythm Gardeners (Priya Jain, Wen Han Mei, and Maneesha Prasanna)
 **Technology Stack:** Java 21, JavaFX 23.0.1, Maven
 
 ## Overview
