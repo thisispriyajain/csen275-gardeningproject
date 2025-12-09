@@ -6,6 +6,8 @@ import edu.scu.csen275.smartgarden.system.*;
 import edu.scu.csen275.smartgarden.util.Logger;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +26,7 @@ public class HeadlessSimulationEngine {
     private final Garden garden;
     private final WateringSystem wateringSystem;
     private final HeatingSystem heatingSystem;
+    private final CoolingSystem coolingSystem;
     private final PestControlSystem pestControlSystem;
     private final WeatherSystem weatherSystem;
     
@@ -38,6 +41,11 @@ public class HeadlessSimulationEngine {
     private static final int BASE_TICK_INTERVAL_MS = 1000; // 1 second real time = 1 minute sim time
     private static final int TICKS_PER_SIM_DAY = 1440; // 1440 minutes in a day
     
+    // Track active instances for automatic cleanup
+    private static final Set<HeadlessSimulationEngine> activeInstances = ConcurrentHashMap.newKeySet();
+    private static volatile boolean shutdownHookRegistered = false;
+    private static final Object shutdownLock = new Object();
+    
     /**
      * Creates a new HeadlessSimulationEngine with new systems.
      * Use this when you want independent systems from SimulationEngine.
@@ -46,8 +54,9 @@ public class HeadlessSimulationEngine {
         this.garden = garden;
         this.wateringSystem = new WateringSystem(garden);
         this.heatingSystem = new HeatingSystem(garden);
+        this.coolingSystem = new CoolingSystem(garden);
         this.pestControlSystem = new PestControlSystem(garden);
-        this.weatherSystem = new WeatherSystem(garden, this.heatingSystem);
+        this.weatherSystem = new WeatherSystem(garden, this.heatingSystem, this.coolingSystem);
         
         // Connect weather system to watering system
         this.wateringSystem.setWeatherSystem(this.weatherSystem);
@@ -59,6 +68,10 @@ public class HeadlessSimulationEngine {
             return t;
         });
         
+        // Register this instance for automatic cleanup
+        activeInstances.add(this);
+        registerShutdownHook();
+        
         logger.info("Simulation", "Headless simulation engine created");
     }
     
@@ -69,17 +82,20 @@ public class HeadlessSimulationEngine {
      * @param garden The garden model
      * @param wateringSystem Shared watering system
      * @param heatingSystem Shared heating system
+     * @param coolingSystem Shared cooling system
      * @param pestControlSystem Shared pest control system
      * @param weatherSystem Shared weather system
      */
     public HeadlessSimulationEngine(Garden garden, 
                                     WateringSystem wateringSystem,
                                     HeatingSystem heatingSystem,
+                                    CoolingSystem coolingSystem,
                                     PestControlSystem pestControlSystem,
                                     WeatherSystem weatherSystem) {
         this.garden = garden;
         this.wateringSystem = wateringSystem;
         this.heatingSystem = heatingSystem;
+        this.coolingSystem = coolingSystem;
         this.pestControlSystem = pestControlSystem;
         this.weatherSystem = weatherSystem;
         
@@ -90,7 +106,45 @@ public class HeadlessSimulationEngine {
             return t;
         });
         
+        // Register this instance for automatic cleanup
+        activeInstances.add(this);
+        registerShutdownHook();
+        
         logger.info("Simulation", "Headless simulation engine created (reusing systems)");
+    }
+    
+    /**
+     * Registers a JVM shutdown hook to automatically stop all active simulation engines.
+     * This ensures cleanup happens even if stop() is not explicitly called.
+     * Only registers once for all instances.
+     */
+    private static void registerShutdownHook() {
+        synchronized (shutdownLock) {
+            if (shutdownHookRegistered) {
+                return;
+            }
+            
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                synchronized (activeInstances) {
+                    for (HeadlessSimulationEngine engine : activeInstances) {
+                        if (engine.isRunning) {
+                            engine.isRunning = false;
+                            engine.scheduler.shutdown();
+                            try {
+                                if (!engine.scheduler.awaitTermination(2, TimeUnit.SECONDS)) {
+                                    engine.scheduler.shutdownNow();
+                                }
+                            } catch (InterruptedException e) {
+                                engine.scheduler.shutdownNow();
+                                Thread.currentThread().interrupt();
+                            }
+                        }
+                    }
+                }
+            }, "HeadlessSimulationEngine-ShutdownHook"));
+            
+            shutdownHookRegistered = true;
+        }
     }
     
     /**
@@ -114,6 +168,7 @@ public class HeadlessSimulationEngine {
     
     /**
      * Stops the headless simulation loop.
+     * Note: This is optional - shutdown hook will handle cleanup automatically when JVM exits.
      */
     public void stop() {
         if (!isRunning) {
@@ -155,6 +210,7 @@ public class HeadlessSimulationEngine {
             // Update all systems
             wateringSystem.checkAndWater();
             heatingSystem.update();
+            coolingSystem.update();
             pestControlSystem.update();
             weatherSystem.update();
             
@@ -240,6 +296,7 @@ public class HeadlessSimulationEngine {
     // Getters for systems (same interface as SimulationEngine)
     public WateringSystem getWateringSystem() { return wateringSystem; }
     public HeatingSystem getHeatingSystem() { return heatingSystem; }
+    public CoolingSystem getCoolingSystem() { return coolingSystem; }
     public PestControlSystem getPestControlSystem() { return pestControlSystem; }
     public WeatherSystem getWeatherSystem() { return weatherSystem; }
     public Garden getGarden() { return garden; }

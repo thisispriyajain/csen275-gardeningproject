@@ -5,7 +5,7 @@ package edu.scu.csen275.smartgarden.model;
  * Flowers have moderate growth rates and low water requirements.
  */
 public class Flower extends Plant {
-    private static final int DEFAULT_LIFESPAN = 60; // days
+    private static final int DEFAULT_LIFESPAN = 90; // days
     private static final int WATER_REQ = 30;
     private static final int SUNLIGHT_REQ = 70;
     private static final int MIN_TEMP = 10;

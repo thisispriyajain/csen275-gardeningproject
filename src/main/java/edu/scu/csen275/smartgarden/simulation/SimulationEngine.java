@@ -2,6 +2,7 @@ package edu.scu.csen275.smartgarden.simulation;
 
 import edu.scu.csen275.smartgarden.model.Garden;
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.system.CoolingSystem;
 import edu.scu.csen275.smartgarden.system.HeatingSystem;
 import edu.scu.csen275.smartgarden.system.PestControlSystem;
 import edu.scu.csen275.smartgarden.system.WateringSystem;
@@ -21,6 +22,7 @@ public class SimulationEngine {
     private final Garden garden;
     private final WateringSystem wateringSystem;
     private final HeatingSystem heatingSystem;
+    private final CoolingSystem coolingSystem;
     private final PestControlSystem pestControlSystem;
     private final WeatherSystem weatherSystem;
     
@@ -44,8 +46,9 @@ public class SimulationEngine {
         this.garden = garden;
         this.wateringSystem = new WateringSystem(garden);
         this.heatingSystem = new HeatingSystem(garden);
+        this.coolingSystem = new CoolingSystem(garden);
         this.pestControlSystem = new PestControlSystem(garden);
-        this.weatherSystem = new WeatherSystem(garden, this.heatingSystem);
+        this.weatherSystem = new WeatherSystem(garden, this.heatingSystem, this.coolingSystem);
         
         // Connect weather system to watering system (so watering skips when raining)
         this.wateringSystem.setWeatherSystem(this.weatherSystem);
@@ -155,6 +158,7 @@ public class SimulationEngine {
             // Update all systems
             wateringSystem.checkAndWater();
             heatingSystem.update();
+            coolingSystem.update();
             pestControlSystem.update();
             weatherSystem.update();
             
@@ -247,8 +251,10 @@ public class SimulationEngine {
         logger.info("Statistics", "Dead plants: " + garden.getDeadPlants().size());
         logger.info("Statistics", "Water used: " + 
                    (10000 - wateringSystem.getWaterSupply()) + "L");
-        logger.info("Statistics", "Energy used: " + 
+        logger.info("Statistics", "Heating energy used: " + 
                    heatingSystem.getEnergyConsumption() + " units");
+        logger.info("Statistics", "Cooling energy used: " + 
+                   coolingSystem.getEnergyConsumption() + " units");
         logger.info("Statistics", "Pesticide used: " + 
                    (50 - pestControlSystem.getPesticideStock()) + " applications");
         logger.info("Statistics", "=========================");
@@ -265,6 +271,10 @@ public class SimulationEngine {
     
     public HeatingSystem getHeatingSystem() {
         return heatingSystem;
+    }
+    
+    public CoolingSystem getCoolingSystem() {
+        return coolingSystem;
     }
     
     public PestControlSystem getPestControlSystem() {

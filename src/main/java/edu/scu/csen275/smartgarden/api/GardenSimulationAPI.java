@@ -5,6 +5,7 @@ import edu.scu.csen275.smartgarden.model.*;
 import edu.scu.csen275.smartgarden.simulation.SimulationEngine;
 import edu.scu.csen275.smartgarden.simulation.HeadlessSimulationEngine;
 import edu.scu.csen275.smartgarden.simulation.WeatherSystem;
+import edu.scu.csen275.smartgarden.system.CoolingSystem;
 import edu.scu.csen275.smartgarden.system.HeatingSystem;
 import edu.scu.csen275.smartgarden.system.HarmfulPest;
 import edu.scu.csen275.smartgarden.system.PestControlSystem;
@@ -14,6 +15,7 @@ import edu.scu.csen275.smartgarden.util.Logger;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,10 @@ public class GardenSimulationAPI {
     // Track day count for API compatibility (from API calls)
     private int dayCount = 0;
     
+    // Track active API instances for automatic cleanup
+    private static final Set<GardenSimulationAPI> activeInstances = ConcurrentHashMap.newKeySet();
+    private static volatile boolean shutdownHookRegistered = false;
+    private static final Object shutdownLock = new Object();
     
     // Pest vulnerabilities mapping - loaded from parasites.json config file
     // Maps plant name -> list of pest names that can attack it
@@ -114,6 +120,16 @@ public class GardenSimulationAPI {
     }
     
     /**
+     * Creates a new GardenSimulationAPI with default settings.
+     * This constructor creates its own GardenController internally.
+     * Use this constructor for simple API usage as shown in the specification.
+     */
+    public GardenSimulationAPI() {
+        // Create default GardenController (9x9 grid)
+        this(new GardenController(9, 9));
+    }
+    
+    /**
      * Creates a new GardenSimulationAPI with a GardenController.
      * The API will use this controller to interact with the garden systems.
      * 
@@ -134,9 +150,13 @@ public class GardenSimulationAPI {
             garden,
             engine.getWateringSystem(),
             engine.getHeatingSystem(),
+            engine.getCoolingSystem(),
             engine.getPestControlSystem(),
             engine.getWeatherSystem()
         );
+        
+        // Register this instance for automatic cleanup
+        activeInstances.add(this);
         
         logger.info("API", "GardenSimulationAPI initialized with headless simulation engine");
     }
@@ -149,6 +169,9 @@ public class GardenSimulationAPI {
     public void initializeGarden() {
         // Enable dual logging - all logs will go to both logs/garden_*.log AND log.txt
         Logger.enableApiLogging(Paths.get("log.txt"));
+        
+        // Register shutdown hook for automatic cleanup (only once)
+        registerShutdownHook();
         
         logger.info("API", "Initializing garden - Day 0 begins");
         dayCount = 0;
@@ -181,10 +204,11 @@ public class GardenSimulationAPI {
         
         // Enable API mode - disable automatic pest spawning and weather changes
         // Pests and weather will only be triggered via API calls
-        // All other automatic systems (pesticide, heating, sprinklers, water decrease) continue to work
+        // All other automatic systems (pesticide, heating, cooling, sprinklers, water decrease) continue to work
         engine.getPestControlSystem().setApiModeEnabled(true);
         engine.getWeatherSystem().setApiModeEnabled(true);
         engine.getHeatingSystem().setApiModeEnabled(true);
+        engine.getCoolingSystem().setApiModeEnabled(true);
         
         // Start headless simulation for continuous plant updates
         // This enables true 24-hour survival testing
@@ -286,9 +310,11 @@ public class GardenSimulationAPI {
         logger.info("API", "Temperature changed to " + temp + "°F (" + tempCelsiusInt + "°C)");
         
         HeatingSystem heatingSystem = engine.getHeatingSystem();
+        CoolingSystem coolingSystem = engine.getCoolingSystem();
         
         // Set ambient temperature - this updates all zones
         heatingSystem.setAmbientTemperature(tempCelsiusInt);
+        coolingSystem.setAmbientTemperature(tempCelsiusInt);
         
         // Apply temperature effects to all plants (using Celsius internally)
         // NOTE: Weather is NOT changed by temperature - weather only changes via api.rain()
@@ -301,7 +327,7 @@ public class GardenSimulationAPI {
             }
         }
         
-        // Trigger system updates (heating will activate if temp is low)
+        // Trigger system updates (heating will activate if temp is low, cooling if temp is high)
         triggerSystemUpdates();
         
         dayCount++;
@@ -311,10 +337,13 @@ public class GardenSimulationAPI {
      * Triggers a parasite (pest) infestation based on plant vulnerabilities.
      * This uses smartGarden's PestControlSystem.
      * 
-     * @param parasiteType Type of pest (e.g., "Red Mite", "Green Leaf Worm", etc.)
+     * @param parasiteType Type of pest (e.g., "Red Mite", "Green Leaf Worm", etc.) - case-insensitive
      */
     public void parasite(String parasiteType) {
         logger.info("API", "Parasite infestation: " + parasiteType);
+        
+        // Normalize input for case-insensitive matching
+        String normalizedParasiteType = parasiteType.toLowerCase();
         
         // Find all plants that are vulnerable to this pest type
         for (Plant plant : garden.getAllPlants()) {
@@ -330,9 +359,19 @@ public class GardenSimulationAPI {
             }
             List<String> vulnerabilities = pestVulnerabilities.getOrDefault(lookupKey, new ArrayList<>());
             
-            if (vulnerabilities.contains(parasiteType)) {
+            // Case-insensitive matching: find matching parasite name from vulnerabilities list
+            String matchedParasiteName = null;
+            for (String vulnerability : vulnerabilities) {
+                if (vulnerability.toLowerCase().equals(normalizedParasiteType)) {
+                    matchedParasiteName = vulnerability; // Use original name from config
+                    break;
+                }
+            }
+            
+            if (matchedParasiteName != null) {
                 // Create a pest at the plant's position and attack it
-                HarmfulPest pest = new HarmfulPest(parasiteType, plant.getPosition());
+                // Use the original name from config to ensure consistency
+                HarmfulPest pest = new HarmfulPest(matchedParasiteName, plant.getPosition());
                 pest.causeDamage(plant);
                 
                 // Register pest with PestControlSystem so it gets automatically treated
@@ -340,7 +379,7 @@ public class GardenSimulationAPI {
                 pestSystem.registerPest(pest);
                 
                 logger.info("API", plantType + " at " + plant.getPosition() + 
-                           " attacked by " + parasiteType);
+                           " attacked by " + matchedParasiteName);
             }
         }
         
@@ -418,8 +457,40 @@ public class GardenSimulationAPI {
     }
     
     /**
+     * Registers a JVM shutdown hook to automatically clean up resources.
+     * This ensures cleanup happens even if the script doesn't explicitly call cleanup methods.
+     * Only registers once for all API instances.
+     */
+    private static void registerShutdownHook() {
+        synchronized (shutdownLock) {
+            if (shutdownHookRegistered) {
+                return;
+            }
+            
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                // Stop all headless simulations
+                for (GardenSimulationAPI api : activeInstances) {
+                    if (api.headlessEngine.isRunning()) {
+                        api.headlessEngine.stop();
+                    }
+                }
+                
+                // Close API log
+                try {
+                    Logger.disableApiLogging();
+                } catch (Exception e) {
+                    // Ignore - JVM is shutting down anyway
+                }
+            }, "GardenSimulationAPI-ShutdownHook"));
+            
+            shutdownHookRegistered = true;
+        }
+    }
+    
+    /**
      * Stops the headless simulation loop.
      * Useful for cleanup or when switching to UI mode.
+     * Note: This is optional - shutdown hook will handle cleanup automatically when JVM exits.
      */
     public void stopHeadlessSimulation() {
         if (!headlessEngine.isRunning()) {
@@ -453,17 +524,20 @@ public class GardenSimulationAPI {
      */
     private void triggerSystemUpdates() {
         HeatingSystem heatingSystem = engine.getHeatingSystem();
+        CoolingSystem coolingSystem = engine.getCoolingSystem();
         WateringSystem wateringSystem = engine.getWateringSystem();
         PestControlSystem pestSystem = engine.getPestControlSystem();
         
         // Systems automatically log all their actions - just call update()
         heatingSystem.update();
+        coolingSystem.update();
         wateringSystem.checkAndWater();
         pestSystem.update();
     }
     
     /**
      * Closes the API log file writer. Should be called when done using the API.
+     * Note: This is optional - shutdown hook will handle cleanup automatically when JVM exits.
      */
     public static void closeApiLog() {
         Logger.disableApiLogging();

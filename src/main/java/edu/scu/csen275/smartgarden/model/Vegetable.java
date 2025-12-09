@@ -5,7 +5,7 @@ package edu.scu.csen275.smartgarden.model;
  * Vegetables grow quickly but require high water and care.
  */
 public class Vegetable extends Plant {
-    private static final int DEFAULT_LIFESPAN = 45; // days
+    private static final int DEFAULT_LIFESPAN = 90; // days
     private static final int WATER_REQ = 60;
     private static final int SUNLIGHT_REQ = 80;
     private static final int MIN_TEMP = 15;

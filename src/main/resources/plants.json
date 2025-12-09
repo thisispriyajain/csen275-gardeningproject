@@ -42,7 +42,7 @@
       "temperatureRequirement": 21,
       "minTemperature": 15,
       "maxTemperature": 28,
-      "lifespan": 45,
+      "lifespan": 90,
       "growthDuration": 5,
       "vulnerableTo": ["Red Mite", "Brown Caterpillar"]
     },
@@ -53,7 +53,7 @@
       "temperatureRequirement": 21,
       "minTemperature": 15,
       "maxTemperature": 28,
-      "lifespan": 45,
+      "lifespan": 90,
       "growthDuration": 5,
       "vulnerableTo": ["Black Beetle", "Red Mite"]
     },
@@ -64,7 +64,7 @@
       "temperatureRequirement": 21,
       "minTemperature": 15,
       "maxTemperature": 28,
-      "lifespan": 45,
+      "lifespan": 90,
       "growthDuration": 5,
       "vulnerableTo": ["Green Leaf Worm"]
     }
@@ -77,7 +77,7 @@
       "temperatureRequirement": 20,
       "minTemperature": 10,
       "maxTemperature": 30,
-      "lifespan": 60,
+      "lifespan": 90,
       "growthDuration": 7,
       "vulnerableTo": ["Red Mite", "Brown Caterpillar"]
     },
@@ -88,7 +88,7 @@
       "temperatureRequirement": 20,
       "minTemperature": 10,
       "maxTemperature": 30,
-      "lifespan": 60,
+      "lifespan": 90,
       "growthDuration": 7,
       "vulnerableTo": ["Green Leaf Worm"]
     },
@@ -99,7 +99,7 @@
       "temperatureRequirement": 20,
       "minTemperature": 10,
       "maxTemperature": 30,
-      "lifespan": 60,
+      "lifespan": 90,
       "growthDuration": 7,
       "vulnerableTo": ["Black Beetle", "Red Mite"]
     }

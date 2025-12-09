@@ -115,11 +115,17 @@ package "System" {
         - moistureThreshold: int
         - sprinklers: Map<Integer, Sprinkler>
         - weatherSystem: WeatherSystem
+        - autoRefillEnabled: boolean
+        - refillThreshold: int
+        - initialWaterSupply: int
         
+        + checkAndWater(): void
         + checkMoistureLevels(): void
         + waterZone(zoneId: int): void
         + calculateWaterNeeded(zone: Zone): int
         + updateSupply(amount: int): void
+        + refillWater(amount: int): void
+        + autoRefillIfNeeded(): void
         + isWaterAvailable(): boolean
         + stopAllSprinklers(): void
         + setWeatherSystem(weatherSystem: WeatherSystem): void
@@ -142,14 +148,40 @@ package "System" {
         - targetMaxTemperature: int
         - heatingMode: HeatingMode
         - energyConsumption: int
+        - sensors: Map<Integer, TemperatureSensor>
         
+        + update(): void
         + monitorTemperature(): void
         + adjustHeating(): void
+        + setAmbientTemperature(temp: int): void
         + applyWarmthToPlants(plants: List<Plant>): void
         + getStatus(): String
     }
     
+    class CoolingSystem {
+        - currentTemperature: int
+        - coolingMode: CoolingMode
+        - energyConsumption: int
+        - sensors: Map<Integer, TemperatureSensor>
+        
+        + update(): void
+        + setAmbientTemperature(temp: int): void
+        + getCurrentTemperature(): int
+        + getCoolingMode(): CoolingMode
+        + getMaxTemperatureThreshold(): int
+        + activateCooling(maxPlantTemp: int): void
+        + deactivateCooling(): void
+        + getStatus(): String
+    }
+    
     enum HeatingMode {
+        OFF
+        LOW
+        MEDIUM
+        HIGH
+    }
+    
+    enum CoolingMode {
         OFF
         LOW
         MEDIUM
@@ -162,10 +194,16 @@ package "System" {
         - treatmentThreshold: int
         - activeTreatments: Set<Integer>
         - pests: List<Pest>
+        - autoRefillEnabled: boolean
+        - refillThreshold: int
+        - initialPesticideStock: int
         
+        + update(): void
         + detectPests(zone: Zone): void
         + assessThreat(zone: Zone): ThreatLevel
         + applyTreatment(zone: Zone): void
+        + refillPesticide(amount: int): void
+        + autoRefillIfNeeded(): void
         + spawnPests(): void
         + reducePestCount(zone: Zone, amount: int): void
     }
@@ -229,6 +267,11 @@ package "Simulation" {
         - state: SimulationState
         - elapsedTicks: long
         - timeline: Timeline
+        - wateringSystem: WateringSystem
+        - heatingSystem: HeatingSystem
+        - coolingSystem: CoolingSystem
+        - pestControlSystem: PestControlSystem
+        - weatherSystem: WeatherSystem
         
         + start(): void
         + pause(): void
@@ -237,6 +280,7 @@ package "Simulation" {
         + tick(): void
         + setSpeed(multiplier: int): void
         + updateAllSystems(): void
+        + autoRefillSupplies(): void
         + triggerRandomEvents(): void
     }
     
@@ -252,9 +296,13 @@ package "Simulation" {
         - nextWeather: Weather
         - temperatureModifier: int
         - moistureModifier: int
+        - heatingSystem: HeatingSystem
+        - coolingSystem: CoolingSystem
         
+        + update(): void
         + changeWeather(): void
         + applyEffects(plants: List<Plant>): void
+        + applyTemperatureForWeather(weather: Weather): void
         + generateForecast(): Weather
         + getCurrentWeather(): Weather
     }
@@ -336,6 +384,7 @@ package "Controller" {
         - simulationEngine: SimulationEngine
         - wateringSystem: WateringSystem
         - heatingSystem: HeatingSystem
+        - coolingSystem: CoolingSystem
         - pestControlSystem: PestControlSystem
         - weatherSystem: WeatherSystem
         - logger: Logger
@@ -391,17 +440,27 @@ WateringSystem "1" -- "1" WeatherSystem : checks weather
 HeatingSystem "1" -- "1..*" TemperatureSensor : monitors
 HeatingSystem "1" -- "1" HeatingMode : operates in
 
+CoolingSystem "1" -- "1..*" TemperatureSensor : monitors
+CoolingSystem "1" -- "1" CoolingMode : operates in
+CoolingSystem "1" -- "1..*" Plant : protects from heat
+
 PestControlSystem "1" *-- "0..*" Pest : tracks
 PestControlSystem "1" -- "1..*" PestDetector : uses
 PestControlSystem "1" -- "1..*" Zone : monitors
 
 SimulationEngine "1" -- "1" Garden : controls
+SimulationEngine "1" -- "1" WateringSystem : manages
+SimulationEngine "1" -- "1" HeatingSystem : manages
+SimulationEngine "1" -- "1" CoolingSystem : manages
+SimulationEngine "1" -- "1" PestControlSystem : manages
 SimulationEngine "1" -- "1" WeatherSystem : uses
 SimulationEngine "1" -- "1" EventScheduler : schedules with
 SimulationEngine "1" -- "1" SimulationState : has
 
 WeatherSystem "1" -- "1" Weather : current
 WeatherSystem "1" -- "0..*" Plant : affects
+WeatherSystem "1" -- "1" HeatingSystem : coordinates with
+WeatherSystem "1" -- "1" CoolingSystem : coordinates with
 
 EventScheduler "1" *-- "0..*" Event : manages
 Event "1" -- "1" EventType : of type
@@ -413,6 +472,7 @@ GardenController "1" -- "1" Garden : manages
 GardenController "1" -- "1" SimulationEngine : controls
 GardenController "1" -- "1" WateringSystem : controls
 GardenController "1" -- "1" HeatingSystem : controls
+GardenController "1" -- "1" CoolingSystem : controls
 GardenController "1" -- "1" PestControlSystem : controls
 GardenController "1" -- "1" Logger : logs to
 

@@ -304,6 +304,8 @@ public abstract class Plant {
     public int getPestAttacks() { return pestAttacks; }
     public int getTotalPestAttacks() { return totalPestAttacks; }
     public int getMaxLifespan() { return maxLifespan; }
+    public int getMinTemperature() { return minTemperature; }
+    public int getMaxTemperature() { return maxTemperature; }
     
     @Override
     public String toString() {

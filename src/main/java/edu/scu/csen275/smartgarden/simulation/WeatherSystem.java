@@ -2,6 +2,7 @@ package edu.scu.csen275.smartgarden.simulation;
 
 import edu.scu.csen275.smartgarden.model.Garden;
 import edu.scu.csen275.smartgarden.model.Plant;
+import edu.scu.csen275.smartgarden.system.CoolingSystem;
 import edu.scu.csen275.smartgarden.system.HeatingSystem;
 import edu.scu.csen275.smartgarden.util.Logger;
 import javafx.animation.*;
@@ -15,6 +16,7 @@ import java.util.Random;
 public class WeatherSystem {
     private final Garden garden;
     private final HeatingSystem heatingSystem;
+    private final CoolingSystem coolingSystem; // Optional - can be null
     private final ObjectProperty<Weather> currentWeather;
     private Weather previousWeather; // Track previous weather to detect changes
     private int weatherDuration; // minutes
@@ -32,8 +34,16 @@ public class WeatherSystem {
      * Creates a new WeatherSystem for the garden.
      */
     public WeatherSystem(Garden garden, HeatingSystem heatingSystem) {
+        this(garden, heatingSystem, null);
+    }
+    
+    /**
+     * Creates a new WeatherSystem for the garden with cooling system support.
+     */
+    public WeatherSystem(Garden garden, HeatingSystem heatingSystem, CoolingSystem coolingSystem) {
         this.garden = garden;
         this.heatingSystem = heatingSystem;
+        this.coolingSystem = coolingSystem;
         this.currentWeather = new SimpleObjectProperty<>(Weather.SUNNY);
         this.previousWeather = Weather.SUNNY; // Initialize previous weather
         this.weatherDuration = 60;
@@ -250,27 +260,45 @@ public class WeatherSystem {
         if (weather == Weather.SUNNY) {
             targetTemp = 20;
             heatingSystem.setAmbientTemperature(targetTemp);
+            if (coolingSystem != null) {
+                coolingSystem.setAmbientTemperature(targetTemp);
+            }
             if (!apiModeEnabled) {
                 logger.info("Weather", "SUNNY weather: Temperature set to " + targetTemp + "°C");
             }
             // Turn off heating when sunny (temp >= 17°C threshold)
             heatingSystem.update(); // This will deactivate heating
+            if (coolingSystem != null) {
+                coolingSystem.update(); // Check if cooling needed
+            }
         } else if (weather == Weather.RAINY) {
             targetTemp = 10;
             heatingSystem.setAmbientTemperature(targetTemp);
+            if (coolingSystem != null) {
+                coolingSystem.setAmbientTemperature(targetTemp);
+            }
             if (!apiModeEnabled) {
                 logger.info("Weather", "RAINY weather: Temperature set to " + targetTemp + "°C");
             }
             // Heating will activate (temp < 15°C, deficit = 5 = LOW mode)
             heatingSystem.update();
+            if (coolingSystem != null) {
+                coolingSystem.update(); // Cooling should be off at 10°C
+            }
         } else if (weather == Weather.SNOWY) {
             targetTemp = 5;
             heatingSystem.setAmbientTemperature(targetTemp);
+            if (coolingSystem != null) {
+                coolingSystem.setAmbientTemperature(targetTemp);
+            }
             if (!apiModeEnabled) {
                 logger.info("Weather", "SNOWY weather: Temperature set to " + targetTemp + "°C");
             }
             // Heating will activate (temp < 15°C, deficit > 10 = HIGH mode)
             heatingSystem.update();
+            if (coolingSystem != null) {
+                coolingSystem.update(); // Cooling should be off at 5°C
+            }
         }
     }
     
