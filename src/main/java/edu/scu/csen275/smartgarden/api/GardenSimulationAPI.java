@@ -111,8 +111,7 @@ public class GardenSimulationAPI {
         // All other automatic systems (pesticide, heating, sprinklers, water decrease) continue to work
         engine.getPestControlSystem().setApiModeEnabled(true);
         engine.getWeatherSystem().setApiModeEnabled(true);
-        logger.info("API", "API mode enabled - automatic pest spawning and weather changes disabled");
-        logger.info("API", "Pesticide, heating, sprinklers, and water monitoring remain automatic");
+        engine.getHeatingSystem().setApiModeEnabled(true);
         
         // Start headless simulation for continuous plant updates
         // This enables true 24-hour survival testing
@@ -326,7 +325,6 @@ public class GardenSimulationAPI {
         }
         
         headlessEngine.start();
-        logger.info("API", "Headless simulation loop started - plants will update continuously, water will decrease automatically");
     }
     
     /**

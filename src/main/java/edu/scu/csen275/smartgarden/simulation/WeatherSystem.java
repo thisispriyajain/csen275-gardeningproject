@@ -61,16 +61,12 @@ public class WeatherSystem {
                 realTimeRotationTimer = null;
             }
             rotateSunnyRainyMode = false; // Also disable rotation flag
-            logger.info("Weather", "Stopped weather rotation timer - weather changes now only via API");
         } else {
             // If disabling API mode and rotation was enabled, disable rotation
             if (rotateSunnyRainyMode) {
                 disableSunnyRainyRotation();
             }
         }
-        
-        logger.info("Weather", "API mode " + (enabled ? "enabled" : "disabled") + 
-                   " - automatic weather changes " + (enabled ? "disabled" : "enabled"));
     }
     
     /**
@@ -244,23 +240,35 @@ public class WeatherSystem {
             return;
         }
         
+        // In API mode, don't automatically change temperature with weather
+        // Temperature should only be controlled via api.temperature() calls
+        if (apiModeEnabled) {
+            return; // Skip temperature changes in API mode
+        }
+        
         int targetTemp;
         if (weather == Weather.SUNNY) {
             targetTemp = 20;
             heatingSystem.setAmbientTemperature(targetTemp);
-            logger.info("Weather", "SUNNY weather: Temperature set to " + targetTemp + "°C");
+            if (!apiModeEnabled) {
+                logger.info("Weather", "SUNNY weather: Temperature set to " + targetTemp + "°C");
+            }
             // Turn off heating when sunny (temp >= 17°C threshold)
             heatingSystem.update(); // This will deactivate heating
         } else if (weather == Weather.RAINY) {
             targetTemp = 10;
             heatingSystem.setAmbientTemperature(targetTemp);
-            logger.info("Weather", "RAINY weather: Temperature set to " + targetTemp + "°C");
+            if (!apiModeEnabled) {
+                logger.info("Weather", "RAINY weather: Temperature set to " + targetTemp + "°C");
+            }
             // Heating will activate (temp < 15°C, deficit = 5 = LOW mode)
             heatingSystem.update();
         } else if (weather == Weather.SNOWY) {
             targetTemp = 5;
             heatingSystem.setAmbientTemperature(targetTemp);
-            logger.info("Weather", "SNOWY weather: Temperature set to " + targetTemp + "°C");
+            if (!apiModeEnabled) {
+                logger.info("Weather", "SNOWY weather: Temperature set to " + targetTemp + "°C");
+            }
             // Heating will activate (temp < 15°C, deficit > 10 = HIGH mode)
             heatingSystem.update();
         }

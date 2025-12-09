@@ -19,6 +19,7 @@ public class HeatingSystem {
     private final IntegerProperty targetMaxTemperature;
     private final ObjectProperty<HeatingMode> heatingMode;
     private final IntegerProperty energyConsumption;
+    private boolean apiModeEnabled = false; // When enabled, temperature change logs are suppressed
     
     private static final Logger logger = Logger.getInstance();
     private static final int DEFAULT_MIN_TEMP = 15; // Celsius
@@ -191,7 +192,17 @@ public class HeatingSystem {
         for (Zone zone : garden.getZones()) {
             zone.setTemperature(temperature);
         }
-        logger.info("Heating", "Ambient temperature set to " + temperature + "°C (was " + oldTemp + "°C)");
+        if (!apiModeEnabled) {
+            logger.info("Heating", "Ambient temperature set to " + temperature + "°C (was " + oldTemp + "°C)");
+        }
+    }
+    
+    /**
+     * Sets whether API mode is enabled.
+     * When enabled, temperature change logs are suppressed.
+     */
+    public void setApiModeEnabled(boolean enabled) {
+        this.apiModeEnabled = enabled;
     }
     
     /**

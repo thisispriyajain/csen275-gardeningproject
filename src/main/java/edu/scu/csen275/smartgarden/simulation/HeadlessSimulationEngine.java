@@ -110,7 +110,6 @@ public class HeadlessSimulationEngine {
         
         isRunning = true;
         scheduler.scheduleAtFixedRate(this::tick, 0, BASE_TICK_INTERVAL_MS, TimeUnit.MILLISECONDS);
-        logger.info("Simulation", "Headless simulation started - plants will update continuously");
     }
     
     /**

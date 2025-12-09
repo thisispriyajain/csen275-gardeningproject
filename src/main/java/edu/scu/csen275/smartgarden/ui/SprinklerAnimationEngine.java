@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class SprinklerAnimationEngine {
     private static final Random random = new Random();
-    private static final double ANIMATION_DURATION = 3000; // 3 seconds
+    private static final double ANIMATION_DURATION = 5000; // 5 seconds (increased for better visibility)
     private static final double FRAME_RATE = 60.0; // 60 FPS
     private static final double FRAME_INTERVAL = 1000.0 / FRAME_RATE; // ~16.67ms
     
@@ -109,7 +109,7 @@ public class SprinklerAnimationEngine {
                 double centerY = (tileBounds.getMinY() - containerBounds.getMinY()) + tileBounds.getHeight() / 2;
                 
                 // Create multiple water particles per tile (sprinkler effect)
-                int particleCount = 8 + random.nextInt(5); // 8-12 particles per tile
+                int particleCount = 15 + random.nextInt(10); // 15-25 particles per tile (increased for visibility)
                 for (int i = 0; i < particleCount; i++) {
                     SprinklerParticle particle = new SprinklerParticle();
                     particle.x = centerX;
@@ -117,14 +117,14 @@ public class SprinklerAnimationEngine {
                     
                     // Random angle for sprinkler spray (arc pattern)
                     double angle = (Math.PI / 4) + (random.nextDouble() * Math.PI / 2); // 45-135 degrees
-                    double velocity = 2 + random.nextDouble() * 3; // 2-5 pixels per frame
+                    double velocity = 4 + random.nextDouble() * 4; // 4-8 pixels per frame (increased for more dramatic effect)
                     particle.vx = Math.cos(angle) * velocity;
                     particle.vy = Math.sin(angle) * velocity;
                     
-                    particle.size = 3 + random.nextDouble() * 2; // 3-5 pixels
-                    particle.opacity = 0.7 + random.nextDouble() * 0.3; // 0.7-1.0
+                    particle.size = 5 + random.nextDouble() * 4; // 5-9 pixels (increased size for visibility)
+                    particle.opacity = 0.9 + random.nextDouble() * 0.1; // 0.9-1.0 (increased opacity)
                     particle.lifetime = 0;
-                    particle.maxLifetime = 30 + random.nextInt(20); // 30-50 frames
+                    particle.maxLifetime = 40 + random.nextInt(30); // 40-70 frames (longer lifetime)
                     
                     particles.add(particle);
                 }
@@ -184,8 +184,8 @@ public class SprinklerAnimationEngine {
                             double progress = (double)particle.lifetime / particle.maxLifetime;
                             double currentOpacity = particle.opacity * (1.0 - progress);
                             
-                            // Draw water droplet
-                            gc.setFill(Color.rgb(135, 206, 250, currentOpacity)); // Light blue
+                            // Draw water droplet (brighter blue for better visibility)
+                            gc.setFill(Color.rgb(100, 200, 255, currentOpacity)); // Brighter, more vibrant blue
                             gc.fillOval(
                                 particle.x - particle.size / 2,
                                 particle.y - particle.size / 2,

@@ -60,8 +60,6 @@ public class PestControlSystem {
      */
     public void setApiModeEnabled(boolean enabled) {
         this.apiModeEnabled = enabled;
-        logger.info("PestControl", "API mode " + (enabled ? "enabled" : "disabled") + 
-                   " - automatic pest spawning " + (enabled ? "disabled" : "enabled"));
     }
     
     /**

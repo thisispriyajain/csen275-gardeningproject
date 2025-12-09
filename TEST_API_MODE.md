@@ -125,19 +125,6 @@ mvnw exec:java -Dexec.mainClass="edu.scu.csen275.smartgarden.api.ComprehensiveAP
 
 ---
 
-## Test 4: Verify UI + API Mode (Future Test)
-
-When you combine UI + API later:
-
-1. Start UI: `run-ui.bat`
-2. In another terminal, run API test: `run-quick-test.bat`
-3. **Expected:**
-   - API triggers pests/weather → visible in UI
-   - No automatic pests/weather from normal simulation
-   - All automatic systems (pesticide, heating, sprinklers) still work
-
----
-
 ## What to Look For in Logs
 
 ### ✅ GOOD (API Mode Working Correctly):
