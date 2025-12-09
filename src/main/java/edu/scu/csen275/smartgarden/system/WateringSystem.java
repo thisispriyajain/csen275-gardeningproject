@@ -157,8 +157,7 @@ public class WateringSystem {
         sprinkler.deactivate();
         
         logger.info("Watering", "Zone " + zoneId + " watered with " + waterUsed + 
-                   "L. Moisture: " + zone.getMoistureLevel() + "%. Supply remaining: " + 
-                   waterSupply.get() + "L");
+                   "L. Supply remaining: " + waterSupply.get() + "L");
     }
     
     /**

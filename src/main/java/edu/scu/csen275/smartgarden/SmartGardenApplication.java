@@ -176,9 +176,6 @@ public class SmartGardenApplication extends Application {
         // Setup toolbar actions
         setupToolbarActions();
         
-        // Setup info panel actions with coin animations
-        setupInfoPanelActions();
-        
         // Create log panel
         VBox logPanel = createLogPanel();
         
@@ -254,47 +251,6 @@ public class SmartGardenApplication extends Application {
         });
     }
     
-    /**
-     * Sets up info panel button actions.
-     */
-    private void setupInfoPanelActions() {
-        infoPanel.getRefillWaterBtn().setOnAction(e -> {
-            controller.refillWater();
-            animateButtonClick(infoPanel.getRefillWaterBtn());
-        });
-        
-        infoPanel.getRefillPesticideBtn().setOnAction(e -> {
-            controller.refillPesticide();
-            animateButtonClick(infoPanel.getRefillPesticideBtn());
-        });
-        
-        infoPanel.getWaterAllBtn().setOnAction(e -> {
-            // Trigger watering on all zones
-            for (int i = 1; i <= 9; i++) {
-                controller.manualWaterZone(i);
-            }
-            
-            // Trigger combined watering animation on all tiles
-            gardenPanel.animateAllTilesWatering();
-            
-            // Create sparkle burst at button location
-            javafx.geometry.Bounds bounds = infoPanel.getWaterAllBtn().localToScene(
-                infoPanel.getWaterAllBtn().getBoundsInLocal()
-            );
-            if (particleSystem != null && bounds != null) {
-                javafx.geometry.Bounds sceneBounds = animatedBackground.localToScene(
-                    animatedBackground.getBoundsInLocal()
-                );
-                if (sceneBounds != null) {
-                    double x = bounds.getCenterX() - sceneBounds.getMinX();
-                    double y = bounds.getCenterY() - sceneBounds.getMinY();
-                    particleSystem.createSparkleBurst(x, y);
-                }
-            }
-            
-            animateButtonClick(infoPanel.getWaterAllBtn());
-        });
-    }
     
     /**
      * Creates the log panel.

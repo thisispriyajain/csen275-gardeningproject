@@ -13,8 +13,8 @@ public class InfoCard extends VBox {
     private final Label titleLabel;
     
     public InfoCard(String title) {
-        this.setSpacing(10);
-        this.setPadding(new Insets(15));
+        this.setSpacing(18);
+        this.setPadding(new Insets(22));
         this.getStyleClass().add("card");
         this.setAlignment(Pos.TOP_LEFT);
         
@@ -32,8 +32,8 @@ public class InfoCard extends VBox {
         
         ProgressBar progressBar = new ProgressBar(initialValue);
         progressBar.getStyleClass().add("modern-progress-bar");
-        progressBar.setPrefWidth(220);
-        progressBar.setPrefHeight(20);
+        progressBar.setPrefWidth(280);
+        progressBar.setPrefHeight(28);
         
         this.getChildren().addAll(barLabel, progressBar);
         return progressBar;

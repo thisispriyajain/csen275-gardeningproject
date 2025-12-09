@@ -183,15 +183,13 @@ public class PestControlSystem {
         ThreatLevel threat = assessThreat(zone);
         
         if (threat == ThreatLevel.HIGH || threat == ThreatLevel.CRITICAL) {
-            // DELAY treatment by 3 seconds so user can see pests attacking
-            logger.info("PestControl", "Threat detected in Zone " + zone.getZoneId() + 
-                       " (" + threat + ") - delaying treatment by 3 seconds for visibility");
+            logger.info("PestControl", "Threat detected in Zone " + zone.getZoneId() + " (" + threat + ")");
             
+            // DELAY treatment by 3 seconds so user can see pests attacking
             // Try to use JavaFX Timeline if available (UI mode)
             // If JavaFX toolkit not initialized, fall back to thread-based delay (headless/API mode)
             Timeline delayTreatment = new Timeline(
                 new KeyFrame(Duration.seconds(3), e -> {
-                    logger.info("PestControl", "Applying delayed treatment to Zone " + zone.getZoneId());
                     applyTreatment(zone);
                 })
             );
@@ -201,7 +199,6 @@ public class PestControlSystem {
             } catch (RuntimeException e) {
                 // JavaFX toolkit not initialized - use thread-based delay (headless/API mode)
                 scheduler.schedule(() -> {
-                    logger.info("PestControl", "Applying delayed treatment to Zone " + zone.getZoneId());
                     applyTreatment(zone);
                 }, 3, TimeUnit.SECONDS);
             }

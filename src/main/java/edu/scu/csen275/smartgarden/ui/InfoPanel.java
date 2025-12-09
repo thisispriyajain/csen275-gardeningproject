@@ -1,8 +1,6 @@
 package edu.scu.csen275.smartgarden.ui;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
@@ -13,7 +11,6 @@ import javafx.scene.layout.VBox;
 public class InfoPanel extends VBox {
     private final InfoCard simulationCard;
     private final InfoCard resourcesCard;
-    private final InfoCard controlsCard;
     
     private final Label timeLabel;
     private final Label statsLabel;
@@ -22,13 +19,10 @@ public class InfoPanel extends VBox {
     private final WeatherDisplay weatherDisplay;
     private final ProgressBar waterBar;
     private final ProgressBar pesticideBar;
-    private final Button refillWaterBtn;
-    private final Button refillPesticideBtn;
-    private final Button waterAllBtn;
     
     public InfoPanel() {
-        this.setSpacing(15);
-        this.setPadding(new Insets(15));
+        this.setSpacing(25);
+        this.setPadding(new Insets(20));
         this.setMinWidth(320);
         this.getStyleClass().add("info-panel");
         
@@ -46,25 +40,8 @@ public class InfoPanel extends VBox {
         waterBar = resourcesCard.addProgressBar("Water Supply", 1.0);
         pesticideBar = resourcesCard.addProgressBar("Pesticide Stock", 1.0);
         
-        // Controls Card
-        controlsCard = new InfoCard("🎮 Manual Controls");
-        
-        refillWaterBtn = new Button("💧 Refill Water");
-        refillWaterBtn.getStyleClass().add("resource-button");
-        refillWaterBtn.setPrefWidth(200);
-        
-        refillPesticideBtn = new Button("🧪 Refill Pesticide");
-        refillPesticideBtn.getStyleClass().add("resource-button");
-        refillPesticideBtn.setPrefWidth(200);
-        
-        waterAllBtn = new Button("🌊 Water All Zones");
-        waterAllBtn.getStyleClass().add("resource-button");
-        waterAllBtn.setPrefWidth(200);
-        
-        controlsCard.getChildren().addAll(refillWaterBtn, refillPesticideBtn, waterAllBtn);
-        
         // Add all cards
-        this.getChildren().addAll(simulationCard, resourcesCard, controlsCard);
+        this.getChildren().addAll(simulationCard, resourcesCard);
     }
     
     /**
@@ -100,8 +77,5 @@ public class InfoPanel extends VBox {
     public WeatherDisplay getWeatherDisplay() { return weatherDisplay; }
     public ProgressBar getWaterBar() { return waterBar; }
     public ProgressBar getPesticideBar() { return pesticideBar; }
-    public Button getRefillWaterBtn() { return refillWaterBtn; }
-    public Button getRefillPesticideBtn() { return refillPesticideBtn; }
-    public Button getWaterAllBtn() { return waterAllBtn; }
 }
 
