@@ -11,8 +11,11 @@ import edu.scu.csen275.smartgarden.system.PestControlSystem;
 import edu.scu.csen275.smartgarden.system.WateringSystem;
 import edu.scu.csen275.smartgarden.util.Logger;
 
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * GardenSimulationAPI provides an interface for automated testing and monitoring 
@@ -35,12 +38,70 @@ public class GardenSimulationAPI {
     private int dayCount = 0;
     
     
-    // Pest vulnerabilities mapping (similar to Group9 API)
-    private static final Map<String, List<String>> pestVulnerabilities = new HashMap<>();
+    // Pest vulnerabilities mapping - loaded from parasites.json config file
+    // Maps plant name -> list of pest names that can attack it
+    private static Map<String, List<String>> pestVulnerabilities = new HashMap<>();
     
     static {
-        // Initialize pest vulnerabilities for different plant types
-        // This maps plant types to pests that can attack them
+        // Load pest vulnerabilities from parasites.json config file
+        loadPestVulnerabilitiesFromConfig();
+    }
+    
+    /**
+     * Loads pest vulnerabilities from parasites.json config file.
+     * Creates a reverse mapping: plant name -> list of pests that can attack it.
+     */
+    private static void loadPestVulnerabilitiesFromConfig() {
+        try {
+            InputStream configStream = GardenSimulationAPI.class.getResourceAsStream("/parasites.json");
+            if (configStream == null) {
+                System.err.println("[GardenSimulationAPI] WARNING: parasites.json not found, using default vulnerabilities");
+                // Fallback to hardcoded values if config not found
+                loadDefaultPestVulnerabilities();
+                return;
+            }
+            
+            String configContent = new String(configStream.readAllBytes());
+            configStream.close();
+            
+            // Parse parasites.json: extract "name" and "targetPlants" for each parasite
+            // Pattern: "name": "PestName", ... "targetPlants": ["Plant1", "Plant2", ...]
+            Pattern parasitePattern = Pattern.compile(
+                "\"name\"\\s*:\\s*\"([^\"]+)\".*?\"targetPlants\"\\s*:\\s*\\[([^\\]]+)\\]",
+                Pattern.DOTALL
+            );
+            
+            Matcher matcher = parasitePattern.matcher(configContent);
+            
+            while (matcher.find()) {
+                String parasiteName = matcher.group(1);
+                String targetPlantsStr = matcher.group(2);
+                
+                // Extract all plant names from the array
+                Pattern plantPattern = Pattern.compile("\"([^\"]+)\"");
+                Matcher plantMatcher = plantPattern.matcher(targetPlantsStr);
+                
+                while (plantMatcher.find()) {
+                    String plantName = plantMatcher.group(1);
+                    // Add reverse mapping: plant -> list of pests
+                    pestVulnerabilities.computeIfAbsent(plantName, k -> new ArrayList<>()).add(parasiteName);
+                }
+            }
+            
+            System.out.println("[GardenSimulationAPI] Loaded pest vulnerabilities from parasites.json: " + 
+                             pestVulnerabilities.size() + " plants configured");
+        } catch (Exception e) {
+            System.err.println("[GardenSimulationAPI] ERROR loading parasites.json: " + e.getMessage());
+            e.printStackTrace();
+            // Fallback to default values
+            loadDefaultPestVulnerabilities();
+        }
+    }
+    
+    /**
+     * Fallback method to load default pest vulnerabilities if config file fails.
+     */
+    private static void loadDefaultPestVulnerabilities() {
         pestVulnerabilities.put("Strawberry", Arrays.asList("Red Mite", "Green Leaf Worm"));
         pestVulnerabilities.put("Grapevine", Arrays.asList("Black Beetle", "Red Mite"));
         pestVulnerabilities.put("Apple Sapling", Arrays.asList("Brown Caterpillar", "Green Leaf Worm"));
@@ -81,14 +142,9 @@ public class GardenSimulationAPI {
     }
     
     /**
-     * Initializes the garden with a predefined set of plants.
+     * Initializes the garden with a predefined set of plants from config file.
      * This method marks the beginning of the simulation clock.
-     * 
-     * Creates plants at fixed positions:
-     * - Strawberry at (1, 1)
-     * - Carrot at (2, 2)
-     * - Tomato at (3, 3)
-     * - Sunflower at (4, 4)
+     * Reads plant configuration from garden-config.json in resources.
      */
     public void initializeGarden() {
         // Enable dual logging - all logs will go to both logs/garden_*.log AND log.txt
@@ -97,12 +153,29 @@ public class GardenSimulationAPI {
         logger.info("API", "Initializing garden - Day 0 begins");
         dayCount = 0;
         
-        // Create predefined plants for simulation
-        // Using smartGarden's PlantType enum
-        addPlant(PlantType.STRAWBERRY, new Position(1, 1));
-        addPlant(PlantType.CARROT, new Position(2, 2));
-        addPlant(PlantType.TOMATO, new Position(3, 3));
-        addPlant(PlantType.SUNFLOWER, new Position(4, 4));
+        // Load plants from config file
+        try {
+            InputStream configStream = getClass().getResourceAsStream("/garden-config.json");
+            if (configStream == null) {
+                logger.warning("API", "Config file not found, using default plants");
+                // Fallback to default plants if config not found
+                addPlant(PlantType.STRAWBERRY, new Position(1, 1));
+                addPlant(PlantType.CARROT, new Position(2, 2));
+                addPlant(PlantType.TOMATO, new Position(3, 3));
+                addPlant(PlantType.SUNFLOWER, new Position(4, 4));
+            } else {
+                String configContent = new String(configStream.readAllBytes());
+                configStream.close();
+                loadPlantsFromConfig(configContent);
+            }
+        } catch (Exception e) {
+            logger.error("API", "Error loading config file: " + e.getMessage());
+            // Fallback to default plants
+            addPlant(PlantType.STRAWBERRY, new Position(1, 1));
+            addPlant(PlantType.CARROT, new Position(2, 2));
+            addPlant(PlantType.TOMATO, new Position(3, 3));
+            addPlant(PlantType.SUNFLOWER, new Position(4, 4));
+        }
         
         logger.info("API", "Garden initialized with " + garden.getTotalPlants() + " plants.");
         
@@ -134,24 +207,30 @@ public class GardenSimulationAPI {
      * 
      * @return Map containing:
      *         - "plants": List of plant names
-     *         - "waterRequirement": List of current water levels
+     *         - "waterRequirement": List of water requirement amounts (not current levels)
      *         - "parasites": List of lists of pest types that can attack each plant
      */
     public Map<String, Object> getPlants() {
         Map<String, Object> plantInfo = new HashMap<>();
         List<String> plantNames = new ArrayList<>();
-        List<Integer> waterLevels = new ArrayList<>();
+        List<Integer> waterRequirements = new ArrayList<>();
         List<List<String>> parasiteList = new ArrayList<>();
         
         for (Plant plant : garden.getAllPlants()) {
             String plantType = plant.getPlantType();
             plantNames.add(plantType);
-            waterLevels.add(plant.getWaterLevel());
-            parasiteList.add(pestVulnerabilities.getOrDefault(plantType, new ArrayList<>()));
+            waterRequirements.add(plant.getWaterRequirement()); // Fixed: return requirement, not current level
+            
+            // Handle Flower type format "Flower (Sunflower)" -> extract "Sunflower"
+            String lookupKey = plantType;
+            if (plantType.startsWith("Flower (")) {
+                lookupKey = plantType.substring(8, plantType.length() - 1); // Extract "Sunflower" from "Flower (Sunflower)"
+            }
+            parasiteList.add(pestVulnerabilities.getOrDefault(lookupKey, new ArrayList<>()));
         }
         
         plantInfo.put("plants", plantNames);
-        plantInfo.put("waterRequirement", waterLevels);
+        plantInfo.put("waterRequirement", waterRequirements);
         plantInfo.put("parasites", parasiteList);
         
         logger.info("API", "Retrieved plant information for " + plantNames.size() + " plants.");
@@ -194,6 +273,12 @@ public class GardenSimulationAPI {
      * @param temp Temperature in Fahrenheit (specification requirement: 40-120 F)
      */
     public void temperature(int temp) {
+        // Validate temperature range (40-120 F as per specification)
+        if (temp < 40 || temp > 120) {
+            logger.warning("API", "Temperature " + temp + "°F is outside valid range (40-120°F). Clamping to valid range.");
+            temp = Math.max(40, Math.min(120, temp));
+        }
+        
         // Convert Fahrenheit to Celsius (spec expects Fahrenheit input)
         double tempCelsius = (temp - 32) * 5.0 / 9.0;
         int tempCelsiusInt = (int) Math.round(tempCelsius);
@@ -238,7 +323,12 @@ public class GardenSimulationAPI {
             }
             
             String plantType = plant.getPlantType();
-            List<String> vulnerabilities = pestVulnerabilities.getOrDefault(plantType, new ArrayList<>());
+            // Handle Flower type format "Flower (Sunflower)" -> extract "Sunflower"
+            String lookupKey = plantType;
+            if (plantType.startsWith("Flower (")) {
+                lookupKey = plantType.substring(8, plantType.length() - 1); // Extract "Sunflower" from "Flower (Sunflower)"
+            }
+            List<String> vulnerabilities = pestVulnerabilities.getOrDefault(lookupKey, new ArrayList<>());
             
             if (vulnerabilities.contains(parasiteType)) {
                 // Create a pest at the plant's position and attack it
@@ -377,6 +467,68 @@ public class GardenSimulationAPI {
      */
     public static void closeApiLog() {
         Logger.disableApiLogging();
+    }
+    
+    /**
+     * Parses the JSON config file and loads plants into the garden.
+     * Simple JSON parser for the specific config format.
+     * 
+     * @param configContent The JSON content as a string
+     */
+    private void loadPlantsFromConfig(String configContent) {
+        // Simple regex-based parser for the specific JSON structure
+        // Pattern: "type": "PlantName", "position": {"row": X, "column": Y}
+        Pattern plantPattern = Pattern.compile(
+            "\"type\"\\s*:\\s*\"([^\"]+)\".*?\"row\"\\s*:\\s*(\\d+).*?\"column\"\\s*:\\s*(\\d+)",
+            Pattern.DOTALL
+        );
+        
+        Matcher matcher = plantPattern.matcher(configContent);
+        int plantCount = 0;
+        
+        while (matcher.find()) {
+            String plantTypeName = matcher.group(1);
+            int row = Integer.parseInt(matcher.group(2));
+            int column = Integer.parseInt(matcher.group(3));
+            
+            // Map plant type name to PlantType enum
+            PlantType plantType = mapPlantTypeName(plantTypeName);
+            if (plantType != null) {
+                addPlant(plantType, new Position(row, column));
+                plantCount++;
+            } else {
+                logger.warning("API", "Unknown plant type in config: " + plantTypeName);
+            }
+        }
+        
+        if (plantCount == 0) {
+            logger.warning("API", "No plants loaded from config, using defaults");
+            addPlant(PlantType.STRAWBERRY, new Position(1, 1));
+            addPlant(PlantType.CARROT, new Position(2, 2));
+            addPlant(PlantType.TOMATO, new Position(3, 3));
+            addPlant(PlantType.SUNFLOWER, new Position(4, 4));
+        }
+    }
+    
+    /**
+     * Maps plant type name from config to PlantType enum.
+     * 
+     * @param plantTypeName The plant type name from config
+     * @return The corresponding PlantType enum, or null if not found
+     */
+    private PlantType mapPlantTypeName(String plantTypeName) {
+        return switch (plantTypeName) {
+            case "Strawberry" -> PlantType.STRAWBERRY;
+            case "Grapevine" -> PlantType.GRAPEVINE;
+            case "Apple Sapling", "Apple" -> PlantType.APPLE;
+            case "Carrot" -> PlantType.CARROT;
+            case "Tomato" -> PlantType.TOMATO;
+            case "Onion" -> PlantType.ONION;
+            case "Sunflower" -> PlantType.SUNFLOWER;
+            case "Tulip" -> PlantType.TULIP;
+            case "Rose" -> PlantType.ROSE;
+            default -> null;
+        };
     }
 }
 
