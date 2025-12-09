@@ -24,7 +24,7 @@ public class WateringSystem {
     private static final Logger logger = Logger.getInstance();
     private static final int INITIAL_WATER_SUPPLY = 10000; // liters
     private static final int DEFAULT_MOISTURE_THRESHOLD = 40; // percentage
-    private static final int WATER_PER_CYCLE = 100; // amount to water per cycle (increased for sustainability)
+    private static final int WATER_PER_CYCLE = 10; // amount to water per cycle
     
     /**
      * Creates a new WateringSystem for the garden.

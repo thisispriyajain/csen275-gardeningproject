@@ -7,8 +7,6 @@ import edu.scu.csen275.smartgarden.simulation.SimulationEngine;
 import edu.scu.csen275.smartgarden.simulation.WeatherSystem;
 import edu.scu.csen275.smartgarden.ui.*;
 import edu.scu.csen275.smartgarden.util.Logger;
-import edu.scu.csen275.smartgarden.util.EventBus;
-import edu.scu.csen275.smartgarden.events.*;
 import edu.scu.csen275.smartgarden.api.GardenSimulationAPI;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -83,9 +81,6 @@ public class SmartGardenApplication extends Application {
             
             // Setup pest event handlers
             setupPestEventHandlers();
-            
-            // Setup EventBus subscriptions for API events
-            setupEventBusSubscriptions();
             
             // Check if API mode is enabled (via system property)
             boolean apiModeEnabled = Boolean.getBoolean("smartgarden.api.enabled") || 
@@ -398,78 +393,6 @@ public class SmartGardenApplication extends Application {
             public void onPestRemoved(Position position, String pestType) {
                 // Not explicitly handled in UI yet, but can be added
             }
-        });
-    }
-    
-    /**
-     * Sets up EventBus subscriptions for API events.
-     * This allows API calls to trigger UI updates even when API runs separately.
-     */
-    private void setupEventBusSubscriptions() {
-        // Subscribe to rain events
-        EventBus.subscribe("RainEvent", event -> {
-            if (event instanceof RainEvent) {
-                RainEvent rainEvent = (RainEvent) event;
-                System.out.println("[SmartGardenApplication] Received RainEvent: " + rainEvent.getAmount() + " units");
-                
-                // Find container for rain animation
-                Pane centerContainer = findCenterContainer();
-                if (centerContainer != null) {
-                    RainAnimationEngine.startRain(centerContainer);
-                    // Stop sprinklers when rain starts
-                    if (controller != null && controller.getSimulationEngine() != null) {
-                        controller.getSimulationEngine().getWateringSystem().stopAllSprinklers();
-                        edu.scu.csen275.smartgarden.ui.SprinklerAnimationEngine.stopAllAnimations();
-                    }
-                }
-            }
-        });
-        
-        // Subscribe to temperature events
-        EventBus.subscribe("TemperatureEvent", event -> {
-            if (event instanceof TemperatureEvent) {
-                TemperatureEvent tempEvent = (TemperatureEvent) event;
-                System.out.println("[SmartGardenApplication] Received TemperatureEvent: " + tempEvent.getTemperatureFahrenheit() + "°F");
-                
-                // Update weather display based on temperature
-                if (controller != null && controller.getSimulationEngine() != null) {
-                    WeatherSystem.Weather weather = controller.getSimulationEngine().getWeatherSystem().getCurrentWeather();
-                    if (infoPanel != null && infoPanel.getWeatherDisplay() != null) {
-                        infoPanel.getWeatherDisplay().updateWeather(weather);
-                    }
-                    
-                    // Handle snow animation if temperature is cold
-                    Pane centerContainer = findCenterContainer();
-                    if (centerContainer != null) {
-                        if (weather == WeatherSystem.Weather.SNOWY) {
-                            SnowAnimationEngine.startSnow(centerContainer);
-                        } else {
-                            SnowAnimationEngine.stopSnow(centerContainer);
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Subscribe to parasite events
-        EventBus.subscribe("ParasiteEvent", event -> {
-            if (event instanceof ParasiteEvent) {
-                ParasiteEvent parasiteEvent = (ParasiteEvent) event;
-                System.out.println("[SmartGardenApplication] Received ParasiteEvent: " + 
-                                parasiteEvent.getParasiteType() + " at " + parasiteEvent.getPosition());
-                
-                // Trigger pest animation on the affected tile
-                if (gardenPanel != null) {
-                    gardenPanel.onPestSpawned(parasiteEvent.getPosition(), 
-                                            parasiteEvent.getParasiteType(), true);
-                }
-            }
-        });
-        
-        // Subscribe to garden initialization
-        EventBus.subscribe("InitializeGardenEvent", event -> {
-            System.out.println("[SmartGardenApplication] Received InitializeGardenEvent - garden initialized");
-            // UI will update automatically via polling, but we can add special handling here if needed
         });
     }
     
@@ -892,9 +815,9 @@ public class SmartGardenApplication extends Application {
      */
     private void scheduleAPICalls(GardenSimulationAPI api) {
         // API mode is enabled - UI and API share the same controller
-        // External API calls will be visible in UI via EventBus
-        System.out.println("[SmartGardenApplication] API mode active - external API calls will be visible in UI");
-        controller.getLogger().info("System", "API mode active - API calls can be made externally, UI will update via EventBus");
+                   // UI will update automatically via polling (updateUI() every 0.5s)
+                   System.out.println("[SmartGardenApplication] API mode active - external API calls will be visible in UI via polling");
+                   controller.getLogger().info("System", "API mode active - API calls can be made externally, UI will update via polling");
         
         // Optional: Enable scheduled API calls for testing/demonstration
         // Uncomment below to enable automatic API calls (like Smart_Garden_System 3):

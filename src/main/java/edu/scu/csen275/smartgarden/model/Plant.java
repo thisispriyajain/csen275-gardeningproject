@@ -58,9 +58,9 @@ public abstract class Plant {
         this.totalPestAttacks = 0;
     }
     
-    // Water consumption counter - plants don't need water every single minute
+    // Water consumption counter - moderate consumption rate
     private int waterConsumptionTicks = 0;
-    private static final int TICKS_PER_WATER_CONSUMPTION = 30; // Consume 1 water every 30 minutes
+    private static final int TICKS_PER_WATER_CONSUMPTION = 5; // Consume 1 water every 5 minutes
     
     /**
      * Updates plant state for one simulation tick (1 minute).
@@ -70,7 +70,7 @@ public abstract class Plant {
             return;
         }
         
-        // Decrease water level over time (but not every single tick - that's too fast!)
+        // Decrease water level over time (1 per 5 ticks for moderate consumption)
         waterConsumptionTicks++;
         if (waterConsumptionTicks >= TICKS_PER_WATER_CONSUMPTION) {
             waterConsumptionTicks = 0;

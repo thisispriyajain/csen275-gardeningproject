@@ -10,8 +10,6 @@ import edu.scu.csen275.smartgarden.system.HarmfulPest;
 import edu.scu.csen275.smartgarden.system.PestControlSystem;
 import edu.scu.csen275.smartgarden.system.WateringSystem;
 import edu.scu.csen275.smartgarden.util.Logger;
-import edu.scu.csen275.smartgarden.util.EventBus;
-import edu.scu.csen275.smartgarden.events.*;
 
 import java.nio.file.Paths;
 import java.util.*;
@@ -119,9 +117,6 @@ public class GardenSimulationAPI {
         // Start headless simulation for continuous plant updates
         // This enables true 24-hour survival testing
         startHeadlessSimulation();
-        
-        // Publish event for UI
-        EventBus.publish("InitializeGardenEvent", new InitializeGardenEvent());
     }
     
     /**
@@ -191,9 +186,6 @@ public class GardenSimulationAPI {
         triggerSystemUpdates();
         
         dayCount++;
-        
-        // Publish event for UI
-        EventBus.publish("RainEvent", new RainEvent(amount));
     }
     
     /**
@@ -229,9 +221,6 @@ public class GardenSimulationAPI {
         triggerSystemUpdates();
         
         dayCount++;
-        
-        // Publish event for UI
-        EventBus.publish("TemperatureEvent", new TemperatureEvent(temp));
     }
     
     /**
@@ -263,9 +252,6 @@ public class GardenSimulationAPI {
                 
                 logger.info("API", plantType + " at " + plant.getPosition() + 
                            " attacked by " + parasiteType);
-                
-                // Publish event for UI (one per plant attacked)
-                EventBus.publish("ParasiteEvent", new ParasiteEvent(parasiteType, plant.getPosition()));
             }
         }
         

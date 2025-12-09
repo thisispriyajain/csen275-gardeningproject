@@ -15,7 +15,7 @@ public class Sprinkler {
     private LocalDateTime lastActivation;
     
     private static final Logger logger = Logger.getInstance();
-    private static final int DEFAULT_FLOW_RATE = 25; // Increased to ensure plants get enough water
+    private static final int DEFAULT_FLOW_RATE = 5; // liters per minute per plant
     
     /**
      * Creates a new Sprinkler for a zone.
