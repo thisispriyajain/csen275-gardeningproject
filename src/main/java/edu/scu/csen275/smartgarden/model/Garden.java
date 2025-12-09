@@ -105,9 +105,8 @@ public class Garden {
             }
         }
         
-        // Give plant initial water to prevent immediate dehydration
-        // Water the plant to match its water requirement
-        plant.water(plant.getWaterRequirement());
+        // Plant already starts with waterLevel = waterRequirement in constructor
+        // No need for additional watering here
         
         logger.info("Garden", "Planted " + plant.getPlantType() + " at " + pos + 
                    " with initial water: " + plant.getWaterRequirement());
